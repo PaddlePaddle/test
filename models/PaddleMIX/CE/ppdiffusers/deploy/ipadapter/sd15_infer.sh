@@ -58,6 +58,27 @@ fi
 echo "*******ppdiffusers/deploy/sd15 ipadapter_sd15_inference_inpaint end***********"
 
 # tensorrt
+# tune
+(python infer.py \
+    --model_dir static_model/stable-diffusion-v1-5-ipadapter/ \
+    --scheduler "ddim" \
+    --backend paddle \
+    --device gpu \
+    --task_name all \
+    --width 512 \
+    --height 512 \
+    --inference_steps 30 \
+    --tune True \
+    --use_fp16 False) 2>&1 | tee ${log_dir}/ipadapter_sd15_inference_tune.log
+tmp_exit_code=${PIPESTATUS[0]}
+exit_code=$(($exit_code + ${tmp_exit_code}))
+if [ ${tmp_exit_code} -eq 0 ]; then
+    echo "ppdiffusers/deploy/sd15 ipadapter_sd15_inference_tune success" >>"${log_dir}/ce_res.log"
+else
+    echo "ppdiffusers/deploy/sd15 ipadapter_sd15_inference_tune fail" >>"${log_dir}/ce_res.log"
+fi
+echo "*******ppdiffusers/deploy/sd15 ipadapter_sd15_inference_tune end***********"
+
 # text2img
 (python infer.py \
     --model_dir static_model/stable-diffusion-v1-5-ipadapter/ \
