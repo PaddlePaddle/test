@@ -22,17 +22,17 @@ bash prepare.sh
 
 # 训练
 
-echo "*******paddlemix cogagent infer***********"
-(python paddlemix/examples/cogagent/chat_demo.py \
-    --model_name_or_path "THUDM/cogagent-chat") 2>&1 | tee ${log_dir}/paddlemix_cogagent infer.log
+echo "*******paddlemix cogvlm infer***********"
+(python paddlemix/examples/cogvlm/chat_demo.py \
+    --model_name_or_path "THUDM/cogvlm-chat") 2>&1 | tee ${log_dir}/paddlemix_cogvlm_infer.log
 tmp_exit_code=${PIPESTATUS[0]}
 exit_code=$(($exit_code + ${tmp_exit_code}))
 if [ ${tmp_exit_code} -eq 0 ]; then
-    echo "paddlemix cogagent infer run success" >>"${log_dir}/ce_res.log"
+    echo "paddlemix cogvlm infer run success" >>"${log_dir}/ce_res.log"
 else
-    echo "paddlemix cogagent infer run fail" >>"${log_dir}/ce_res.log"
+    echo "paddlemix cogvlm infer run fail" >>"${log_dir}/ce_res.log"
 fi
-echo "*******paddlemix cogagent infer end***********"
+echo "*******paddlemix cogvlm infer end***********"
 
 
 echo exit_code:${exit_code}
