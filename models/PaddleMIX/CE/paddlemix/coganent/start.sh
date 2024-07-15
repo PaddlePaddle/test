@@ -15,10 +15,10 @@ fi
 /bin/cp -rf ./* ${work_path}/
 exit_code=0
 
+cd ${work_path}
+
 # 下载依赖、数据集和权重
 bash prepare.sh
-
-cd ${work_path}
 
 # 训练
 
