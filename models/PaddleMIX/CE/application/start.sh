@@ -6,7 +6,7 @@ echo ${cur_path}
 work_path=${root_path}/PaddleMIX/
 echo ${work_path}
 
-log_dir=${root_path}/log
+log_dir=${root_path}/log_application
 
 if [ ! -d "$log_dir" ]; then
     mkdir -p "$log_dir"
@@ -20,16 +20,16 @@ bash prepare.sh
 
 cd ${work_path}
 
-# echo "*******application vision_language_chat begin***********"
-# (python vision_language_chat.py) 2>&1 | tee ${log_dir}/vision_language_chat.log
-# tmp_exit_code=${PIPESTATUS[0]}
-# exit_code=$(($exit_code + ${tmp_exit_code}))
-# if [ ${tmp_exit_code} -eq 0 ]; then
-#     echo "application vision_language_chat run success" >>"${log_dir}/ce_res.log"
-# else
-#     echo "application vision_language_chat run fail" >>"${log_dir}/ce_res.log"
-# fi
-# echo "*******application vision_language_chat end***********"
+echo "*******application vision_language_chat begin***********"
+(python vision_language_chat.py) 2>&1 | tee ${log_dir}/vision_language_chat.log
+tmp_exit_code=${PIPESTATUS[0]}
+exit_code=$(($exit_code + ${tmp_exit_code}))
+if [ ${tmp_exit_code} -eq 0 ]; then
+    echo "application vision_language_chat run success" >>"${log_dir}/ce_res.log"
+else
+    echo "application vision_language_chat run fail" >>"${log_dir}/ce_res.log"
+fi
+echo "*******application vision_language_chat end***********"
 
 echo "*******application grounded_sam begin***********"
 (python grounded_sam.py) 2>&1 | tee ${log_dir}/grounded_sam.log
@@ -108,16 +108,16 @@ else
 fi
 echo "*******application text_guided_image_upscaling end***********"
 
-# echo "*******application dual_text_image_guided_generation begin***********"
-# (python dual_text_image_guided_generation.py) | tee ${log_dir}/dual_text_image_guided_generation.log
-# tmp_exit_code=${PIPESTATUS[0]}
-# exit_code=$(($exit_code + ${tmp_exit_code}))
-# if [ ${tmp_exit_code} -eq 0 ]; then
-#     echo "application dual_text_image_guided_generation run success" >> "${log_dir}/ce_res.log"
-# else
-#     echo "application dual_text_image_guided_generation run fail" >> "${log_dir}/ce_res.log"
-# fi
-# echo "*******application dual_text_image_guided_generation end***********"
+echo "*******application dual_text_image_guided_generation begin***********"
+(python dual_text_image_guided_generation.py) | tee ${log_dir}/dual_text_image_guided_generation.log
+tmp_exit_code=${PIPESTATUS[0]}
+exit_code=$(($exit_code + ${tmp_exit_code}))
+if [ ${tmp_exit_code} -eq 0 ]; then
+    echo "application dual_text_image_guided_generation run success" >> "${log_dir}/ce_res.log"
+else
+    echo "application dual_text_image_guided_generation run fail" >> "${log_dir}/ce_res.log"
+fi
+echo "*******application dual_text_image_guided_generation end***********"
 
 echo "*******application image2image_text_guided_generation begin***********"
 (python image2image_text_guided_generation.py) 2>&1 | tee ${log_dir}/image2image_text_guided_generation.log
