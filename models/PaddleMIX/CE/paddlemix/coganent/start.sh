@@ -1,0 +1,39 @@
+#!/bin/bash
+
+cur_path=$(pwd)
+echo ${cur_path}
+
+work_path=${root_path}/PaddleMIX/
+echo ${work_path}
+
+log_dir=${root_path}/log_mix
+
+if [ ! -d "$log_dir" ]; then
+    mkdir -p "$log_dir"
+fi
+
+/bin/cp -rf ./* ${work_path}/
+exit_code=0
+
+# 下载依赖、数据集和权重
+bash prepare.sh
+
+cd ${work_path}
+
+# 训练
+
+echo "*******paddlemix cogagent infer***********"
+(python paddlemix/examples/cogagent/chat_demo.py \
+    --model_name_or_path "THUDM/cogagent-chat") 2>&1 | tee ${log_dir}/paddlemix_cogagent infer.log
+tmp_exit_code=${PIPESTATUS[0]}
+exit_code=$(($exit_code + ${tmp_exit_code}))
+if [ ${tmp_exit_code} -eq 0 ]; then
+    echo "paddlemix cogagent infer run success" >>"${log_dir}/ce_res.log"
+else
+    echo "paddlemix cogagent infer run fail" >>"${log_dir}/ce_res.log"
+fi
+echo "*******paddlemix cogagent infer end***********"
+
+
+echo exit_code:${exit_code}
+exit ${exit_code}
