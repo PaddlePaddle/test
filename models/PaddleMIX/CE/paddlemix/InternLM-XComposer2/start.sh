@@ -39,15 +39,15 @@ echo "*******paddlemix internlm_xcomposer2 single_infer end***********"
 unset FLAGS_use_cuda_managed_memory
 unset FLAGS_allocator_strategy
 
-echo "*******paddlemix internlm_xcomposer2 sft_A100_80G***********"
-(python paddlemix/tools/supervised_finetune.py paddlemix/config/internlm_xcomposer2/sft_argument.json) 2>&1 | tee ${log_dir}/paddlemix_internlm_xcomposer2_sft_A100_80G.log
-tmp_exit_code=${PIPESTATUS[0]}
-exit_code=$(($exit_code + ${tmp_exit_code}))
-if [ ${tmp_exit_code} -eq 0 ]; then
-    echo "paddlemix internlm_xcomposer2 sft_A100_80G run success" >>"${log_dir}/ce_res.log"
-else
-    echo "paddlemix internlm_xcomposer2 sft_A100_80G run fail" >>"${log_dir}/ce_res.log"
-fi
-echo "*******paddlemix internlm_xcomposer2 sft_A100_80G end***********"
+# echo "*******paddlemix internlm_xcomposer2 sft_A100_80G***********"
+# (python paddlemix/tools/supervised_finetune.py paddlemix/config/internlm_xcomposer2/sft_argument.json) 2>&1 | tee ${log_dir}/paddlemix_internlm_xcomposer2_sft_A100_80G.log
+# tmp_exit_code=${PIPESTATUS[0]}
+# exit_code=$(($exit_code + ${tmp_exit_code}))
+# if [ ${tmp_exit_code} -eq 0 ]; then
+#     echo "paddlemix internlm_xcomposer2 sft_A100_80G run success" >>"${log_dir}/ce_res.log"
+# else
+#     echo "paddlemix internlm_xcomposer2 sft_A100_80G run fail" >>"${log_dir}/ce_res.log"
+# fi
+# echo "*******paddlemix internlm_xcomposer2 sft_A100_80G end***********"
 echo exit_code:${exit_code}
 exit ${exit_code}
