@@ -26,7 +26,7 @@ export FLAGS_allocator_strategy=auto_growth
 echo "*******paddlemix internlm_xcomposer2 single_infer***********"
 (python paddlemix/examples/internlm_xcomposer2/chat_demo.py \
     --model_name_or_path "internlm/internlm-xcomposer2-7b" \
-    --image_path "path/to/image.jpg" \
+    --image_path "./000000004505.jpg" \
     --text "Please describe this image in detail.") 2>&1 | tee ${log_dir}/paddlemix_internlm_xcomposer2_single_infer.log
 tmp_exit_code=${PIPESTATUS[0]}
 exit_code=$(($exit_code + ${tmp_exit_code}))
