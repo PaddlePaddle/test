@@ -19,6 +19,7 @@ cd ${work_path}
 
 export FLAGS_use_cuda_managed_memory=true
 export FLAGS_allocator_strategy=auto_growth
+pip install tiktoken
 echo "*******paddlemix qwen_vl single_infer***********"
 (python paddlemix/examples/qwen_vl/run_predict.py \
     --model_name_or_path "qwen-vl/qwen-vl-7b" \
