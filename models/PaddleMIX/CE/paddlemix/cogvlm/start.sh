@@ -21,7 +21,8 @@ cd ${work_path}
 bash prepare.sh
 
 # 训练
-
+export FLAGS_use_cuda_managed_memory=true
+export FLAGS_allocator_strategy=auto_growth
 echo "*******paddlemix cogvlm infer***********"
 (python paddlemix/examples/cogvlm/chat_demo.py \
     --model_name_or_path "THUDM/cogvlm-chat") 2>&1 | tee ${log_dir}/paddlemix_cogvlm_infer.log
