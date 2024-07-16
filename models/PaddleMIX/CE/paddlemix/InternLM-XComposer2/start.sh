@@ -40,7 +40,7 @@ unset FLAGS_use_cuda_managed_memory
 unset FLAGS_allocator_strategy
 
 echo "*******paddlemix internlm_xcomposer2 sft_A100_80G***********"
-(paddlemix/tools/supervised_finetune.py paddlemix/config/internlm_xcomposer2/sft_argument.json) 2>&1 | tee ${log_dir}/paddlemix_internlm_xcomposer2_sft_A100_80G.log
+(python paddlemix/tools/supervised_finetune.py paddlemix/config/internlm_xcomposer2/sft_argument.json) 2>&1 | tee ${log_dir}/paddlemix_internlm_xcomposer2_sft_A100_80G.log
 tmp_exit_code=${PIPESTATUS[0]}
 exit_code=$(($exit_code + ${tmp_exit_code}))
 if [ ${tmp_exit_code} -eq 0 ]; then
