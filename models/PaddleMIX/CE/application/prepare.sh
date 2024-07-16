@@ -17,7 +17,6 @@ pip install -r paddlemix/appflow/requirements.txt
 export http_proxy=${proxy}
 export https_proxy=${proxy}
 python nltk_data_download.py
-pip install git+https://github.com/PaddlePaddle/PaddleSpeech.git
 unset http_proxy
 unset https_proxy
 
