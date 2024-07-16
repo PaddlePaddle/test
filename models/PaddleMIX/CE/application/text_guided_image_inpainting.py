@@ -27,8 +27,7 @@ paddle.seed(1024)
 
 prompt = "Face of a yellow cat, high resolution, sitting on a park bench"
 
-app = Appflow(app='inpainting', models=[
-              'stabilityai/stable-diffusion-2-inpainting'])
-image = app(inpaint_prompt=prompt, image=image, seg_masks=mask_image)['result']
+app = Appflow(app='inpainting',models=['stabilityai/stable-diffusion-2-inpainting'])
+image = app(inpaint_prompt=prompt,image=image,seg_masks=mask_image)['result']
 
 image.save("a_yellow_cat.png")

@@ -17,8 +17,9 @@ text_to_image_generation
 import paddle
 from paddlemix.appflow import Appflow
 
-paddle.seed(1024)
+paddle.seed(42)
 task = Appflow(app="text2image_generation",
-               models=["stabilityai/stable-diffusion-v1-5"])
+               models=["stabilityai/stable-diffusion-xl-base-1.0"]
+               )
 prompt = "a photo of an astronaut riding a horse on mars."
 result = task(prompt=prompt)['result']

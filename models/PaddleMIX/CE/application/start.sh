@@ -32,7 +32,7 @@ fi
 echo "*******application vision_language_chat end***********"
 
 echo "*******application grounded_sam begin***********"
-(python grounded_sam.py) 2>&1 | tee ${log_dir}/grounded_sam.log
+(python applications/CVinW/grounded_sam.py) 2>&1 | tee ${log_dir}/grounded_sam.log
 tmp_exit_code=${PIPESTATUS[0]}
 exit_code=$(($exit_code + ${tmp_exit_code}))
 if [ ${tmp_exit_code} -eq 0 ]; then
@@ -43,7 +43,7 @@ fi
 echo "*******application grounded_sam end***********"
 
 echo "*******application automatic_label begin***********"
-(python automatic_label.py) 2>&1 | tee ${log_dir}/automatic_label.log
+(python applications/Automatic_label/automatic_label.py) 2>&1 | tee ${log_dir}/automatic_label.log
 tmp_exit_code=${PIPESTATUS[0]}
 exit_code=$(($exit_code + ${tmp_exit_code}))
 if [ ${tmp_exit_code} -eq 0 ]; then

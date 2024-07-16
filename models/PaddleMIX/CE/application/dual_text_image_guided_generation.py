@@ -23,7 +23,6 @@ image = load_image(url)
 prompt = "a red car in the sun"
 
 
-app = Appflow(app='dual_text_and_image_guided_generation',
-              models=['shi-labs/versatile-diffusion'])
-image = app(prompt=prompt, image=image)['result']
+app = Appflow(app='dual_text_and_image_guided_generation',models=['shi-labs/versatile-diffusion'])
+image = app(prompt=prompt,image=image)['result']
 image.save("versatile-diffusion-red_car.png")
