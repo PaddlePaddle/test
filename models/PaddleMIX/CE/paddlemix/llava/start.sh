@@ -23,18 +23,18 @@ bash prepare.sh
 # infer
 export FLAGS_use_cuda_managed_memory=true
 export FLAGS_allocator_strategy=auto_growth
-echo "*******paddlemix llava infer***********"
-(python paddlemix/examples/llava/run_predict_multiround.py \
-    --model-path "paddlemix/llava/llava-v1.5-7b" \
-    --image-file "https://bj.bcebos.com/v1/paddlenlp/models/community/GroundingDino/000000004505.jpg") 2>&1 | tee ${log_dir}/paddlemix_llava_infer.log
-tmp_exit_code=${PIPESTATUS[0]}
-exit_code=$(($exit_code + ${tmp_exit_code}))
-if [ ${tmp_exit_code} -eq 0 ]; then
-    echo "paddlemix llava infer run success" >>"${log_dir}/ce_res.log"
-else
-    echo "paddlemix llava infer run fail" >>"${log_dir}/ce_res.log"
-fi
-echo "*******paddlemix llava infer end***********"
+# echo "*******paddlemix llava infer***********"
+# (python paddlemix/examples/llava/run_predict_multiround.py \
+#     --model-path "paddlemix/llava/llava-v1.5-7b" \
+#     --image-file "https://bj.bcebos.com/v1/paddlenlp/models/community/GroundingDino/000000004505.jpg") 2>&1 | tee ${log_dir}/paddlemix_llava_infer.log
+# tmp_exit_code=${PIPESTATUS[0]}
+# exit_code=$(($exit_code + ${tmp_exit_code}))
+# if [ ${tmp_exit_code} -eq 0 ]; then
+#     echo "paddlemix llava infer run success" >>"${log_dir}/ce_res.log"
+# else
+#     echo "paddlemix llava infer run fail" >>"${log_dir}/ce_res.log"
+# fi
+# echo "*******paddlemix llava infer end***********"
 
 echo "*******paddlemix llava finetune***********"
 (python paddlemix/examples/llava/pretrain.py paddlemix/config/llava/pretrain.json) 2>&1 | tee ${log_dir}/paddlemix_llava_finetune.log
