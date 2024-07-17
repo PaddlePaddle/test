@@ -28,9 +28,9 @@ export FLAGS_allocator_strategy=auto_growth
 echo "*******paddlemix yolo-world infer***********"
 (python infer.py \
     --config=./YOLO-World/configs \
-    -o=./YOLO-World/pretrain/yolo_world_v2_x_obj365v1_goldg_cc3mlite_pretrain-8698fbfa.pdparams \
+    -o ./YOLO-World/pretrain/yolo_world_v2_x_obj365v1_goldg_cc3mlite_pretrain-8698fbfa.pdparams \
     --image=https://bj.bcebos.com/v1/paddlenlp/models/community/GroundingDino/000000004505.jpg \
-    --text=bus\
+    --text bus\
     --topk=3 \
     --threshold=0.6 \
     --output_dir=./yolo_output) 2>&1 | tee ${log_dir}/paddlemix_yolo-world_infer.log
