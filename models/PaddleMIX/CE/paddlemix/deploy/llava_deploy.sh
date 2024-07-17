@@ -24,6 +24,7 @@ cd ${work_path}
 bash prepare_qwen.sh
 
 echo "*******paddlemix deploy ll av a begin***********"
+cd ${work_path}
 
 #静态图模型导出
 (bash llava_export.sh) 2>&1 | tee ${log_dir}/run_deploy_llava_export.log
@@ -34,6 +35,7 @@ if [ ${tmp_exit_code} -eq 0 ]; then
 else
     echo "paddlemix deploy llava export run fail" >>"${log_dir}/ce_res.log"
 fi
+cd ${work_path}
 
 
 #转出静态图推理所需的语言模型
