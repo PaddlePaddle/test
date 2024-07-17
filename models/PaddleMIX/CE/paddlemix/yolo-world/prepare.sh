@@ -1,5 +1,5 @@
 
-pip install https://paddlenlp.bj.bcebos.com/models/community/junnyu/wheels/ppdiffusers-0.24.0-py3-none-any.whl --user
+pip install https://paddlenlp.bj.bcebos.com/models/community/junnyu/wheels/ppdiffusers-0.24.0-py3-none-any.whl
 # 由于YOLO-World实现依赖PaddleYOLO, 先将PaddleYOLO clone至third_party目录下
 mkdir third_party
 git clone https://github.com/PaddlePaddle/PaddleYOLO.git third_party/PaddleYOLO
