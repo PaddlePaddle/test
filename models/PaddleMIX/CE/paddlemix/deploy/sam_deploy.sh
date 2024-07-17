@@ -6,7 +6,7 @@ echo ${cur_path}
 work_path=${root_path}/PaddleMIX/deploy/sam/
 echo ${work_path}
 
-log_dir=${root_path}/log
+log_dir=${root_path}/log_deploy
 
 if [ ! -d "$log_dir" ]; then
     mkdir -p "$log_dir"
