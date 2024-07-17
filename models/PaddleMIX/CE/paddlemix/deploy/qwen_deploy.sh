@@ -44,7 +44,7 @@ else
     echo "paddlemix deploy qwen_ql language run fail" >>"${log_dir}/ce_res.log"
 fi
 
-pwd
+cd ${work_path}
 #转出静态图推理所需的语言模型
 (bash qwen_predict.sh) 2>&1 | tee ${log_dir}/run_deploy_qwen_ql_predict.log
 tmp_exit_code=${PIPESTATUS[0]}

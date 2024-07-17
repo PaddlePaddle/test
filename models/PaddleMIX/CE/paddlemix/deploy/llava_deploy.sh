@@ -37,7 +37,6 @@ else
 fi
 cd ${work_path}
 
-
 #转出静态图推理所需的语言模型
 (bash llava_predict.sh) 2>&1 | tee ${log_dir}/run_deploy_llava_predict.log
 tmp_exit_code=${PIPESTATUS[0]}
