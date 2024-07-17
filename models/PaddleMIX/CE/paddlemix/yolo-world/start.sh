@@ -21,19 +21,27 @@ cd ${work_path}
 bash prepare.sh
 
 # infer
+cd ${work_path}
 export FLAGS_use_cuda_managed_memory=true
 export FLAGS_allocator_strategy=auto_growth
 
-echo "*******paddlemix yolo-world finetune***********"
-(python paddlemix/examples/yolo-world/pretrain.py paddlemix/config/yolo-world/pretrain.json) 2>&1 | tee ${log_dir}/paddlemix_yolo-world_finetune.log
+echo "*******paddlemix yolo-world infer***********"
+(python infer.py \
+    --config ./YOLO-World/configs \
+    -o ./YOLO-World/pretrain \
+    --image https://bj.bcebos.com/v1/paddlenlp/models/community/GroundingDino/000000004505.jpg \
+    --text bus\
+    --topk 3 \
+    --threshold=0.6 \
+    --output_dir=./yolo_output) 2>&1 | tee ${log_dir}/paddlemix_yolo-world_infer.log
 tmp_exit_code=${PIPESTATUS[0]}
 exit_code=$(($exit_code + ${tmp_exit_code}))
 if [ ${tmp_exit_code} -eq 0 ]; then
-    echo "paddlemix yolo-world finetune run success" >>"${log_dir}/ce_res.log"
+    echo "paddlemix yolo-world infer run success" >>"${log_dir}/ce_res.log"
 else
-    echo "paddlemix yolo-world finetune run fail" >>"${log_dir}/ce_res.log"
+    echo "paddlemix yolo-world infer run fail" >>"${log_dir}/ce_res.log"
 fi
-echo "*******paddlemix yolo-world finetune end***********"
+echo "*******paddlemix yolo-world infer end***********"
 
 unset FLAGS_use_cuda_managed_memory
 unset FLAGS_allocator_strategy
