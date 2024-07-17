@@ -32,8 +32,8 @@ echo "*******paddlemix yolo-world infer***********"
     --image https://bj.bcebos.com/v1/paddlenlp/models/community/GroundingDino/000000004505.jpg \
     --text bus\
     --topk 3 \
-    --threshold=0.6 \
-    --output_dir=./yolo_output) 2>&1 | tee ${log_dir}/paddlemix_yolo-world_infer.log
+    --threshold 0.6 \
+    --output_dir ./yolo_output) 2>&1 | tee ${log_dir}/paddlemix_yolo-world_infer.log
 tmp_exit_code=${PIPESTATUS[0]}
 exit_code=$(($exit_code + ${tmp_exit_code}))
 if [ ${tmp_exit_code} -eq 0 ]; then
