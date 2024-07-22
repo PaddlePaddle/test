@@ -107,15 +107,13 @@ def test_dataset(dataset: MMDataset):
         assert isinstance(data, dict), ''
 
 
-def add_path(url: str) -> str:
+def update_url(url: str) -> str:
     # logic
     newurl = url.replace('http://', 'https://')
     return newurl
 
 def test_ops(dataset: MMDataset):
-    dataset = dataset.map(
-    functools.partial(ops.update_image_url, func=add_path, schema=SCHEMA.MM),
-    max_workers=64)
+    dataset = dataset.map(update_url, max_workers=8, progress=True)
 
 
 
