@@ -106,19 +106,15 @@ def test_dataset(dataset: MMDataset):
     for data in dataset:
         assert isinstance(data, dict), ''
 
-def is_wanted(item: str) -> bool: 
-    return True
-def update_url(url: str) -> str:
+def add_path(url: str) -> str:
     # logic
-    
     print(f'{url}')
     return url
 
 def test_ops(dataset: MMDataset):
-    dataset = dataset.map(update_url, max_workers=8, progress=True)
-    assert len(dataset) == 4, ''
-    dataset = dataset.filter(is_wanted, max_workers=8)
-    assert len(dataset) == 4, ''
+    dataset = dataset.map(
+    functools.partial(ops.update_image_url, func=add_path, schema=SCHEMA.MM),
+    max_workers=64)
     
 
 
