@@ -24,7 +24,7 @@ bash prepare.sh
 cd ${work_path}
 export FLAGS_use_cuda_managed_memory=true
 export FLAGS_allocator_strategy=auto_growth
-curl -O https://bj.bcebos.com/v1/paddlenlp/models/community/GroundingDino/000000004505
+curl -O https://bj.bcebos.com/v1/paddlenlp/models/community/GroundingDino/000000004505.jpg
 # wget https://bj.bcebos.com/v1/paddlenlp/models/community/GroundingDino/000000004505
 echo "*******paddlemix yolo-world infer***********"
 (python infer.py \
