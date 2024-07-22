@@ -109,8 +109,9 @@ def test_dataset(dataset: MMDataset):
 
 def update_url(url: str) -> str:
     # logic
-    newurl = url.replace('http://', 'https://')
-    return newurl
+    
+    print(f'{url}')
+    return url
 
 def test_ops(dataset: MMDataset):
     dataset = dataset.map(update_url, max_workers=8, progress=True)
