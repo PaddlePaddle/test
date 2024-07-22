@@ -19,7 +19,10 @@ exit_code=0
 bash prepare.sh
 
 cd ${work_path}
-
+export FLAGS_use_cuda_managed_memory=true
+export FLAGS_allocator_strategy=auto_growth
+export FLAGS_embedding_deterministic=1
+export FLAGS_cudnn_deterministic=1
 echo "*******application vision_language_chat begin***********"
 (python vision_language_chat.py) 2>&1 | tee ${log_dir}/vision_language_chat.log
 tmp_exit_code=${PIPESTATUS[0]}
@@ -210,7 +213,10 @@ else
     echo "application auodio_image2image run fail" >>"${log_dir}/ce_res.log"
 fi
 echo "*******application auodio_image2image end***********"
-
+unset FLAGS_use_cuda_managed_memory
+unset FLAGS_allocator_strategy
+unset FLAGS_embedding_deterministic
+unset FLAGS_cudnn_deterministic
 cat ${log_dir}/ce_res.log
 
 echo exit_code:${exit_code}
