@@ -28,7 +28,7 @@ curl -O https://bj.bcebos.com/v1/paddlenlp/models/community/GroundingDino/000000
 # wget https://bj.bcebos.com/v1/paddlenlp/models/community/GroundingDino/000000004505
 echo "*******paddlemix yolo-world infer***********"
 (python infer.py \
-    --config ./configs/yolo_world_s.yml \
+    --config ./configs/yolo_world_x.yml \
     -o weights=./pretrain/yolo_world_v2_x_obj365v1_goldg_cc3mlite_pretrain-8698fbfa.pdparams \
     --image=./000000004505.jpg \
     --text bus\
