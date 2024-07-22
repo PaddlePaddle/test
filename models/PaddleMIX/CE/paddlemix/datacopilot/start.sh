@@ -18,7 +18,6 @@ exit_code=0
 cd ${work_path}
 
 # 下载依赖、数据集和权重
-bash prepare.sh
 
 # importoutput
 cd ${work_path}
@@ -26,7 +25,7 @@ export FLAGS_use_cuda_managed_memory=true
 export FLAGS_allocator_strategy=auto_growth
 
 echo "*******paddlemix datacopilot importoutput***********"
-(python ) 2>&1 | tee ${log_dir}/paddlemix_datacopilot_importoutput.log
+(python importoutput.py) 2>&1 | tee ${log_dir}/paddlemix_datacopilot_importoutput.log
 tmp_exit_code=${PIPESTATUS[0]}
 exit_code=$(($exit_code + ${tmp_exit_code}))
 if [ ${tmp_exit_code} -eq 0 ]; then
