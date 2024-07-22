@@ -16,6 +16,8 @@ import pytest
 
 from paddlemix.datacopilot.core import MMDataset, SCHEMA, is_valid_schema
 from paddlemix.datacopilot.misc import open_tmp_dir
+import paddlemix.datacopilot.ops as ops
+import functools
 
 
 @pytest.fixture
@@ -105,6 +107,17 @@ def test_dataset(dataset: MMDataset):
         assert isinstance(data, dict), ''
 
 
+def add_path(url: str) -> str:
+    # logic
+    newurl = url.replace('http://', 'https://')
+    return newurl
+
+def test_ops(dataset: MMDataset):
+    dataset = dataset.map(
+    functools.partial(ops.update_image_url, func=add_path, schema=SCHEMA.MM),
+    max_workers=64)
+
+
 
 def test_h5(dataset: MMDataset):
 
@@ -134,6 +147,6 @@ def test_h5(dataset: MMDataset):
         for i in range(len(dataset)):
             assert dataset[i] == newdataset[i], ''
 
-
+    
 if __name__ == '__main__':
     pytest.main([__file__])
