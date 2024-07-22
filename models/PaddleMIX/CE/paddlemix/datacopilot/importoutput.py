@@ -106,7 +106,8 @@ def test_dataset(dataset: MMDataset):
     for data in dataset:
         assert isinstance(data, dict), ''
 
-
+def is_wanted(item: str) -> bool: 
+    return True
 def update_url(url: str) -> str:
     # logic
     
@@ -115,6 +116,10 @@ def update_url(url: str) -> str:
 
 def test_ops(dataset: MMDataset):
     dataset = dataset.map(update_url, max_workers=8, progress=True)
+    assert len(dataset) == 4, ''
+    dataset = dataset.filter(is_wanted, max_workers=8)
+    assert len(dataset) == 4, ''
+    
 
 
 
