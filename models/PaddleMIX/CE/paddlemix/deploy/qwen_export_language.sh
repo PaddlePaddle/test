@@ -1,7 +1,7 @@
 #!/bin/bash
 
 export CUDA_VISIBLE_DEVICES=0
-export PYTHONPATH=./PaddleNLP/:../PaddleMIX:./PaddleNLP/llm
+export PYTHONPATH=../../PaddleNLP/:../../../PaddleMIX:../../PaddleNLP/llm
 
 cd PaddleNLP/llm
 
