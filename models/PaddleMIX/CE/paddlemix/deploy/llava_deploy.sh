@@ -21,7 +21,7 @@ export https_proxy=${proxy}
 
 cd ${work_path}
 # 通用
-bash prepare_qwen.sh
+bash prepare_llava.sh
 
 echo "*******paddlemix deploy ll av a begin***********"
 cd ${work_path}
