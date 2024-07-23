@@ -1,5 +1,7 @@
+wget https://github.com/PaddlePaddle/PaddleNLP/archive/refs/tags/v2.7.2.tar.gz
 rm -rf PaddleNLP
-git clone https://github.com/PaddlePaddle/PaddleNLP.git
+tar xf v2.7.2.tar.gz
+mv PaddleNLP-2.7.2/ PaddleNLP/
 cd PaddleNLP
 pip install -e .
 cd csrc

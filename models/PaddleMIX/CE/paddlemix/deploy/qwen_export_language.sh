@@ -3,7 +3,7 @@
 export CUDA_VISIBLE_DEVICES=0
 export PYTHONPATH=./PaddleNLP/:../PaddleMIX:./PaddleNLP/llm
 
-cd PaddleNLP/llm
+cd PaddleNLP/llm/predict
 
 python export_model.py \
     --model_name_or_path "qwen-vl/qwen-vl-7b-static" \
