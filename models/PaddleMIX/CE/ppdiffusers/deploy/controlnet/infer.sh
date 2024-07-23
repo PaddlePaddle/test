@@ -1,5 +1,5 @@
 #!/bin/bash
-
+log_dir=${root_path}/deploy_log
 export FLAGS_use_cuda_managed_memory=true
 export USE_PPXFORMERS=False
 
