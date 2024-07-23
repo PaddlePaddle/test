@@ -111,10 +111,6 @@ def add_path(url: str) -> str:
     print(f'{url}')
     return url
 
-def test_ops(dataset: MMDataset):
-    dataset = dataset.map(
-    functools.partial(ops.update_image_url, func=add_path, schema=SCHEMA.MM),
-    max_workers=64)
     
 
 
