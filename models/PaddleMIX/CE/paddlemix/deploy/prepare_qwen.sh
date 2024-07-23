@@ -1,5 +1,5 @@
-wget https://codeload.github.com/PaddlePaddle/PaddleNLP/zip/refs/tags/v2.7.2
-tar xf v2.7.2
+wget https://github.com/PaddlePaddle/PaddleNLP/archive/refs/tags/v2.7.2.tar.gz
+tar xf v2.7.2.tar.gz
 cd PaddleNLP
 pip install -e .
 cd csrc
