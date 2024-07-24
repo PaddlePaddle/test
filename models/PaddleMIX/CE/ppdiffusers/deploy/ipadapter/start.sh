@@ -2,6 +2,10 @@
 
 cur_path=$(pwd)
 echo ${cur_path}
+log_dir=${root_path}/deploy_log
+if [ ! -d "$log_dir" ]; then
+    mkdir -p "$log_dir"
+fi
 
 work_path2=${root_path}/PaddleMIX/ppdiffusers/deploy/ipadapter/sdxl
 echo ${work_path2}
@@ -22,13 +26,7 @@ exit ${exit_code}
 
 work_path1=${root_path}/PaddleMIX/ppdiffusers/deploy/ipadapter/sd15
 echo ${work_path1}
-
-log_dir=${root_path}/deploy_log
-
-if [ ! -d "$log_dir" ]; then
-    mkdir -p "$log_dir"
-fi
-
+cd ${cur_path}
 /bin/cp -rf ./* ${work_path1}/
 exit_code=0
 
