@@ -12,4 +12,3 @@ echo ${work_path}/
 cd ${work_path}
 python setup.py bdist_wheel
 pip install ./dist/*.whl
-pip install huggingface_hub==0.22.0
