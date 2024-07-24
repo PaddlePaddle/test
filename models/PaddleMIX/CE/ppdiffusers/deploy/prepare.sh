@@ -10,5 +10,4 @@ work_path=${root_path}/PaddleMIX/ppdiffusers/
 echo ${work_path}/
 
 cd ${work_path}
-python setup.py bdist_wheel
-pip install ./dist/*.whl
+pip install -e .
