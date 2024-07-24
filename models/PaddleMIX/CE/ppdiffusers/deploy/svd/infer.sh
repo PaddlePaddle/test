@@ -36,8 +36,8 @@ echo "*******ppdiffusers/deploy/svd svd_inference_text2video end***********"
     --backend paddle \
     --device gpu \
     --task_name all \
-    --width 512 \
-    --height 512 \
+    --width 256 \
+    --height 256 \
     --inference_steps 30 \
     --tune True \
     --use_fp16 False) 2>&1 | tee ${log_dir}/svd_inference_tune.log
