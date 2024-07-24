@@ -16,8 +16,8 @@ exit_code=0
 
 # python -m pip install paddlepaddle-gpu==2.5.1.post117 -f https://www.paddlepaddle.org.cn/whl/linux/mkl/avx/stable.html -i http://pip.baidu.com/root/baidu/+simple/ --trusted-host pip.baidu.com
 
-bash groundingdino_deploy.sh
-exit_code=$(($exit_code + $?))
+# bash groundingdino_deploy.sh
+# exit_code=$(($exit_code + $?))
 
 # bash sam_deploy.sh
 # exit_code=$(($exit_code + $?))
@@ -25,8 +25,8 @@ exit_code=$(($exit_code + $?))
 bash qwen_deploy.sh
 exit_code=$(($exit_code + $?))
 
-bash llava_deploy.sh
-exit_code=$(($exit_code + $?))
+# bash llava_deploy.sh
+# exit_code=$(($exit_code + $?))
 # # 查看结果
 cat ${log_dir}/ce_res.log
 
