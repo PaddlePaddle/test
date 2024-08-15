@@ -226,7 +226,7 @@ fi
 echo "*******application auodio_image2image end***********"
 
 echo "*******application script_grounded_sam_chatglm begin***********"
-(python Inpainting/grounded_sam_chatglm.py) 2>&1 | tee ${log_dir}/script_grounded_sam_chatglm.log
+(python applications/Inpainting/grounded_sam_chatglm.py) 2>&1 | tee ${log_dir}/script_grounded_sam_chatglm.log
 tmp_exit_code=${PIPESTATUS[0]}
 exit_code=$(($exit_code + ${tmp_exit_code}))
 if [ ${tmp_exit_code} -eq 0 ]; then
@@ -237,7 +237,7 @@ fi
 echo "*******application script_grounded_sam_chatglm end***********"
 
 echo "*******application script_grounded_sam_inpainting begin***********"
-(python Inpainting/grounded_sam_inpainting.py) 2>&1 | tee ${log_dir}/script_grounded_sam_inpainting.log
+(python applications/Inpainting/grounded_sam_inpainting.py) 2>&1 | tee ${log_dir}/script_grounded_sam_inpainting.log
 tmp_exit_code=${PIPESTATUS[0]}
 exit_code=$(($exit_code + ${tmp_exit_code}))
 if [ ${tmp_exit_code} -eq 0 ]; then
@@ -248,7 +248,7 @@ fi
 echo "*******application script_grounded_sam_inpainting end***********"
 
 echo "*******application gradio_autolable begin***********"
-(python gradio_autolable.py) 2>&1 | tee ${log_dir}/gradio_autolable.log
+(python applications/gradio_autolable.py) 2>&1 | tee ${log_dir}/gradio_autolable.log
 tmp_exit_code=${PIPESTATUS[0]}
 exit_code=$(($exit_code + ${tmp_exit_code}))
 if [ ${tmp_exit_code} -eq 0 ]; then
@@ -259,7 +259,7 @@ fi
 echo "*******application gradio_autolable end***********"
 
 echo "*******application gradio_text2image begin***********"
-(python gradio_text2image.py) 2>&1 | tee ${log_dir}/gradio_text2image.log
+(python applications/gradio_text2image.py) 2>&1 | tee ${log_dir}/gradio_text2image.log
 tmp_exit_code=${PIPESTATUS[0]}
 exit_code=$(($exit_code + ${tmp_exit_code}))
 if [ ${tmp_exit_code} -eq 0 ]; then
