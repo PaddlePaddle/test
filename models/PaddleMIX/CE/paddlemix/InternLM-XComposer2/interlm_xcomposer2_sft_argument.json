@@ -2,8 +2,8 @@
     "model_name_or_path": "internlm/internlm-xcomposer2-7b",
     "freeze_exclude": ["*vit*"],
     "dataset": {
-        "train":[{"name": "chatml_dataset", "data_files": "ScienceQA/train.json"}],
-        "eval": [{"name": "chatml_dataset", "data_files": "ScienceQA/val.json"}]
+        "train":[{"name": "chatml_dataset", "data_files": "ScienceQA/llava_train_part.json","chat_template":"ScienceQA/llava_chat_template.json"}],
+        "eval": [{"name": "chatml_dataset", "data_files": "ScienceQA/llava_val_part.json","chat_template":"ScienceQA/llava_chat_template.json"}]
     },
     "mixtoken": false,
     "output_dir": "./checkpoints/internlm_xcomposer_sft_ckpts",
