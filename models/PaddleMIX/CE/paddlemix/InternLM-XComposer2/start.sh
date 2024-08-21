@@ -26,6 +26,8 @@ export CUDA_VISIBLE_DEVICES=${1:-0}
 # 单轮预测
 export FLAGS_use_cuda_managed_memory=true
 export FLAGS_allocator_strategy=auto_growth
+export FLAGS_embedding_deterministic=1
+export FLAGS_cudnn_deterministic=1
 echo "*******paddlemix internlm_xcomposer2 single_infer***********"
 (python paddlemix/examples/internlm_xcomposer2/chat_demo.py \
     --model_name_or_path "internlm/internlm-xcomposer2-7b" \
@@ -41,7 +43,10 @@ fi
 echo "*******paddlemix internlm_xcomposer2 single_infer end***********"
 unset FLAGS_use_cuda_managed_memory
 unset FLAGS_allocator_strategy
-
+export FLAGS_use_cuda_managed_memory=true
+export FLAGS_allocator_strategy=auto_growth
+export FLAGS_embedding_deterministic=1
+export FLAGS_cudnn_deterministic=1
 echo "*******paddlemix internlm_xcomposer2 train fp32***********"
 (python paddlemix/tools/supervised_finetune.py interlm_xcomposer2_sft_argument.json) 2>&1 | tee ${log_dir}/paddlemix_internlm_xcomposer2_train_fp32.log
 tmp_exit_code=${PIPESTATUS[0]}
@@ -55,7 +60,10 @@ echo "*******paddlemix internlm_xcomposer2 train fp32 end***********"
 echo exit_code:${exit_code}
 exit ${exit_code}
 
-
+export FLAGS_use_cuda_managed_memory=true
+export FLAGS_allocator_strategy=auto_growth
+export FLAGS_embedding_deterministic=1
+export FLAGS_cudnn_deterministic=1
 echo "*******paddlemix internlm_xcomposer2 train bf16 O2***********"
 (python paddlemix/tools/supervised_finetune.py interlm_xcomposer2_sft_argument.json) 2>&1 | tee ${log_dir}/paddlemix_internlm_xcomposer2_train_bf16_O2.log
 tmp_exit_code=${PIPESTATUS[0]}
