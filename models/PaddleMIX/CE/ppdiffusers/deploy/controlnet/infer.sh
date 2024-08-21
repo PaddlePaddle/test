@@ -9,6 +9,7 @@ export USE_PPXFORMERS=False
     --scheduler "ddim" \
     --backend paddle \
     --device gpu \
+    --tune False \
     --task_name text2img) 2>&1 | tee ${log_dir}/controlnet_inference_text2img.log
 tmp_exit_code=${PIPESTATUS[0]}
 exit_code=$(($exit_code + ${tmp_exit_code}))

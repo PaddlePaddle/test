@@ -1,6 +1,7 @@
 #!/bin/bash
 
 pip install -r requirements.txt
+pip install paddlenlp==3.0.0b0
 
 
 rm -rf fastdit_imagenet256_tiny/

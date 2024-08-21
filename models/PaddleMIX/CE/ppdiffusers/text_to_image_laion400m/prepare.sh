@@ -3,6 +3,8 @@
 # export http_proxy=${proxy}
 # export https_proxy=${proxy}
 pip install -r requirements.txt
+pip install paddlenlp==3.0.0b0
+
 # unset http_proxy
 # unset https_proxy
 
