@@ -25,6 +25,11 @@ for subdir in */; do
       continue
     fi
 
+    # examples extra
+    if [ "$subdir" == "ppdiffusers_example_test/" ]; then
+      continue
+    fi
+
     start_script_path="$subdir/start.sh"
 
     # 检查start.sh文件是否存在
