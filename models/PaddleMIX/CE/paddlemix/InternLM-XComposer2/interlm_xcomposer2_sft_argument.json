@@ -3,7 +3,7 @@
     "freeze_exclude": ["*vit*"],
     "dataset": {
         "train":[{"name": "chatml_dataset", "data_files": "ScienceQA/train.json"}],
-        "eval": [{"name": "chatml_dataset", "data_files": "ScienceQA/eval.json"}]
+        "eval": [{"name": "chatml_dataset", "data_files": "ScienceQA/val.json"}]
     },
     "mixtoken": false,
     "output_dir": "./checkpoints/internlm_xcomposer_sft_ckpts",
