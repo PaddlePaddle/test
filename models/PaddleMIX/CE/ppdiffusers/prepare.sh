@@ -8,8 +8,9 @@ cd ${work_path2}
 # export https_proxy=${proxy}
 python -m pip install --upgrade pip
 pip install -r requirements.txt
-pip install paddlenlp==3.0.0b0
 pip install -e .
+pip install paddlenlp==3.0.0b0
+
 # unset http_proxy
 # unset https_proxy
 pip install pytest safetensors ftfy fastcore opencv-python einops parameterized requests-mock
