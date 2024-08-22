@@ -67,7 +67,7 @@ echo "*******ppdiffusers/deploy/sdxl ipadapter_sdxl_inference_inpaint end*******
     --task_name all \
     --width 512 \
     --height 512 \
-    --inference_steps 30 \
+    --inference_steps 50 \
     --tune True \
     --use_fp16 False) 2>&1 | tee ${log_dir}/ipadapter_sdxl_inference_tune.log
 tmp_exit_code=${PIPESTATUS[0]}
