@@ -26,6 +26,10 @@ pip install pytest-xdist
 pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu
 
 #pip install paddlenlp==3.0.0b0
+nlp_path=${root_path}/PaddleMIX/PaddleNLP/
+pushd ${nlp_path} || exit
+pip install -e .
+popd
 export http_proxy=${mix_proxy}
 export https_proxy=${mix_proxy}
 # rm -rf tests/pipelines/test_pipelines.py
