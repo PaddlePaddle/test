@@ -22,7 +22,7 @@ cd ${work_path2}
 python -m pip install --upgrade pip
 pip install -r requirements.txt
 pip install -e .
-pip install paddlenlp==3.0.0b0
+#pip install paddlenlp==3.0.0b0
 
 pip install pytest safetensors ftfy fastcore opencv-python einops parameterized requests-mock
 pip install ligo-segments

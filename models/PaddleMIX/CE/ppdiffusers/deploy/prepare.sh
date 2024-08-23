@@ -11,4 +11,4 @@ cd ${work_path}
 pip install -e .
 
 
-pip install paddlenlp==3.0.0b0
+#pip install paddlenlp==3.0.0b0

@@ -1,5 +1,5 @@
 #!/bin/bash
-pip install paddlenlp==3.0.0b0
+#pip install paddlenlp==3.0.0b0
 
 rm -rf data
 # wget https://paddlenlp.bj.bcebos.com/models/community/westfish/t2i-adapter/t2i-adapter-data-demo.zip

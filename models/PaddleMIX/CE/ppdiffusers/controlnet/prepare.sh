@@ -5,7 +5,7 @@ unzip -o fill50k.zip
 rm -rf fill50k.zip
 
 pip install -r requirements.txt
-pip install paddlenlp==3.0.0b0
+#pip install paddlenlp==3.0.0b0
 
 export http_proxy=${proxy}
 export https_proxy=${proxy}
