@@ -4,7 +4,6 @@ pip install -U decord
 #pip install paddlenlp==3.0.0b0
 nlp_path=${root_path}/PaddleMIX/PaddleNLP/
 pushd ${nlp_path} || exit
-cd ${nlp_path}
 pip install -e .
 popd
 
