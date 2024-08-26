@@ -9,11 +9,8 @@ cd ${work_path2}
 python -m pip install --upgrade pip
 pip install -r requirements.txt
 pip install -e .
-#pip install paddlenlp==3.0.0b0
-nlp_path=${root_path}/PaddleMIX/PaddleNLP/
-pushd ${nlp_path} || exit
-pip install -e .
-popd
+
+bash change_paddlenlp_version.sh
 
 
 # unset http_proxy
