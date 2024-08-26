@@ -22,7 +22,7 @@ cd ${work_path2}
 python -m pip install --upgrade pip
 pip install -r requirements.txt
 pip install -e .
-bash change_paddlenlp_version.sh
+bash ${root_path}/PaddleMIX/change_paddlenlp_version.sh
 
 
 pip install pytest safetensors ftfy fastcore opencv-python einops parameterized requests-mock

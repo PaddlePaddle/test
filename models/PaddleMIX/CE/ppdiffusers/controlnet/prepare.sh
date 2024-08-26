@@ -6,7 +6,7 @@ rm -rf fill50k.zip
 
 pip install -r requirements.txt
 
-bash change_paddlenlp_version.sh
+bash ${root_path}/PaddleMIX/change_paddlenlp_version.sh
 
 
 export http_proxy=${proxy}

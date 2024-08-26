@@ -3,10 +3,13 @@
 exit_code=0
 
 log_dir=${root_path}/log
+# 用于切换nlp的版本 
+nlp_path=${root_path}/PaddleMIX
 
 work_path=$(pwd)
 echo ${work_path}
 
+cp change_paddlenlp_version.sh ${root_path}/PaddleMIX
 bash prepare.sh
 
 cd ${work_path}

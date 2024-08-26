@@ -25,7 +25,7 @@ pip install fastdeploy-gpu-python -f https://www.paddlepaddle.org.cn/whl/fastdep
 pip install pytest-xdist
 pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu
 
-bash change_paddlenlp_version.sh
+bash ${root_path}/PaddleMIX/change_paddlenlp_version.sh
 
 export http_proxy=${mix_proxy}
 export https_proxy=${mix_proxy}

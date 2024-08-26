@@ -11,4 +11,4 @@ cd ${work_path}
 pip install -e .
 
 
-bash change_paddlenlp_version.sh
+bash ${root_path}/PaddleMIX/change_paddlenlp_version.sh

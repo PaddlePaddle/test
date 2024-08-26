@@ -4,7 +4,7 @@ echo "*******prepare begin***********"
 # export http_proxy=${proxy}
 # export https_proxy=${proxy}
 pip install -r requirements.txt
-bash change_paddlenlp_version.sh
+bash ${root_path}/PaddleMIX/change_paddlenlp_version.sh
 
 
 # unset http_proxy

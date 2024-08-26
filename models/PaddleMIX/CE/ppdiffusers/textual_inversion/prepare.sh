@@ -1,5 +1,5 @@
 #!/bin/bash
-bash change_paddlenlp_version.sh
+bash ${root_path}/PaddleMIX/change_paddlenlp_version.sh
 
 wget https://paddle-qa.bj.bcebos.com/PaddleMIX/cat_toy_images.tar.gz
 tar -zxvf cat_toy_images.tar.gz

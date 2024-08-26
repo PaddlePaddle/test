@@ -1,5 +1,5 @@
 #!/bin/bash
-bash change_paddlenlp_version.sh
+bash ${root_path}/PaddleMIX/change_paddlenlp_version.sh
 
 
 wget https://paddlenlp.bj.bcebos.com/models/community/junnyu/develop/dogs.tar.gz
