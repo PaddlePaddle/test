@@ -246,8 +246,8 @@ class LayerTest(object):
 
 if __name__ == "__main__":
     # # 精度调试逻辑
-    # layerfile = "./layerTorchcase/demo/SIR_101.py"
-    # testing = "yaml/dy_eval.yml"
+    # layerfile = "./layerModelcase/Ocr_cases/backbones/rec_MobileNetV3.py"
+    # testing = "yaml/dy^dy_train^export_st_inputspec^ppinfer_new_exc_pir.yml"
     # single_test = LayerTest(title="lzy_naive", layerfile=layerfile, testing=testing)
     # single_test._case_run()
 

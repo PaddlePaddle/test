@@ -9,6 +9,7 @@ export PLT_SET_DEVICE="${PLT_SET_DEVICE:-gpu}"
 export PLT_DEVICE_ID="${PLT_DEVICE_ID:-6}"
 export CUDA_VISIBLE_DEVICES="${PLT_DEVICE_ID:-6}"
 export FRAMEWORK="${FRAMEWORK:-paddle}"
+export USE_PADDLE_MODEL="${USE_PADDLE_MODEL:-None}"  # 设定是否使用paddle模型库, 可选PaddleOCR
 export MULTI_WORKER="${MULTI_WORKER:-0}"
 export MULTI_DOUBLE_CHECK="${MULTI_DOUBLE_CHECK:-True}"
 

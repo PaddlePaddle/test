@@ -12,6 +12,10 @@ if os.environ.get("FRAMEWORK") == "paddle":
     import diy
     import layerApicase
     import layercase
+
+    if os.environ.get("USE_PADDLE_MODEL", "None") == "PaddleOCR":
+        import layerModelcase
+        import PaddleOCR
 elif os.environ.get("FRAMEWORK") == "torch":
     import torch
     import layerTorchcase

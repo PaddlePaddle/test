@@ -11,6 +11,7 @@ on:
 jobs:
   paddleqa-checkout:
     if: ${{ !github.event.repository.fork }}
+    environment: CodeSync
     runs-on: ubuntu-latest
     name: Repo Checkout and Upload
     strategy:

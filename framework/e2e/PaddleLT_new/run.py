@@ -68,6 +68,14 @@ class Run(object):
 
             self.logger.get_log().info(f"Paddle框架commit: {paddle.__git_commit__}, 版本: {paddle.__version__}")
 
+            if os.environ.get("USE_PADDLE_MODEL", "None") == "PaddleOCR":
+                os.system(
+                    "wget -q https://xly-devops.bj.bcebos.com/PaddleTest/PaddleOCR/PaddleOCR.tar.gz --no-proxy "
+                    "&& tar -xzf PaddleOCR.tar.gz && rm -rf PaddleOCR.tar.gz "
+                    "&& cd PaddleOCR && git rev-parse HEAD && git branch "
+                    f"&& {self.py_cmd} -m pip install -r requirements.txt && {self.py_cmd} setup.py install"
+                )
+
         # 下载ground truth用于跨硬件测试
         plt_gt_download_url = os.environ.get("PLT_GT_DOWNLOAD_URL")
         if not plt_gt_download_url == "None" and os.environ.get("TESTING_MODE") == "precision":
