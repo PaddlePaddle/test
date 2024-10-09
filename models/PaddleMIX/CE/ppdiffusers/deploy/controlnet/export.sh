@@ -7,7 +7,7 @@ export USE_PPXFORMERS=False
 (python export_model.py \
     --pretrained_model_name_or_path runwayml/stable-diffusion-v1-5 \
     --controlnet_pretrained_model_name_or_path lllyasviel/sd-controlnet-canny \
-    --output_path static_model/stable-diffusion-v1-5-canny) 2>&1 | tee ${log_dir}/deploy_controlnet_export_model.log
+    --output_path static_model/stable-diffusion-v1-5-canny --width 512 --height 512) 2>&1 | tee ${log_dir}/deploy_controlnet_export_model.log
 tmp_exit_code=${PIPESTATUS[0]}
 exit_code=$(($exit_code + ${tmp_exit_code}))
 if [ ${tmp_exit_code} -eq 0 ]; then
