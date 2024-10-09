@@ -38,7 +38,7 @@ echo "*******ppdiffusers/deploy/svd svd_inference_text2video end***********"
     --task_name all \
     --width 256 \
     --height 256 \
-    --inference_steps 50 \
+    --inference_steps 5 \
     --tune True \
     --use_fp16 False) 2>&1 | tee ${log_dir}/svd_inference_tune.log
 tmp_exit_code=${PIPESTATUS[0]}

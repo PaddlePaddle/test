@@ -67,7 +67,7 @@ echo "*******ppdiffusers/deploy/sdxl sdxl_inference_inpaint end***********"
     --task_name all \
     --width 512 \
     --height 512 \
-    --inference_steps 50 \
+    --inference_steps 5 \
     --tune True \
     --use_fp16 False) 2>&1 | tee ${log_dir}/sdxl_inference_tune.log
 tmp_exit_code=${PIPESTATUS[0]}
