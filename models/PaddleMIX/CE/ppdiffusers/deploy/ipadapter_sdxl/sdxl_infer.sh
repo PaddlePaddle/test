@@ -84,6 +84,9 @@ echo "*******ppdiffusers/deploy/sdxl ipadapter_sdxl_inference_tune end**********
     --model_dir static_model/stable-diffusion-xl-base-1.0-ipadapter \
     --scheduler "ddim" \
     --backend paddle_tensorrt \
+    --width 512 \
+    --height 512 \
+    --inference_steps 50 \
     --device gpu --task_name text2img) 2>&1 | tee ${log_dir}/ipadapter_sdxl_inference_tensorrt_text2img.log
 tmp_exit_code=${PIPESTATUS[0]}
 exit_code=$(($exit_code + ${tmp_exit_code}))
@@ -96,10 +99,13 @@ echo "*******ppdiffusers/deploy/sdxl ipadapter_sdxl_inference_tensorrt_text2img 
 
 # img2img
 (python infer.py \
-    --model_dir static_model/stable-diffusion-xl-base-1.0-ipadapter/ \
+    --model_dir static_model/stable-diffusion-xl-base-1.0-ipadapter \
     --scheduler "ddim" \
     --backend paddle_tensorrt \
     --device gpu \
+    --width 512 \
+    --height 512 \
+    --inference_steps 50 \
     --task_name img2img) 2>&1 | tee ${log_dir}/ipadapter_sdxl_inference_tensorrt_img2img.log
 tmp_exit_code=${PIPESTATUS[0]}
 exit_code=$(($exit_code + ${tmp_exit_code}))
@@ -116,6 +122,9 @@ echo "*******ppdiffusers/deploy/sdxl ipadapter_sdxl_inference_tensorrt_img2img e
     --scheduler "ddim" \
     --backend paddle_tensorrt \
     --device gpu \
+    --width 512 \
+    --height 512 \
+    --inference_steps 50 \
     --task_name inpaint) 2>&1 | tee ${log_dir}/ipadapter_sdxl_inference_tensorrt_inpaint.log
 tmp_exit_code=${PIPESTATUS[0]}
 exit_code=$(($exit_code + ${tmp_exit_code}))

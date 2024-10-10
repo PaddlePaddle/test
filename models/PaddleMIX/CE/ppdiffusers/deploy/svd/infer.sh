@@ -55,9 +55,10 @@ echo "*******ppdiffusers/deploy/svd svd_inference_tune end***********"
     --model_dir static_model/stable-video-diffusion-img2vid-xt \
     --scheduler "euler" \
     --backend paddle_tensorrt \
+    --device gpu \
     --width 256 \
     --height 256 \
-    --device gpu \
+    --inference_steps 25 \
     --task_name img2video) 2>&1 | tee ${log_dir}/svd_inference_tensorrt_text2video.log
 tmp_exit_code=${PIPESTATUS[0]}
 exit_code=$(($exit_code + ${tmp_exit_code}))

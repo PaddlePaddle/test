@@ -85,6 +85,9 @@ echo "*******ppdiffusers/deploy/sd15 ipadapter_sd15_inference_tune end**********
     --scheduler "ddim" \
     --backend paddle_tensorrt \
     --device gpu \
+    --width 512 \
+    --height 512 \
+    --inference_steps 50 \
     --task_name text2img) 2>&1 | tee ${log_dir}/ipadapter_sd15_inference_tensorrt_text2img.log
 tmp_exit_code=${PIPESTATUS[0]}
 exit_code=$(($exit_code + ${tmp_exit_code}))
@@ -101,6 +104,9 @@ echo "*******ppdiffusers/deploy/sd15 ipadapter_sd15_inference_tensorrt_text2img 
     --scheduler "ddim" \
     --backend paddle_tensorrt \
     --device gpu \
+    --width 512 \
+    --height 512 \
+    --inference_steps 50 \
     --task_name img2img) 2>&1 | tee ${log_dir}/ipadapter_sd15_inference_tensorrt_img2img.log
 tmp_exit_code=${PIPESTATUS[0]}
 exit_code=$(($exit_code + ${tmp_exit_code}))
@@ -117,6 +123,9 @@ echo "*******ppdiffusers/deploy/sd15 ipadapter_sd15_inference_tensorrt_img2img e
     --scheduler "ddim" \
     --backend paddle_tensorrt \
     --device gpu \
+    --width 512 \
+    --height 512 \
+    --inference_steps 50 \
     --task_name inpaint_legacy) 2>&1 | tee ${log_dir}/ipadapter_sd15_inference_tensorrt_inpaint.log
 tmp_exit_code=${PIPESTATUS[0]}
 exit_code=$(($exit_code + ${tmp_exit_code}))
