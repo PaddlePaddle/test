@@ -8,7 +8,13 @@ fi
 
 export FLAGS_use_cuda_managed_memory=true
 export USE_PPXFORMERS=False
+export CUDA_VISIBLE_DEVICES=5
 
+export FLAGS_allocator_strategy=auto_growth
+
+export FLAGS_embedding_deterministic=1
+
+export FLAGS_cudnn_deterministic=1
 # text2img
 (python infer.py \
     --model_dir static_model/stable-diffusion-xl-base-1.0-ipadapter \
