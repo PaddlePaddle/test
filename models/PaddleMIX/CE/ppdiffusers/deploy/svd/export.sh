@@ -8,7 +8,14 @@ fi
 
 export FLAGS_use_cuda_managed_memory=true
 export USE_PPXFORMERS=False
+export USE_PPXFORMERS=False
+export CUDA_VISIBLE_DEVICES=5
 
+export FLAGS_allocator_strategy=auto_growth
+
+export FLAGS_embedding_deterministic=1
+
+export FLAGS_cudnn_deterministic=1
 (python export_model.py \
     --pretrained_model_name_or_path stabilityai/stable-video-diffusion-img2vid-xt \
     --output_path static_model/stable-video-diffusion-img2vid-xt) 2>&1 | tee ${log_dir}/deploy_svd_export_model.log
