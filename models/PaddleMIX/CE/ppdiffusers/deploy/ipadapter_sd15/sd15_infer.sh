@@ -19,11 +19,11 @@ export USE_PPXFORMERS=False
 tmp_exit_code=${PIPESTATUS[0]}
 exit_code=$(($exit_code + ${tmp_exit_code}))
 if [ ${tmp_exit_code} -eq 0 ]; then
-    echo "ppdiffusers/deploy/sd15 ipadapter_sd15_inference_text2img success" >>"${log_dir}/ce_res.log"
+    echo "ppdiffusers/deploy/ipadapter_sd15 ipadapter_sd15_inference_text2img success" >>"${log_dir}/ce_res.log"
 else
-    echo "ppdiffusers/deploy/sd15 ipadapter_sd15_inference_text2img fail" >>"${log_dir}/ce_res.log"
+    echo "ppdiffusers/deploy/ipadapter_sd15 ipadapter_sd15_inference_text2img fail" >>"${log_dir}/ce_res.log"
 fi
-echo "*******ppdiffusers/deploy/sd15 ipadapter_sd15_inference_text2img end***********"
+echo "*******ppdiffusers/deploy/ipadapter_sd15 ipadapter_sd15_inference_text2img end***********"
 
 # img2img
 (python infer.py \
@@ -35,11 +35,11 @@ echo "*******ppdiffusers/deploy/sd15 ipadapter_sd15_inference_text2img end******
 tmp_exit_code=${PIPESTATUS[0]}
 exit_code=$(($exit_code + ${tmp_exit_code}))
 if [ ${tmp_exit_code} -eq 0 ]; then
-    echo "ppdiffusers/deploy/sd15 ipadapter_sd15_inference_img2img success" >>"${log_dir}/ce_res.log"
+    echo "ppdiffusers/deploy/ipadapter_sd15 ipadapter_sd15_inference_img2img success" >>"${log_dir}/ce_res.log"
 else
-    echo "ppdiffusers/deploy/sd15 ipadapter_sd15_inference_img2img fail" >>"${log_dir}/ce_res.log"
+    echo "ppdiffusers/deploy/ipadapter_sd15 ipadapter_sd15_inference_img2img fail" >>"${log_dir}/ce_res.log"
 fi
-echo "*******ppdiffusers/deploy/sd15 ipadapter_sd15_inference_img2img end***********"
+echo "*******ppdiffusers/deploy/ipadapter_sd15 ipadapter_sd15_inference_img2img end***********"
 
 # inpaint
 (python infer.py \
@@ -51,11 +51,11 @@ echo "*******ppdiffusers/deploy/sd15 ipadapter_sd15_inference_img2img end*******
 tmp_exit_code=${PIPESTATUS[0]}
 exit_code=$(($exit_code + ${tmp_exit_code}))
 if [ ${tmp_exit_code} -eq 0 ]; then
-    echo "ppdiffusers/deploy/sd15 ipadapter_sd15_inference_inpaint success" >>"${log_dir}/ce_res.log"
+    echo "ppdiffusers/deploy/ipadapter_sd15 ipadapter_sd15_inference_inpaint success" >>"${log_dir}/ce_res.log"
 else
-    echo "ppdiffusers/deploy/sd15 ipadapter_sd15_inference_inpaint fail" >>"${log_dir}/ce_res.log"
+    echo "ppdiffusers/deploy/ipadapter_sd15 ipadapter_sd15_inference_inpaint fail" >>"${log_dir}/ce_res.log"
 fi
-echo "*******ppdiffusers/deploy/sd15 ipadapter_sd15_inference_inpaint end***********"
+echo "*******ppdiffusers/deploy/ipadapter_sd15 ipadapter_sd15_inference_inpaint end***********"
 
 # tensorrt
 # tune
@@ -73,11 +73,11 @@ echo "*******ppdiffusers/deploy/sd15 ipadapter_sd15_inference_inpaint end*******
 tmp_exit_code=${PIPESTATUS[0]}
 exit_code=$(($exit_code + ${tmp_exit_code}))
 if [ ${tmp_exit_code} -eq 0 ]; then
-    echo "ppdiffusers/deploy/sd15 ipadapter_sd15_inference_tune success" >>"${log_dir}/ce_res.log"
+    echo "ppdiffusers/deploy/ipadapter_sd15 ipadapter_sd15_inference_tune success" >>"${log_dir}/ce_res.log"
 else
-    echo "ppdiffusers/deploy/sd15 ipadapter_sd15_inference_tune fail" >>"${log_dir}/ce_res.log"
+    echo "ppdiffusers/deploy/ipadapter_sd15 ipadapter_sd15_inference_tune fail" >>"${log_dir}/ce_res.log"
 fi
-echo "*******ppdiffusers/deploy/sd15 ipadapter_sd15_inference_tune end***********"
+echo "*******ppdiffusers/deploy/ipadapter_sd15 ipadapter_sd15_inference_tune end***********"
 
 # text2img
 (python infer.py \
@@ -92,11 +92,11 @@ echo "*******ppdiffusers/deploy/sd15 ipadapter_sd15_inference_tune end**********
 tmp_exit_code=${PIPESTATUS[0]}
 exit_code=$(($exit_code + ${tmp_exit_code}))
 if [ ${tmp_exit_code} -eq 0 ]; then
-    echo "ppdiffusers/deploy/sd15 ipadapter_sd15_inference_tensorrt_text2img success" >>"${log_dir}/ce_res.log"
+    echo "ppdiffusers/deploy/ipadapter_sd15 ipadapter_sd15_inference_tensorrt_text2img success" >>"${log_dir}/ce_res.log"
 else
-    echo "ppdiffusers/deploy/sd15 ipadapter_sd15_inference_tensorrt_text2img fail" >>"${log_dir}/ce_res.log"
+    echo "ppdiffusers/deploy/ipadapter_sd15 ipadapter_sd15_inference_tensorrt_text2img fail" >>"${log_dir}/ce_res.log"
 fi
-echo "*******ppdiffusers/deploy/sd15 ipadapter_sd15_inference_tensorrt_text2img end***********"
+echo "*******ppdiffusers/deploy/ipadapter_sd15 ipadapter_sd15_inference_tensorrt_text2img end***********"
 
 # img2img
 (python infer.py \
@@ -111,11 +111,11 @@ echo "*******ppdiffusers/deploy/sd15 ipadapter_sd15_inference_tensorrt_text2img 
 tmp_exit_code=${PIPESTATUS[0]}
 exit_code=$(($exit_code + ${tmp_exit_code}))
 if [ ${tmp_exit_code} -eq 0 ]; then
-    echo "ppdiffusers/deploy/sd15 ipadapter_sd15_inference_tensorrt_img2img success" >>"${log_dir}/ce_res.log"
+    echo "ppdiffusers/deploy/ipadapter_sd15 ipadapter_sd15_inference_tensorrt_img2img success" >>"${log_dir}/ce_res.log"
 else
-    echo "ppdiffusers/deploy/sd15 ipadapter_sd15_inference_tensorrt_img2img fail" >>"${log_dir}/ce_res.log"
+    echo "ppdiffusers/deploy/ipadapter_sd15 ipadapter_sd15_inference_tensorrt_img2img fail" >>"${log_dir}/ce_res.log"
 fi
-echo "*******ppdiffusers/deploy/sd15 ipadapter_sd15_inference_tensorrt_img2img end***********"
+echo "*******ppdiffusers/deploy/ipadapter_sd15 ipadapter_sd15_inference_tensorrt_img2img end***********"
 
 # inpaint
 (python infer.py \
@@ -130,11 +130,11 @@ echo "*******ppdiffusers/deploy/sd15 ipadapter_sd15_inference_tensorrt_img2img e
 tmp_exit_code=${PIPESTATUS[0]}
 exit_code=$(($exit_code + ${tmp_exit_code}))
 if [ ${tmp_exit_code} -eq 0 ]; then
-    echo "ppdiffusers/deploy/sd15 ipadapter_sd15_inference_tensorrt_inpaint success" >>"${log_dir}/ce_res.log"
+    echo "ppdiffusers/deploy/ipadapter_sd15 ipadapter_sd15_inference_tensorrt_inpaint success" >>"${log_dir}/ce_res.log"
 else
-    echo "ppdiffusers/deploy/sd15 ipadapter_sd15_inference_tensorrt_inpaint fail" >>"${log_dir}/ce_res.log"
+    echo "ppdiffusers/deploy/ipadapter_sd15 ipadapter_sd15_inference_tensorrt_inpaint fail" >>"${log_dir}/ce_res.log"
 fi
-echo "*******ppdiffusers/deploy/sd15 ipadapter_sd15_inference_tensorrt_inpaint end***********"
+echo "*******ppdiffusers/deploy/ipadapter_sd15 ipadapter_sd15_inference_tensorrt_inpaint end***********"
 
 echo exit_code:${exit_code}
 exit ${exit_code}
