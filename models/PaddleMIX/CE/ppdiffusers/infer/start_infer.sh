@@ -27,6 +27,7 @@ bash ${root_path}/PaddleMIX/change_paddlenlp_version.sh
 
 pip install pytest safetensors ftfy fastcore opencv-python einops parameterized requests-mock
 pip install ligo-segments
+pip install fastdeploy-gpu-python -f https://www.paddlepaddle.org.cn/whl/fastdeploy.html
 
 cd ${work_path}
 exit_code=0
@@ -162,6 +163,17 @@ else
 fi
 echo "*******infer image_to_image_text_guided_generation-stable_diffusion_2 end***********"
 
+echo "*******infer image_to_image_text_guided_generation-stable_diffusion_3 begin***********"
+(python image_to_image_text_guided_generation-stable_diffusion_3.py) 2>&1 | tee ${log_dir}/image_to_image_text_guided_generation-stable_diffusion_3.log
+tmp_exit_code=${PIPESTATUS[0]}
+exit_code=$(($exit_code + ${tmp_exit_code}))
+if [ ${tmp_exit_code} -eq 0 ]; then
+    echo "infer image_to_image_text_guided_generation-stable_diffusion_3 run success" >>"${log_dir}/infer_res.log"
+else
+    echo "infer image_to_image_text_guided_generation-stable_diffusion_3 run fail" >>"${log_dir}/infer_res.log"
+fi
+echo "*******infer image_to_image_text_guided_generation-stable_diffusion_3 end***********"
+
 
 echo "*******infer image_to_image_text_guided_generation-stable_diffusion_controlnet begin***********"
 (python image_to_image_text_guided_generation-stable_diffusion_controlnet.py) 2>&1 | tee ${log_dir}/image_to_image_text_guided_generation-stable_diffusion_controlnet.log
@@ -257,6 +269,19 @@ else
     echo "infer instruct_pix2pix-stable_diffusion_xl run fail" >>"${log_dir}/infer_res.log"
 fi
 echo "*******infer instruct_pix2pix-stable_diffusion_xl end***********"
+
+
+
+echo "*******infer sd15_infer_demo begin***********"
+(python sd15_infer_demo.py) 2>&1 | tee ${log_dir}/sd15_infer_demo.log
+tmp_exit_code=${PIPESTATUS[0]}
+exit_code=$(($exit_code + ${tmp_exit_code}))
+if [ ${tmp_exit_code} -eq 0 ]; then
+    echo "infer sd15_infer_demo run success" >>"${log_dir}/infer_res.log"
+else
+    echo "infer sd15_infer_demo run fail" >>"${log_dir}/infer_res.log"
+fi
+echo "*******infer sd15_infer_demo end***********"
 
 
 echo "*******infer super_resolution-latent_diffusion begin***********"
@@ -545,6 +570,18 @@ else
     echo "infer text_to_image_generation-stable_diffusion_2 run fail" >>"${log_dir}/infer_res.log"
 fi
 echo "*******infer text_to_image_generation-stable_diffusion_2 end***********"
+
+
+echo "*******infer text_to_image_generation-stable_diffusion_3 begin***********"
+(python text_to_image_generation-stable_diffusion_3.py) 2>&1 | tee ${log_dir}/text_to_image_generation-stable_diffusion_3.log
+tmp_exit_code=${PIPESTATUS[0]}
+exit_code=$(($exit_code + ${tmp_exit_code}))
+if [ ${tmp_exit_code} -eq 0 ]; then
+    echo "infer text_to_image_generation-stable_diffusion_3 run success" >>"${log_dir}/infer_res.log"
+else
+    echo "infer text_to_image_generation-stable_diffusion_3 run fail" >>"${log_dir}/infer_res.log"
+fi
+echo "*******infer text_to_image_generation-stable_diffusion_3 end***********"
 
 
 echo "*******infer text_to_image_generation-stable_diffusion_controlnet begin***********"
@@ -975,7 +1012,16 @@ else
 fi
 echo "*******infer text_to_image_generation_kandinsky3 end***********"
 
-
+echo "*******infer text_to_image_generation_largedit_3b begin***********"
+(python text_to_image_generation_largedit_3b.py) 2>&1 | tee ${log_dir}/text_to_image_generation_largedit_3b.log
+tmp_exit_code=${PIPESTATUS[0]}
+exit_code=$(($exit_code + ${tmp_exit_code}))
+if [ ${tmp_exit_code} -eq 0 ]; then
+    echo "infer text_to_image_generation_largedit_3b run success" >>"${log_dir}/infer_res.log"
+else
+    echo "infer text_to_image_generation_largedit_3b run fail" >>"${log_dir}/infer_res.log"
+fi
+echo "*******infer text_to_image_generation_largedit_3b end***********"
 
 echo "*******infer text_to_image_generation_wuerstchen begin***********"
 (python text_to_image_generation_wuerstchen.py) 2>&1 | tee ${log_dir}/text_to_image_generation_wuerstchen.log

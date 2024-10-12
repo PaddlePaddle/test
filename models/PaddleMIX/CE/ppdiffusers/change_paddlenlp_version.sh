@@ -4,13 +4,12 @@
 
 #pip install paddlenlp==3.0.0b0
 
-#pip install paddlenlp==3.0.0b1
-
+pip install paddlenlp==v3.0.0-beta2 
 # 尝试切换到develop的部分
 
 
-nlp_path=${root_path}/PaddleMIX/PaddleNLP/
-pushd ${nlp_path} || exit
-pip install -e .
-popd
+# nlp_path=${root_path}/PaddleMIX/PaddleNLP/
+# pushd ${nlp_path} || exit
+# pip install -e .
+# popd
 
