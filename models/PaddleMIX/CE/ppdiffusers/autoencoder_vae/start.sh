@@ -68,6 +68,30 @@ else
 fi
 echo "*******autoencoder_vae multi infer end***********"
 
+#Encoder和Decoder从零开启训练
+echo "*******autoencoder_vae singe_train_from_zero begin***********"
+(bash single_train_from_zero.sh) 2>&1 | tee ${log_dir}/autoencoder_vae_single_train_zero.log
+tmp_exit_code=${PIPESTATUS[0]}
+exit_code=$(($exit_code + ${tmp_exit_code}))
+if [ ${tmp_exit_code} -eq 0 ]; then
+    echo "autoencoder_vae single_train_zero run success" >>"${log_dir}/ce_res.log"
+else
+    echo "autoencoder_vae single_train_zero run fail" >>"${log_dir}/ce_res.log"
+fi
+echo "*******autoencoder_vae single_train_zero end***********"
+
+#Encoder和Decoder从零开启训练
+echo "*******autoencoder_vae multi_train_from_zero begin***********"
+(bash multi_train_from_zero.sh) 2>&1 | tee ${log_dir}/autoencoder_vae_multi_train_zero.log
+tmp_exit_code=${PIPESTATUS[0]}
+exit_code=$(($exit_code + ${tmp_exit_code}))
+if [ ${tmp_exit_code} -eq 0 ]; then
+    echo "autoencoder_vae multi_train_zero run success" >>"${log_dir}/ce_res.log"
+else
+    echo "autoencoder_vae multi_train_zero run fail" >>"${log_dir}/ce_res.log"
+fi
+echo "*******autoencoder_vae multi_train_zero end***********"
+
 # # 查看结果
 # cat ${log_dir}/ce_res.log
 rm -rf ${work_path}/autoencoder_outputs/*
