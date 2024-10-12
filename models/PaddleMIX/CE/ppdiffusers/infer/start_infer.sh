@@ -989,18 +989,6 @@ fi
 echo "*******infer text_to_image_generation_consistency_model end***********"
 
 
-echo "*******infer text_to_image_generation_dit begin***********"
-(python text_to_image_generation_dit.py) 2>&1 | tee ${log_dir}/text_to_image_generation_dit.log
-tmp_exit_code=${PIPESTATUS[0]}
-exit_code=$(($exit_code + ${tmp_exit_code}))
-if [ ${tmp_exit_code} -eq 0 ]; then
-    echo "infer text_to_image_generation_dit run success" >>"${log_dir}/infer_res.log"
-else
-    echo "infer text_to_image_generation_dit run fail" >>"${log_dir}/infer_res.log"
-fi
-echo "*******infer text_to_image_generation_dit end***********"
-
-
 echo "*******infer text_to_image_generation_kandinsky3 begin***********"
 (python text_to_image_generation_kandinsky3.py) 2>&1 | tee ${log_dir}/text_to_image_generation_kandinsky3.log
 tmp_exit_code=${PIPESTATUS[0]}
