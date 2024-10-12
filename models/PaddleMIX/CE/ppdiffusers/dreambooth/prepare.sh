@@ -1,4 +1,5 @@
 #!/bin/bash
+pip install visualdl
 bash ${root_path}/PaddleMIX/change_paddlenlp_version.sh
 
 

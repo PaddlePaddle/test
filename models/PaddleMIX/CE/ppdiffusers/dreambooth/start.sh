@@ -90,6 +90,30 @@ else
 fi
 echo "*******dreambooth infer_with_class end***********"
 
+# lora train
+echo "*******dreambooth lora_train begin***********"
+(bash lora_train.sh ) 2>&1 | tee ${log_dir}/dreambooth_lora_train.log
+tmp_exit_code=${PIPESTATUS[0]}
+exit_code=$(($exit_code + ${tmp_exit_code}))
+if [ ${tmp_exit_code} -eq 0 ]; then
+    echo "dreambooth lora_train success" >>"${log_dir}/ce_res.log"
+else
+    echo "dreambooth lora_train fail" >>"${log_dir}/ce_res.log"
+fi
+echo "*******dreambooth lora_train end***********"
+
+# lora train
+echo "*******dreambooth lora_infer begin***********"
+(python lora_infer.py) 2>&1 | tee ${log_dir}/dreambooth_lora_infer.log
+tmp_exit_code=${PIPESTATUS[0]}
+exit_code=$(($exit_code + ${tmp_exit_code}))
+if [ ${tmp_exit_code} -eq 0 ]; then
+    echo "dreambooth lora_infer success" >>"${log_dir}/ce_res.log"
+else
+    echo "dreambooth lora_infer fail" >>"${log_dir}/ce_res.log"
+fi
+echo "*******dreambooth lora_lora_infer  end***********"
+
 # # 查看结果
 # cat ${log_dir}/ce_res.log
 rm -rf ${work_path}/dream_outputs/*
