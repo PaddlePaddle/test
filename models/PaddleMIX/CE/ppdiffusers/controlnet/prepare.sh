@@ -5,7 +5,7 @@ unzip -o fill50k.zip
 rm -rf fill50k.zip
 
 pip install -r requirements.txt
-
+pip install gradio
 bash ${root_path}/PaddleMIX/change_paddlenlp_version.sh
 
 
