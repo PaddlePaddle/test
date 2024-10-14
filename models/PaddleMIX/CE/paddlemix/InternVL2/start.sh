@@ -18,22 +18,7 @@ cp ../change_paddlenlp_version.sh ${work_path}
 cd ${work_path}
 exit_code=0
 
-python -m pip install --upgrade pip
-pip install -r requirements.txt
-pip install -e .
-pip install pytest safetensors ftfy fastcore opencv-python einops parameterized requests-mock
-pip install fastdeploy-gpu-python -f https://www.paddlepaddle.org.cn/whl/fastdeploy.html
-pip install pytest-xdist
-pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu
-pip install regex einops
-cd ${work_path}/paddlemix/appflow
-pip install -r requirements.txt
 
-cd ${work_path}/ppdiffusers
-pip install -e .
-
-cd ${work_path}
-bash change_paddlenlp_version.sh
 
 export http_proxy=${mix_proxy}
 export https_proxy=${mix_proxy}
