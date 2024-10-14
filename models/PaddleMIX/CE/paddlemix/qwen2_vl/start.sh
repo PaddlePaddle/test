@@ -91,6 +91,7 @@ unset https_proxy
 
 # # 查看结果
 cat ${log_dir}/ut_res.log
-
+python -m pip install paddlepaddle-gpu==3.0.0b1 -i https://www.paddlepaddle.org.cn/packages/stable/cu118/
 echo exit_code:${exit_code}
 exit ${exit_code}
+
