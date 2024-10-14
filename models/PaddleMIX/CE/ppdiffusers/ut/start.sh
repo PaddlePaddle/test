@@ -24,7 +24,7 @@ pip install pytest safetensors ftfy fastcore opencv-python einops parameterized 
 pip install fastdeploy-gpu-python -f https://www.paddlepaddle.org.cn/whl/fastdeploy.html
 pip install pytest-xdist
 pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu
-
+pip install transformers diffusers
 bash ${root_path}/PaddleMIX/change_paddlenlp_version.sh
 
 export http_proxy=${mix_proxy}
