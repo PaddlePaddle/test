@@ -1,0 +1,25 @@
+[
+    {
+        "image": "http://ecx.images-amazon.com/images/I/51ntbts0gmL.jpg",
+        "conversations": [
+            [
+                "<image>\nWhat is the genre of this book?",
+                "Literature & Fiction"
+            ],
+            [
+                "What is the color of this book?",
+                "Red and black"
+            ]
+
+        ]
+    },
+    {
+        "image": "http://ecx.images-amazon.com/images/I/51cc3XrLevL.jpg",
+        "conversations": [
+            [
+                "<image>\nWhat is the title of this book?",
+                "Beyond Bigger Leaner Stronger: The Advanced Guide to Building Muscle, Staying Lean, and Getting Strong (The Build Muscle, Get Lean, and Stay Healthy Series)"
+            ]
+        ]
+    }
+]
