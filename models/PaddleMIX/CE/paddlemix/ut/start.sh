@@ -25,8 +25,12 @@ pip install fastdeploy-gpu-python -f https://www.paddlepaddle.org.cn/whl/fastdep
 pip install pytest-xdist
 pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu
 
+cd ${work_path}/ppdiffusers
+pip install -e .
+
 bash ${root_path}/PaddleMIX/change_paddlenlp_version.sh
 
+cd ${work_path}
 export http_proxy=${mix_proxy}
 export https_proxy=${mix_proxy}
 # rm -rf tests/pipelines/test_pipelines.py
@@ -39,7 +43,7 @@ export no_proxy=baidu.com,127.0.0.1,0.0.0.0,localhost,bcebos.com,pip.baidu-int.c
 export USE_PPXFORMERS=True
 export RUN_SLOW=True
 echo "*******paddlemix ut appflow begin begin***********"
-(python -m pytest -v tests/appflow) 2>&1 | tee ${log_dir}/tests_ut.log
+(python -m pytest -v tests/appflow) 2>&1 | tee ${log_dir}/tests_ut_appflow.log
 tmp_exit_code=${PIPESTATUS[0]}
 exit_code=$(($exit_code + ${tmp_exit_code}))
 if [ ${tmp_exit_code} -eq 0 ]; then
@@ -50,7 +54,7 @@ fi
 echo "*******paddlemix ut appflow end***********"
 
 echo "*******paddlemix ut models begin***********"
-(python -m pytest -v tests/appflow) 2>&1 | tee ${log_dir}/tests_ut.log
+(python -m pytest -v tests/appflow) 2>&1 | tee ${log_dir}/tests_ut_models.log
 tmp_exit_code=${PIPESTATUS[0]}
 exit_code=$(($exit_code + ${tmp_exit_code}))
 if [ ${tmp_exit_code} -eq 0 ]; then
