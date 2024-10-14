@@ -1,5 +1,7 @@
-cp ../change_paddlenlp_version.sh ${work_path}
 
+cp ../change_paddlenlp_version.sh ${root_path}/PaddleMIX
+
+cd ${root_path}/PaddleMIX
 pip install -r requirements.txt
 pip install -e .
 
