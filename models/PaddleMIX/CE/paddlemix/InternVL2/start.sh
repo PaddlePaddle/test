@@ -1,0 +1,109 @@
+#!/bin/bash
+
+cur_path=$(pwd)
+echo ${cur_path}
+
+work_path=${root_path}/PaddleMIX
+echo ${work_path}
+
+log_dir=${root_path}/ut_log
+
+if [ ! -d "$log_dir" ]; then
+    mkdir -p "$log_dir"
+fi
+
+/bin/cp -rf ./* ${work_path}
+cp ../change_paddlenlp_version.sh ${work_path}
+
+cd ${work_path}
+exit_code=0
+
+python -m pip install --upgrade pip
+pip install -r requirements.txt
+pip install -e .
+pip install pytest safetensors ftfy fastcore opencv-python einops parameterized requests-mock
+pip install fastdeploy-gpu-python -f https://www.paddlepaddle.org.cn/whl/fastdeploy.html
+pip install pytest-xdist
+pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu
+pip install regex einops
+cd ${work_path}/paddlemix/appflow
+pip install -r requirements.txt
+
+cd ${work_path}/ppdiffusers
+pip install -e .
+
+cd ${work_path}
+bash change_paddlenlp_version.sh
+
+export http_proxy=${mix_proxy}
+export https_proxy=${mix_proxy}
+# rm -rf tests/pipelines/test_pipelines.py
+# rm -rf tests/pipelines/stable_diffusion/test_stable_diffusion_pix2pix_zero.py
+
+exit_code=0
+
+export HF_ENDPOINT=https://hf-mirror.com
+export no_proxy=baidu.com,127.0.0.1,0.0.0.0,localhost,bcebos.com,pip.baidu-int.com,mirrors.baidubce.com,repo.baidubce.com,repo.bcm.baidubce.com,pypi.tuna.tsinghua.edu.cn,aistudio.baidu.com
+export USE_PPXFORMERS=true
+
+cd ${work_path}/examples/internvl2
+# 准备图片做物料
+echo "*******paddlemix InternVL2_picture_infer begin begin***********"
+cp ${work_path}/paddlemix/demo_images/examples_image1.jpg .
+
+(python paddlemix/examples/internvl2/chat_demo.py \
+    --model_name_or_path "OpenGVLab/InternVL2-8B" \
+    --image_path 'examples_image1.jpg' \
+    --text "Please describe this image in detail.") 2>&1 | tee ${log_dir}/InternVL2_picture_infer.log
+tmp_exit_code=${PIPESTATUS[0]}
+exit_code=$(($exit_code + ${tmp_exit_code}))
+if [ ${tmp_exit_code} -eq 0 ]; then
+    echo "InternVL2_picture_infer run success" >>"${log_dir}/ut_res.log"
+else
+    echo "InternVL2_picture_infer run fail" >>"${log_dir}/ut_res.log"
+fi
+echo "*******paddlemix InternVL2_picture_infer end***********"
+
+
+echo "*******paddlemix InternVL2_video_infer begin begin***********"
+# 准备视频做物料
+cp ${work_path}/paddlemix/demo_images/red-panda.mp4 .
+
+(python paddlemix/examples/internvl2/chat_demo_video.py \
+    --model_name_or_path "OpenGVLab/InternVL2-8B" \
+    --video_path 'red-panda.mp4' \
+    --text "Please describe this video in detail.") 2>&1 | tee ${log_dir}/InternVL2_picture_infer.log
+tmp_exit_code=${PIPESTATUS[0]}
+exit_code=$(($exit_code + ${tmp_exit_code}))
+if [ ${tmp_exit_code} -eq 0 ]; then
+    echo "InternVL2_picture_infer run success" >>"${log_dir}/ut_res.log"
+else
+    echo "InternVL2_picture_infer run fail" >>"${log_dir}/ut_res.log"
+fi
+echo "*******paddlemix InternVL2_picture_infer end***********"
+
+
+echo "*******paddlemix InternVL2_train begin begin***********"
+# 只测2B模型即可 32G以下显存
+(sh paddlemix/examples/internvl2/shell/internvl2.0/2nd_finetune/internvl2_2b_internlm2_1_8b_dynamic_res_2nd_finetune_full.sh) 2>&1 | tee ${log_dir}/InternVL2_train.log
+tmp_exit_code=${PIPESTATUS[0]}
+exit_code=$(($exit_code + ${tmp_exit_code}))
+if [ ${tmp_exit_code} -eq 0 ]; then
+    echo "InternVL2_train run success" >>"${log_dir}/ut_res.log"
+else
+    echo "InternVL2_train run fail" >>"${log_dir}/ut_res.log"
+fi
+echo "*******paddlemix InternVL2_train end***********"
+
+
+
+unset http_proxy
+unset https_proxy
+
+rm -rf examples_image1.jpg
+rm -rf red-panda.mp4
+# # 查看结果
+cat ${log_dir}/ut_res.log
+
+echo exit_code:${exit_code}
+exit ${exit_code}
