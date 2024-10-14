@@ -13,7 +13,7 @@ if [ ! -d "$log_dir" ]; then
 fi
 
 /bin/cp -rf ./* ${work_path}
-cp ../chaneg_paddlenlp_version.sh ${root_path}/PaddleMIX
+cp ../change_paddlenlp_version.sh ${work_path}
 
 cd ${work_path}
 exit_code=0
