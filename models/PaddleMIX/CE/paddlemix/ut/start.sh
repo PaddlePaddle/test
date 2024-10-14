@@ -13,6 +13,7 @@ if [ ! -d "$log_dir" ]; then
 fi
 
 /bin/cp -rf ./* ${work_path}
+cp change_paddlenlp_version.sh ${root_path}/PaddleMIX
 
 cd ${work_path}
 exit_code=0
@@ -31,9 +32,9 @@ pip install -r requirements.txt
 cd ${work_path}/ppdiffusers
 pip install -e .
 
+cd ${work_path}
 bash ${root_path}/PaddleMIX/change_paddlenlp_version.sh
 
-cd ${work_path}
 export http_proxy=${mix_proxy}
 export https_proxy=${mix_proxy}
 # rm -rf tests/pipelines/test_pipelines.py
