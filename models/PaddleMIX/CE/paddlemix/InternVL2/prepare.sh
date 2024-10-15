@@ -1,5 +1,3 @@
-cp ../change_paddlenlp_version.sh ${work_path}
-
 pip install opencv-python
 pip install soundfile
 pip install decord
