@@ -12,6 +12,7 @@ if [ ! -d "$log_dir" ]; then
     mkdir -p "$log_dir"
 fi
 
+/bin/cp -rf ../change_paddlenlp_version.sh ${work_path}
 /bin/cp -rf ./* ${work_path}
 # cp ../change_paddlenlp_version.sh ${work_path}
 

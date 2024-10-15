@@ -12,17 +12,15 @@ if [ ! -d "$log_dir" ]; then
     mkdir -p "$log_dir"
 fi
 
+/bin/cp -rf ../change_paddlenlp_version.sh ${work_path}
+/bin/cp -rf ./* ${work_path}
 
 cd ${work_path}
-bash prepare.sh
 exit_code=0
 
 
 export http_proxy=${mix_proxy}
 export https_proxy=${mix_proxy}
-
-
-exit_code=0
 
 export HF_ENDPOINT=https://hf-mirror.com
 export no_proxy=baidu.com,127.0.0.1,0.0.0.0,localhost,bcebos.com,pip.baidu-int.com,mirrors.baidubce.com,repo.baidubce.com,repo.bcm.baidubce.com,pypi.tuna.tsinghua.edu.cn,aistudio.baidu.com
@@ -45,7 +43,7 @@ fi
 echo "*******paddlemix qwen2_vl_ops_install end***********"
 
 
-cd ${work_path}/examples/qwen2_vl
+cd ${work_path}
 
 
 echo "*******paddlemix qwen2_vl_infer begin begin***********"
