@@ -32,6 +32,7 @@ export no_proxy=baidu.com,127.0.0.1,0.0.0.0,localhost,bcebos.com,pip.baidu-int.c
 export USE_PPXFORMERS=true
 
 cd ${work_path}
+bash prepare.sh
 bash ./change_paddlenlp_version.sh
 # 准备图片做物料
 echo "*******paddlemix InternVL2_picture_infer begin begin***********"
