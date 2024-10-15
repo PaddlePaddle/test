@@ -14,11 +14,9 @@ fi
 
 
 cd ${work_path}
+bash prepare.sh
 exit_code=0
 
-
-cd ${work_path}
-bash change_paddlenlp_version.sh
 
 export http_proxy=${mix_proxy}
 export https_proxy=${mix_proxy}
