@@ -32,7 +32,6 @@ export HF_ENDPOINT=https://hf-mirror.com
 export no_proxy=baidu.com,127.0.0.1,0.0.0.0,localhost,bcebos.com,pip.baidu-int.com,mirrors.baidubce.com,repo.baidubce.com,repo.bcm.baidubce.com,pypi.tuna.tsinghua.edu.cn,aistudio.baidu.com
 export USE_PPXFORMERS=true
 
-cd ${work_path}
 bash prepare.sh
 # 准备图片做物料
 echo "*******paddlemix InternVL2_picture_infer begin begin***********"
