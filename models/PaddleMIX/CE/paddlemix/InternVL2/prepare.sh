@@ -1,6 +1,6 @@
 cp ../change_paddlenlp_version.sh ${work_path}
 
-pip install cv2
+pip install opencv-python
 pip install -r requirements.txt
 pip install -e .
 
