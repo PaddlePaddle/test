@@ -88,6 +88,7 @@ unset https_proxy
 
 rm -rf examples_image1.jpg
 rm -rf red-panda.mp4
+rm -rf playground
 # # 查看结果
 cat ${log_dir}/ut_res.log
 
