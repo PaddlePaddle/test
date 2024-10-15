@@ -1,5 +1,5 @@
 #!/bin/bash
-cd ${root_path}/ppdiffusers/
+cd ${root_path}/PaddleMIX/ppdiffusers/
 pip install -e .
 
 pip install visualdl
