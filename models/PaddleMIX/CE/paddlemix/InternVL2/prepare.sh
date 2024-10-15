@@ -2,6 +2,8 @@ pip install opencv-python
 pip install soundfile
 pip install decord
 
+mix_path=${root_path}/PaddeMIX
+cd ${mix_path}
 pip install -r requirements.txt
 pip install -e .
 
@@ -15,7 +17,7 @@ bash change_paddlenlp_version.sh
 
 
 # 数据集下载
-cd ${work_path}
+cd ${mix_path}
 rm -rf playground
 mkdir playground
 wget https://paddlenlp.bj.bcebos.com/datasets/paddlemix/playground/data.tar

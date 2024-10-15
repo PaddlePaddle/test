@@ -33,7 +33,6 @@ export USE_PPXFORMERS=true
 
 cd ${work_path}
 bash prepare.sh
-bash ./change_paddlenlp_version.sh
 # 准备图片做物料
 echo "*******paddlemix InternVL2_picture_infer begin begin***********"
 cp ${work_path}/paddlemix/demo_images/examples_image1.jpg .
@@ -89,7 +88,7 @@ unset https_proxy
 rm -rf examples_image1.jpg
 rm -rf red-panda.mp4
 rm -rf playground
-# # 查看结果
+# 查看结果
 cat ${log_dir}/ut_res.log
 
 echo exit_code:${exit_code}
