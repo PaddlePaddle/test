@@ -16,6 +16,7 @@ fi
 /bin/cp -rf ./* ${work_path}
 
 cd ${work_path}
+bash prepare.sh
 exit_code=0
 
 
