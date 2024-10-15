@@ -18,6 +18,13 @@ cd ${work_path}
 exit_code=0
 
 bash prepare.sh
+
+# 设置NPU环境变量
+export FLAGS_npu_storage_format=0
+export FLAGS_use_stride_kernel=0
+export FLAGS_npu_scale_aclnn=True
+export FLAGS_allocator_strategy=auto_growth
+
 # 单机训练
 echo "*******dreambooth train begin***********"
 (bash train.sh) 2>&1 | tee ${log_dir}/dreambooth_train.log

@@ -6,7 +6,7 @@ from ppdiffusers import (
 )
 import paddle
 
-transformer_path = "your-checkpoint/transformer"
+transformer_path = "trained-sd3/transformer"
 
 pipe = StableDiffusion3Pipeline.from_pretrained(
     "stabilityai/stable-diffusion-3-medium-diffusers", paddle_dtype=paddle.float16

@@ -3,7 +3,9 @@ cd ${root_path}/ppdiffusers/
 pip install -e .
 
 pip install visualdl
+cd examples/dreambooth
 pip install -r requirements_sd3.txt
+
 bash ${root_path}/PaddleMIX/change_paddlenlp_version.sh
 
 
