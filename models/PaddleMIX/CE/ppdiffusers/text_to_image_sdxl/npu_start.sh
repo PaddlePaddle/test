@@ -15,13 +15,14 @@ fi
 /bin/cp -rf ./* ${work_path}
 /bin/cp -rf ../change_paddlenlp_version.sh ${work_path}
 
-cd ${work_path}
 exit_code=0
 
 bash prepare.sh
 
 export FLAGS_npu_storage_format=0
 export FLAGS_use_stride_kernel=0
+
+cd ${work_path}
 
 echo "*******paddlemix text_to_image_sdxl_train begin begin***********"
 (bash train.sh) 2>&1 | tee ${log_dir}/text_to_image_sdxl_train.log
