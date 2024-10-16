@@ -5,6 +5,8 @@ export DATASET_NAME="lambdalabs/naruto-blip-captions"
 export HF_ENDPOINT=https://hf-mirror.com
 export FLAGS_conv_workspace_size_limit=4096
 
+wandb offline
+
 python -u train_text_to_image_lora_sdxl.py \
   --pretrained_model_name_or_path=$MODEL_NAME \
   --dataset_name=$DATASET_NAME --caption_column="text" \
