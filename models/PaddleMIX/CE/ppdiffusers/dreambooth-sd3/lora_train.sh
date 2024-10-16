@@ -22,7 +22,7 @@ python train_dreambooth_lora_sd3.py \
   --report_to="wandb" \
   --lr_scheduler="constant" \
   --lr_warmup_steps=0 \
-  --max_train_steps=500 \
+  --max_train_steps=10 \
   --validation_epochs=25 \
   --seed="0" \
   --checkpointing_steps=250 \
