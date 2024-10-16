@@ -17,12 +17,13 @@ fi
 
 exit_code=0
 
+cd ${work_path}
 bash prepare.sh
 
 # export FLAGS_npu_storage_format=0
 # export FLAGS_use_stride_kernel=0
 
-# cd ${work_path}
+
 
 # echo "*******paddlemix text_to_image_sdxl_train begin begin***********"
 # (bash train.sh) 2>&1 | tee ${log_dir}/text_to_image_sdxl_train.log
