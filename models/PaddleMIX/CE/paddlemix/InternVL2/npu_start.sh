@@ -34,8 +34,8 @@ export USE_PPXFORMERS=true
 
 # bash prepare.sh
 # 准备图片做物料
-pip uninstall paddlepaddle -y
-python -m pip install --pre paddlepaddle -i https://www.paddlepaddle.org.cn/packages/nightly/cpu/
+# pip uninstall paddlepaddle -y
+# python -m pip install --pre paddlepaddle -i https://www.paddlepaddle.org.cn/packages/nightly/cpu/
 # npu flag
 export FLAGS_use_stride_kernel=0
 export FLAGS_npu_storage_format=0 # 关闭私有格式
@@ -112,7 +112,7 @@ unset https_proxy
 
 rm -rf examples_image1.jpg
 rm -rf red-panda.mp4
-python -m pip install paddlepaddle-gpu==3.0.0b1 -i https://www.paddlepaddle.org.cn/packages/stable/cu118/
+# python -m pip install paddlepaddle-gpu==3.0.0b1 -i https://www.paddlepaddle.org.cn/packages/stable/cu118/
 # rm -rf playground
 # 查看结果
 cat ${log_dir}/ut_res.log
