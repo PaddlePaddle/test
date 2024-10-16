@@ -34,7 +34,8 @@ export USE_PPXFORMERS=true
 
 # bash prepare.sh
 # 准备图片做物料
- python -m pip install --pre paddlepaddle -i https://www.paddlepaddle.org.cn/packages/nightly/cpu/
+pip uninstall paddlepaddle -y
+python -m pip install --pre paddlepaddle -i https://www.paddlepaddle.org.cn/packages/nightly/cpu/
 # npu flag
 export FLAGS_use_stride_kernel=0
 export FLAGS_npu_storage_format=0 # 关闭私有格式
