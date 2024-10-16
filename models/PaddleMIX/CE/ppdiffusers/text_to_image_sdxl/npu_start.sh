@@ -100,7 +100,7 @@ export FLAGS_allocator_strategy=auto_growth
 # echo "*******paddlemix text_to_image_sdxl_lora_infer end***********"
 
 echo "*******paddlemix text_to_image_sdxl_multi_lora_infer begin begin***********"
-(python test_multi_checkpoint_infer.py) 2>&1 | tee ${log_dir}/text_to_image_sdxl_multi_lora_infer.log
+(python test_lora_multi_infer.py) 2>&1 | tee ${log_dir}/text_to_image_sdxl_multi_lora_infer.log
 tmp_exit_code=${PIPESTATUS[0]}
 exit_code=$(($exit_code + ${tmp_exit_code}))
 if [ ${tmp_exit_code} -eq 0 ]; then
