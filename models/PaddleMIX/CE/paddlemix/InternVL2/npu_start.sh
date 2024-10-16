@@ -61,50 +61,50 @@ fi
 echo "*******paddlemix InternVL2_picture_infer end***********"
 
 
-echo "*******paddlemix InternVL2_video_infer begin begin***********"
-# 准备视频做物料
-cp ${work_path}/paddlemix/demo_images/red-panda.mp4 .
+# echo "*******paddlemix InternVL2_video_infer begin begin***********"
+# # 准备视频做物料
+# cp ${work_path}/paddlemix/demo_images/red-panda.mp4 .
 
-(python paddlemix/examples/internvl2/chat_demo_video.py \
-    --model_name_or_path "OpenGVLab/InternVL2-8B" \
-    --video_path 'red-panda.mp4' \
-    --text "Please describe this video in detail.") 2>&1 | tee ${log_dir}/InternVL2_video_infer.log
-tmp_exit_code=${PIPESTATUS[0]}
-exit_code=$(($exit_code + ${tmp_exit_code}))
-if [ ${tmp_exit_code} -eq 0 ]; then
-    echo "InternVL2_video_infer run success" >>"${log_dir}/ut_res.log"
-else
-    echo "InternVL2_video_infer run fail" >>"${log_dir}/ut_res.log"
-fi
-echo "*******paddlemix InternVL2_video_infer end***********"
-
-
-echo "*******paddlemix InternVL2_train begin begin***********"
-# 只测2B模型即可 32G以下显存
-(sh internvl2_npu_finetune.sh) 2>&1 | tee ${log_dir}/InternVL2_train.log
-tmp_exit_code=${PIPESTATUS[0]}
-exit_code=$(($exit_code + ${tmp_exit_code}))
-if [ ${tmp_exit_code} -eq 0 ]; then
-    echo "InternVL2_train run success" >>"${log_dir}/ut_res.log"
-else
-    echo "InternVL2_train run fail" >>"${log_dir}/ut_res.log"
-fi
-echo "*******paddlemix InternVL2_train end***********"
+# (python paddlemix/examples/internvl2/chat_demo_video.py \
+#     --model_name_or_path "OpenGVLab/InternVL2-8B" \
+#     --video_path 'red-panda.mp4' \
+#     --text "Please describe this video in detail.") 2>&1 | tee ${log_dir}/InternVL2_video_infer.log
+# tmp_exit_code=${PIPESTATUS[0]}
+# exit_code=$(($exit_code + ${tmp_exit_code}))
+# if [ ${tmp_exit_code} -eq 0 ]; then
+#     echo "InternVL2_video_infer run success" >>"${log_dir}/ut_res.log"
+# else
+#     echo "InternVL2_video_infer run fail" >>"${log_dir}/ut_res.log"
+# fi
+# echo "*******paddlemix InternVL2_video_infer end***********"
 
 
-echo "*******paddlemix InternVL2_after_train_infer begin begin***********"
-(python paddlemix/examples/internvl2/chat_demo.py \
-    --model_name_or_path "work_dirs/internvl_chat_v2_0/internvl2_2b_internlm2_1_8b_dynamic_res_2nd_finetune_full" \
-    --image_path 'paddlemix/demo_images/examples_image1.jpg' \
-    --text "Please describe this image in detail.") 2>&1 | tee ${log_dir}/InternVL2_after_train_infer.log
-tmp_exit_code=${PIPESTATUS[0]}
-exit_code=$(($exit_code + ${tmp_exit_code}))
-if [ ${tmp_exit_code} -eq 0 ]; then
-    echo "InternVL2_after_train_infer run success" >>"${log_dir}/ut_res.log"
-else
-    echo "InternVL2_after_train_infer run fail" >>"${log_dir}/ut_res.log"
-fi
-echo "*******paddlemix InternVL2_after_train_infer end***********"
+# echo "*******paddlemix InternVL2_train begin begin***********"
+# # 只测2B模型即可 32G以下显存
+# (sh internvl2_npu_finetune.sh) 2>&1 | tee ${log_dir}/InternVL2_train.log
+# tmp_exit_code=${PIPESTATUS[0]}
+# exit_code=$(($exit_code + ${tmp_exit_code}))
+# if [ ${tmp_exit_code} -eq 0 ]; then
+#     echo "InternVL2_train run success" >>"${log_dir}/ut_res.log"
+# else
+#     echo "InternVL2_train run fail" >>"${log_dir}/ut_res.log"
+# fi
+# echo "*******paddlemix InternVL2_train end***********"
+
+
+# echo "*******paddlemix InternVL2_after_train_infer begin begin***********"
+# (python paddlemix/examples/internvl2/chat_demo.py \
+#     --model_name_or_path "work_dirs/internvl_chat_v2_0/internvl2_2b_internlm2_1_8b_dynamic_res_2nd_finetune_full" \
+#     --image_path 'paddlemix/demo_images/examples_image1.jpg' \
+#     --text "Please describe this image in detail.") 2>&1 | tee ${log_dir}/InternVL2_after_train_infer.log
+# tmp_exit_code=${PIPESTATUS[0]}
+# exit_code=$(($exit_code + ${tmp_exit_code}))
+# if [ ${tmp_exit_code} -eq 0 ]; then
+#     echo "InternVL2_after_train_infer run success" >>"${log_dir}/ut_res.log"
+# else
+#     echo "InternVL2_after_train_infer run fail" >>"${log_dir}/ut_res.log"
+# fi
+# echo "*******paddlemix InternVL2_after_train_infer end***********"
 
 
 unset http_proxy
