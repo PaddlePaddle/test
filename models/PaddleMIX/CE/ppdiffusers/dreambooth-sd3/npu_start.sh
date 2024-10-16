@@ -40,17 +40,17 @@ export FLAGS_allocator_strategy=auto_growth
 
 
 
-# 单机推理
-echo "*******dreambooth infer begin***********"
-(python infer.py) 2>&1 | tee ${log_dir}/dreambooth_infer.log
-tmp_exit_code=${PIPESTATUS[0]}
-exit_code=$(($exit_code + ${tmp_exit_code}))
-if [ ${tmp_exit_code} -eq 0 ]; then
-    echo "dreambooth infer run success" >>"${log_dir}/ce_res.log"
-else
-    echo "dreambooth infer run fail" >>"${log_dir}/ce_res.log"
-fi
-echo "*******dreambooth infer end***********"
+# # 单机推理
+# echo "*******dreambooth infer begin***********"
+# (python infer.py) 2>&1 | tee ${log_dir}/dreambooth_infer.log
+# tmp_exit_code=${PIPESTATUS[0]}
+# exit_code=$(($exit_code + ${tmp_exit_code}))
+# if [ ${tmp_exit_code} -eq 0 ]; then
+#     echo "dreambooth infer run success" >>"${log_dir}/ce_res.log"
+# else
+#     echo "dreambooth infer run fail" >>"${log_dir}/ce_res.log"
+# fi
+# echo "*******dreambooth infer end***********"
 
 # # Lora训练
 # echo "*******dreambooth lora train begin***********"
