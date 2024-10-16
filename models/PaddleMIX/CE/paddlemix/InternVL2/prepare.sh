@@ -20,12 +20,12 @@ bash change_paddlenlp_version.sh
 cd ${mix_path}
 rm -rf playground
 mkdir playground
-wget https://paddlenlp.bj.bcebos.com/datasets/paddlemix/playground/data.tar
-tar -xvf data.tar -C playground
+cd playground
+mkdir data 
+wget https://paddlenlp.bj.bcebos.com/datasets/paddlemix/playground/data/chartqa.tar
+tar -xvf chartqa.tar -C data
 wget https://paddlenlp.bj.bcebos.com/datasets/paddlemix/playground/opensource.tar
-tar -xvf opensource.tar -C playground
-
-rm -rf data.tar opensource.tar
+tar -xvf opensource.tar
 
 
 
