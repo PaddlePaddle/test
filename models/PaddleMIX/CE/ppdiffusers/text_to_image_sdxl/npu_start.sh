@@ -108,3 +108,15 @@ else
     echo "text_to_image_sdxl_multi_infer run fail" >>"${log_dir}/ut_res.log"
 fi
 echo "*******paddlemix text_to_image_sdxl_multi_infer end***********"
+
+
+unset http_proxy
+unset https_proxy
+
+
+
+# 查看结果
+cat ${log_dir}/ut_res.log
+
+echo exit_code:${exit_code}
+exit ${exit_code}
