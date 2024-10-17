@@ -1,3 +1,8 @@
+export FLAGS_npu_storage_format=0
+export FLAGS_use_stride_kernel=0
+export FLAGS_npu_scale_aclnn=True
+export FLAGS_allocator_strategy=auto_growth
+
 export MODEL_NAME="stabilityai/stable-diffusion-xl-base-1.0"
 export VAE_NAME="madebyollin/sdxl-vae-fp16-fix"
 export DATASET_NAME="lambdalabs/naruto-blip-captions"
@@ -19,5 +24,4 @@ python -u train_text_to_image_lora_sdxl.py \
   --checkpointing_steps=10 \
   --output_dir="sd-pokemon-model-lora-sdxl-txt" \
   --train_text_encoder \
-  --validation_prompt="cute dragon creature" \
-  --report_to="wandb"
+  --validation_prompt="cute dragon creature" --report_to="wandb"

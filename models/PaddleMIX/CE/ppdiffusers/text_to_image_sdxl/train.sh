@@ -1,7 +1,6 @@
 export FLAGS_npu_storage_format=0
 export FLAGS_use_stride_kernel=0
 
-
 export MODEL_NAME="stabilityai/stable-diffusion-xl-base-1.0"
 export VAE_NAME="madebyollin/sdxl-vae-fp16-fix"
 export DATASET_NAME="lambdalabs/naruto-blip-captions"

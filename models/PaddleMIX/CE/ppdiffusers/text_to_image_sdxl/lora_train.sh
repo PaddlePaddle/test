@@ -1,3 +1,7 @@
+export FLAGS_npu_storage_format=0
+export FLAGS_use_stride_kernel=0
+export FLAGS_npu_scale_aclnn=True
+export FLAGS_allocator_strategy=auto_growth
 
 
 export MODEL_NAME="stabilityai/stable-diffusion-xl-base-1.0"
@@ -22,6 +26,5 @@ python -u train_text_to_image_lora_sdxl.py \
   --max_train_steps=30 \
   --checkpointing_steps=10 \
   --output_dir="sd-pokemon-model-lora-sdxl" \
-  --validation_prompt="cute dragon creature" \
-  --report_to="wandb"
+  --validation_prompt="cute dragon creature" --report_to="wandb"
 
