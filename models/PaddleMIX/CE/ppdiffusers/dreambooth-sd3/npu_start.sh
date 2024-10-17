@@ -64,7 +64,7 @@ export FLAGS_allocator_strategy=auto_growth
 # fi
 # echo "*******dreambooth lora train end***********"
 
-# Lora训练
+# Lora推理
 echo "*******dreambooth lora infer begin***********"
 (python lora_infer.py) 2>&1 | tee ${log_dir}/dreambooth_lora_infer.log
 tmp_exit_code=${PIPESTATUS[0]}
