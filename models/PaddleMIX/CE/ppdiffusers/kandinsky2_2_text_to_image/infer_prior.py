@@ -7,5 +7,5 @@ pipe = KandinskyV22CombinedPipeline.from_pretrained(
     "kandinsky-community/kandinsky-2-2-decoder", **prior_components)
 
 prompt = 'A robot pokemon, 4k photo'
-images = pipe(prompt=prompt, negative_prompt=negative_prompt).images
+images = pipe(prompt=prompt).images
 images[0].save("robot-pokemon_infer_prior.png")
