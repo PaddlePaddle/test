@@ -47,61 +47,61 @@ echo "*******paddlemix qwen2_vl_ops_install end***********"
 cd ${work_path}
 
 
-# echo "*******paddlemix qwen2_vl_infer begin begin***********"
-# (python paddlemix/examples/qwen2_vl/single_image_infer.py) 2>&1 | tee ${log_dir}/qwen2_vl_infer.log
-# tmp_exit_code=${PIPESTATUS[0]}
-# exit_code=$(($exit_code + ${tmp_exit_code}))
-# if [ ${tmp_exit_code} -eq 0 ]; then
-#     echo "qwen2_vl_infer run success" >>"${log_dir}/ut_res.log"
-# else
-#     echo "qwen2_vl_infer run fail" >>"${log_dir}/ut_res.log"
-# fi
-# echo "*******paddlemix qwen2_vl_infer end***********"
-
-
-# echo "*******paddlemix qwen2_vl_multi_image_infer begin begin***********"
-# (python paddlemix/examples/qwen2_vl/multi_image_infer.py) 2>&1 | tee ${log_dir}/qwen2_vl_multi_image_infer.log
-# tmp_exit_code=${PIPESTATUS[0]}
-# exit_code=$(($exit_code + ${tmp_exit_code}))
-# if [ ${tmp_exit_code} -eq 0 ]; then
-#     echo "qwen2_vl_multi_image_infer run success" >>"${log_dir}/ut_res.log"
-# else
-#     echo "qwen2_vl_multi_image_infer run fail" >>"${log_dir}/ut_res.log"
-# fi
-# echo "*******paddlemix qwen2_vl_multi_image_infer end***********"
-
-
-# echo "*******paddlemix qwen2_vl_video begin begin***********"
-# (python paddlemix/examples/qwen2_vl/video_infer.py) 2>&1 | tee ${log_dir}/qwen2_vl_video.log
-# tmp_exit_code=${PIPESTATUS[0]}
-# exit_code=$(($exit_code + ${tmp_exit_code}))
-# if [ ${tmp_exit_code} -eq 0 ]; then
-#     echo "qwen2_vl_video run success" >>"${log_dir}/ut_res.log"
-# else
-#     echo "qwen2_vl_video run fail" >>"${log_dir}/ut_res.log"
-# fi
-# echo "*******paddlemix qwen2_vl_video end***********"
-
-echo "*******paddlemix qwen2_vl_train begin begin***********"
-(bash train_qwen.sh) 2>&1 | tee ${log_dir}/qwen2_vl_train.log
+echo "*******paddlemix qwen2_vl_infer begin begin***********"
+(python paddlemix/examples/qwen2_vl/single_image_infer.py) 2>&1 | tee ${log_dir}/qwen2_vl_infer.log
 tmp_exit_code=${PIPESTATUS[0]}
 exit_code=$(($exit_code + ${tmp_exit_code}))
 if [ ${tmp_exit_code} -eq 0 ]; then
-    echo "qwen2_vl_train run success" >>"${log_dir}/ut_res.log"
+    echo "qwen2_vl_infer run success" >>"${log_dir}/ut_res.log"
 else
-    echo "qwen2_vl_train run fail" >>"${log_dir}/ut_res.log"
+    echo "qwen2_vl_infer run fail" >>"${log_dir}/ut_res.log"
 fi
-echo "*******paddlemix qwen2_vl_train end***********"
+echo "*******paddlemix qwen2_vl_infer end***********"
 
-echo "*******paddlemix qwen2_vl_train_infer begin begin***********"
-(python iner_qwen.py) 2>&1 | tee ${log_dir}/qwen2_vl_train_infer.log
+
+echo "*******paddlemix qwen2_vl_multi_image_infer begin begin***********"
+(python paddlemix/examples/qwen2_vl/multi_image_infer.py) 2>&1 | tee ${log_dir}/qwen2_vl_multi_image_infer.log
 tmp_exit_code=${PIPESTATUS[0]}
 exit_code=$(($exit_code + ${tmp_exit_code}))
 if [ ${tmp_exit_code} -eq 0 ]; then
-    echo "qwen2_vl_train_infer run success" >>"${log_dir}/ut_res.log"
+    echo "qwen2_vl_multi_image_infer run success" >>"${log_dir}/ut_res.log"
 else
-    echo "qwen2_vl_train_infer run fail" >>"${log_dir}/ut_res.log"
+    echo "qwen2_vl_multi_image_infer run fail" >>"${log_dir}/ut_res.log"
 fi
+echo "*******paddlemix qwen2_vl_multi_image_infer end***********"
+
+
+echo "*******paddlemix qwen2_vl_video begin begin***********"
+(python paddlemix/examples/qwen2_vl/video_infer.py) 2>&1 | tee ${log_dir}/qwen2_vl_video.log
+tmp_exit_code=${PIPESTATUS[0]}
+exit_code=$(($exit_code + ${tmp_exit_code}))
+if [ ${tmp_exit_code} -eq 0 ]; then
+    echo "qwen2_vl_video run success" >>"${log_dir}/ut_res.log"
+else
+    echo "qwen2_vl_video run fail" >>"${log_dir}/ut_res.log"
+fi
+echo "*******paddlemix qwen2_vl_video end***********"
+
+# echo "*******paddlemix qwen2_vl_train begin begin***********"
+# (bash train_qwen.sh) 2>&1 | tee ${log_dir}/qwen2_vl_train.log
+# tmp_exit_code=${PIPESTATUS[0]}
+# exit_code=$(($exit_code + ${tmp_exit_code}))
+# if [ ${tmp_exit_code} -eq 0 ]; then
+#     echo "qwen2_vl_train run success" >>"${log_dir}/ut_res.log"
+# else
+#     echo "qwen2_vl_train run fail" >>"${log_dir}/ut_res.log"
+# fi
+# echo "*******paddlemix qwen2_vl_train end***********"
+
+# echo "*******paddlemix qwen2_vl_train_infer begin begin***********"
+# (python iner_qwen.py) 2>&1 | tee ${log_dir}/qwen2_vl_train_infer.log
+# tmp_exit_code=${PIPESTATUS[0]}
+# exit_code=$(($exit_code + ${tmp_exit_code}))
+# if [ ${tmp_exit_code} -eq 0 ]; then
+#     echo "qwen2_vl_train_infer run success" >>"${log_dir}/ut_res.log"
+# else
+#     echo "qwen2_vl_train_infer run fail" >>"${log_dir}/ut_res.log"
+# fi
 echo "*******paddlemix qwen2_vl_train_infer end***********"
 unset http_proxy
 unset https_proxy
