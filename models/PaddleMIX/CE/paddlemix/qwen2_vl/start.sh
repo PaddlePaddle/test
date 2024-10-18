@@ -82,13 +82,23 @@ else
 fi
 echo "*******paddlemix qwen2_vl_video end***********"
 
+echo "*******paddlemix qwen2_vl_train begin begin***********"
+(sh paddlemix/examples/qwen2_vl/shell/basline_2b_bs32_1e8.sh) 2>&1 | tee ${log_dir}/qwen2_vl_train.log
+tmp_exit_code=${PIPESTATUS[0]}
+exit_code=$(($exit_code + ${tmp_exit_code}))
+if [ ${tmp_exit_code} -eq 0 ]; then
+    echo "qwen2_vl_train run success" >>"${log_dir}/ut_res.log"
+else
+    echo "qwen2_vl_train run fail" >>"${log_dir}/ut_res.log"
+fi
+echo "*******paddlemix qwen2_vl_train end***********"
+
 unset http_proxy
 unset https_proxy
 
 
 # # 查看结果
 cat ${log_dir}/ut_res.log
-python -m pip install paddlepaddle-gpu==3.0.0b1 -i https://www.paddlepaddle.org.cn/packages/stable/cu118/
 echo exit_code:${exit_code}
 exit ${exit_code}
 
