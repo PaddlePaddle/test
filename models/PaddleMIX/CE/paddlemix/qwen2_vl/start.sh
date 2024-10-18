@@ -16,7 +16,7 @@ fi
 /bin/cp -rf ./* ${work_path}
 
 cd ${work_path}
-bash prepare.sh
+# bash prepare.sh
 exit_code=0
 
 
@@ -83,7 +83,7 @@ cd ${work_path}
 # echo "*******paddlemix qwen2_vl_video end***********"
 
 echo "*******paddlemix qwen2_vl_train begin begin***********"
-(sh paddlemix/examples/qwen2_vl/shell/basline_2b_bs32_1e8.sh) 2>&1 | tee ${log_dir}/qwen2_vl_train.log
+(bash train_qwen.sh) 2>&1 | tee ${log_dir}/qwen2_vl_train.log
 tmp_exit_code=${PIPESTATUS[0]}
 exit_code=$(($exit_code + ${tmp_exit_code}))
 if [ ${tmp_exit_code} -eq 0 ]; then
@@ -94,7 +94,7 @@ fi
 echo "*******paddlemix qwen2_vl_train end***********"
 
 echo "*******paddlemix qwen2_vl_train_infer begin begin***********"
-(python paddlemix/examples/qwen2_vl/single_image_infer.py) 2>&1 | tee ${log_dir}/qwen2_vl_train_infer.log
+(python iner_qwen.py) 2>&1 | tee ${log_dir}/qwen2_vl_train_infer.log
 tmp_exit_code=${PIPESTATUS[0]}
 exit_code=$(($exit_code + ${tmp_exit_code}))
 if [ ${tmp_exit_code} -eq 0 ]; then
