@@ -27,7 +27,7 @@ export https_proxy=${mix_proxy}
 exit_code=0
 export no_proxy=baidu.com,127.0.0.1,0.0.0.0,localhost,bcebos.com,pip.baidu-int.com,mirrors.baidubce.com,repo.baidubce.com,repo.bcm.baidubce.com,pypi.tuna.tsinghua.edu.cn,aistudio.baidu.com
 
-#bash prepare.sh
+bash prepare.sh
 export FLAGS_use_stride_kernel=0
 export FLAGS_npu_storage_format=0 # 关闭私有格式
 export FLAGS_npu_jit_compile=0 # 关闭即时编译
