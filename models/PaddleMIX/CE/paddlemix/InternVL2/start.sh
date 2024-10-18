@@ -27,7 +27,7 @@ export https_proxy=${mix_proxy}
 # rm -rf tests/pipelines/stable_diffusion/test_stable_diffusion_pix2pix_zero.py
 
 exit_code=0
-
+export CUDA_VISIBLE_DEVICES=0
 export HF_ENDPOINT=https://hf-mirror.com
 export no_proxy=baidu.com,127.0.0.1,0.0.0.0,localhost,bcebos.com,pip.baidu-int.com,mirrors.baidubce.com,repo.baidubce.com,repo.bcm.baidubce.com,pypi.tuna.tsinghua.edu.cn,aistudio.baidu.com
 export USE_PPXFORMERS=true
