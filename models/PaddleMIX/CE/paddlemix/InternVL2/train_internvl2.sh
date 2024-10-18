@@ -25,7 +25,7 @@ fi
 
 TRAINING_MODEL_RESUME="None"
 TRAINER_INSTANCES='127.0.0.1'
-MASTER='127.0.0.1:8080'
+MASTER='127.0.0.1:8009'
 
 TRAINING_PYTHON="python -m paddle.distributed.launch --master ${MASTER} --nnodes 1 --nproc_per_node ${GPUS} --rank 0 --ips ${TRAINER_INSTANCES} --run_mode=collective"
 ${TRAINING_PYTHON} --log_dir ${OUTPUT_DIR}/paddle_distributed_logs \
