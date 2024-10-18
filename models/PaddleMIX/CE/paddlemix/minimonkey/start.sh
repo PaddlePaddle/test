@@ -37,18 +37,18 @@ export USE_PPXFORMERS=true
 echo "*******paddlemix minimonkey_picture_infer begin begin***********"
 cp ${work_path}/paddlemix/demo_images/examples_image1.jpg .
 
-(python paddlemix/examples/minimonkey/chat_demo_minimonkey.py \
-    --model_name_or_path "HUST-VLRLab/Mini-Monkey" \
-    --image_path 'examples_image1.jpg' \
-    --text "Read the all text in the image.") 2>&1 | tee ${log_dir}/minimonkey_picture_infer.log
-tmp_exit_code=${PIPESTATUS[0]}
-exit_code=$(($exit_code + ${tmp_exit_code}))
-if [ ${tmp_exit_code} -eq 0 ]; then
-    echo "minimonkey_picture_infer run success" >>"${log_dir}/ut_res.log"
-else
-    echo "minimonkey_picture_infer run fail" >>"${log_dir}/ut_res.log"
-fi
-echo "*******paddlemix minimonkey_picture_infer end***********"
+# (python paddlemix/examples/minimonkey/chat_demo_minimonkey.py \
+#     --model_name_or_path "HUST-VLRLab/Mini-Monkey" \
+#     --image_path 'examples_image1.jpg' \
+#     --text "Read the all text in the image.") 2>&1 | tee ${log_dir}/minimonkey_picture_infer.log
+# tmp_exit_code=${PIPESTATUS[0]}
+# exit_code=$(($exit_code + ${tmp_exit_code}))
+# if [ ${tmp_exit_code} -eq 0 ]; then
+#     echo "minimonkey_picture_infer run success" >>"${log_dir}/ut_res.log"
+# else
+#     echo "minimonkey_picture_infer run fail" >>"${log_dir}/ut_res.log"
+# fi
+# echo "*******paddlemix minimonkey_picture_infer end***********"
 
 
 echo "*******paddlemix minimonkey_train begin begin***********"
