@@ -15,11 +15,9 @@ bash change_paddlenlp_version.sh
 
 # 数据集下载
 cd ${mix_path}
-rm -rf playground
-mkdir playground
+wget https://paddlenlp.bj.bcebos.com/datasets/paddlemix/playground.tar
+tar xf playground.tar
 cd playground
-mkdir data 
-wget https://paddlenlp.bj.bcebos.com/datasets/paddlemix/playground/data/chartqa.tar
-tar -xvf chartqa.tar -C data
-wget https://paddlenlp.bj.bcebos.com/datasets/paddlemix/playground/opensource.tar
-tar -xvf opensource.tar
+wget https://paddlenlp.bj.bcebos.com/datasets/paddlemix/playground/opensource_json.tar
+tar xf opensource_json.tar
+
