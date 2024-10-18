@@ -53,11 +53,11 @@ ${TRAINING_PYTHON} --log_dir ${OUTPUT_DIR}/paddle_distributed_logs \
   --per_device_train_batch_size ${PER_DEVICE_BATCH_SIZE} \
   --gradient_accumulation_steps ${GRADIENT_ACC} \
   --recompute True \
-  --max_steps 100 \
+  --max_steps 20 \
   --max_grad_norm 1.0 \
   --evaluation_strategy "no" \
   --save_strategy "epoch" \
-  --save_steps 200 \
+  --save_steps 20 \
   --save_total_limit 2 \
   --learning_rate 4e-5 \
   --weight_decay 0.01 \
