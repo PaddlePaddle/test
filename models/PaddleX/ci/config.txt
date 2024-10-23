@@ -73,7 +73,7 @@ epochs_iters:2
 suite_name:PaddleDetection
 module_name:face_detection
 check_dataset_yaml:paddlex/configs/face_detection/PicoDet_LCNet_x2_5_face.yaml
-dataset_url:https://paddle-model-ecology.bj.bcebos.com/paddlex/data/widerface_coco_examples.tar
+dataset_url:https://paddle-model-ecology.bj.bcebos.com/paddlex/data/face_rec_examples.tar
 train_list_name:
 run_model:train|evaluate|predict|export
 check_options:check_train_result_json|check_eval_result_json
@@ -85,7 +85,7 @@ epochs_iters:2
 suite_name:PaddleDetection
 module_name:human_detection
 check_dataset_yaml:paddlex/configs/human_detection/PP-YOLOE-L_human.yaml
-dataset_url:https://bj.bcebos.com/v1/paddledet/data/widerperson_coco_examples.tar
+dataset_url:https://paddle-model-ecology.bj.bcebos.com/paddlex/data/widerperson_coco_examples.tar
 train_list_name:
 run_model:train|evaluate|predict|export
 check_options:check_train_result_json|check_eval_result_json
