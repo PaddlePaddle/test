@@ -6,7 +6,7 @@ MODEL_LIST_FILE=$2
 ################################################### 可配置环境变量 #####################################################
 # MEM_SIZE: 显存大小，默认值16G，设置示例：export MEM_SIZE=16
 # DEVICE_TYPE: 设备类型，默认gpu，只支持小写，设置示例：export DEVICE_TYPE=gpu
-# DEVICE_NUM: 卡数，默认4卡，设置示例：export DEVICE_NUM=4
+# DEVICE_ID: 使用卡号，默认4卡，设置示例：export DEVICE_ID='0,1,2,3'
 # TEST_RANGE: 测试范围，默认为空，设置示例：export TEST_RANGE='inference'
 
 # set -x
@@ -36,12 +36,11 @@ function func_parser_dataset_url(){
 }
 
 function get_device_list(){
-    gn=`expr $DEVICE_NUM - 1`
-    seq=`seq -s "," 0 $gn`
+    id_list=$DEVICE_ID
     if [[ $suite_name == "PaddleTS" ]];then
-        seq=0
+        id_list=$FIRST_ID
     fi
-    echo ${DEVICE_TYPE}:$seq
+    echo ${DEVICE_TYPE}:$id_list
 }
 
 # 运行命令并输出结果，PR级CI失败会重跑3次并异常退出，增量级和全量级会记录失败命令，最后打印失败的命令并异常退出
@@ -237,9 +236,10 @@ fi
 if [[ -z $DEVICE_TYPE ]]; then
     DEVICE_TYPE='gpu'
 fi
-if [[ -z $DEVICE_NUM ]]; then
-    DEVICE_NUM=4
+if [[ -z $DEVICE_ID ]]; then
+    DEVICE_ID='0,1,2,3'
 fi
+FIRST_ID=`echo $DEVICE_ID | awk -F ',' {'print$1'}`
 
 if [[ -z $MODE ]]; then
     install_deps_cmd="paddlex --install -y"
@@ -371,7 +371,7 @@ function check_pipeline() {
 	rm -rf $output_path
 	mkdir -p $output_path
 	cd $output_path
-    cmd="timeout 30m paddlex --pipeline ${pipeline} --input ${img}"
+    cmd="timeout 30m paddlex --pipeline ${pipeline} --input ${img} --device ${DEVICE_TYPE}:${FIRST_ID}"
 	echo $cmd
 	eval $cmd
     last_status=${PIPESTATUS[0]}
