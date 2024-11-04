@@ -40,7 +40,7 @@ jobs:
           file_name=$REPO_NAME.tar
           cd ${{ github.event.client_payload.path }}
           current_commit=$(git rev-parse HEAD)
-          current_commit_time=$(date +%s)
+          current_commit_time=$(git show -s --format=%ct HEAD)
           cd -
           tar -cf $REPO_NAME.tar ${{ github.event.client_payload.path }}
           python -m pip install bce-python-sdk==0.8.74
