@@ -73,7 +73,7 @@ epochs_iters:2
 suite_name:PaddleDetection
 module_name:face_detection
 check_dataset_yaml:paddlex/configs/face_detection/PicoDet_LCNet_x2_5_face.yaml
-dataset_url:https://paddle-model-ecology.bj.bcebos.com/paddlex/data/face_rec_examples.tar
+dataset_url:https://paddle-model-ecology.bj.bcebos.com/paddlex/data/widerface_coco_examples.tar
 train_list_name:
 run_model:train|evaluate|predict|export
 check_options:check_train_result_json|check_eval_result_json
@@ -150,6 +150,18 @@ train_list_name:
 run_model:train|evaluate|predict|export
 check_options:check_train_result_json|check_eval_result_json
 check_weights_items:2,pdparams,pdema,pdopt,pdstates,inference_config,pdmodel,pdiparams,pdiparams.info
+evaluate_weight_path:best_model/best_model.pdparams
+inference_weight_dir:best_model/inference
+epochs_iters:2
+*********************************************************************************************************************
+suite_name:PaddleClas
+module_name:face_recognition
+check_dataset_yaml:paddlex/configs/face_recognition/MobileFaceNet.yaml
+dataset_url:https://paddle-model-ecology.bj.bcebos.com/paddlex/data/face_rec_examples.tar
+train_list_name:train.txt
+run_model:train|evaluate|predict|export
+check_options:check_train_result_json|check_eval_result_json
+check_weights_items:2,pdparams,pdopt,pdstates,pdmodel,pdiparams,pdiparams.info
 evaluate_weight_path:best_model/best_model.pdparams
 inference_weight_dir:best_model/inference
 epochs_iters:2
