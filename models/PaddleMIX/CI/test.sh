@@ -1,11 +1,8 @@
 #!/bin/bash
 
 bash prepare.sh
-export http_proxy=${proxy}
-export https_proxy=${proxy}
 python nltk_data_download.py
-unset http_proxy
-unset https_proxy
+
 
 work_path=$(pwd)
 echo ${work_path}
