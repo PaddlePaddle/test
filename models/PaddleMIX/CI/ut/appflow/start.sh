@@ -17,7 +17,6 @@ exit_code=0
 cd ${work_path}
 
 echo "*******tests/appflow/ test_cviw begin***********"
-pip install paddlenlp==3.0.0b0
 (python test_cviw.py) 2>&1 | tee ${log_dir}/appflow_test_cviw.log
 tmp_exit_code=${PIPESTATUS[0]}
 exit_code=$(($exit_code + ${tmp_exit_code}))
