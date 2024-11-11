@@ -15,6 +15,9 @@ class LayerCase(paddle.nn.Layer):
         """
         forward
         """
+
+        paddle.seed(33)
+        np.random.seed(33)
         out = paddle.bincount(x, weights,  minlength=paddle.to_tensor([5], dtype='int32', stop_gradient=False), )
         return out
 

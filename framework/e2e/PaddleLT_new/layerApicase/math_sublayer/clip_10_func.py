@@ -15,6 +15,9 @@ class LayerCase(paddle.nn.Layer):
         """
         forward
         """
+
+        paddle.seed(33)
+        np.random.seed(33)
         out = paddle.clip(x,  min=paddle.to_tensor([-10], dtype='float32', stop_gradient=False), max=paddle.to_tensor([20], dtype='float32', stop_gradient=False), )
         return out
 

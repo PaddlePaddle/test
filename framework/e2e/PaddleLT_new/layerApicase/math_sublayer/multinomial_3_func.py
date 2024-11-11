@@ -15,6 +15,9 @@ class LayerCase(paddle.nn.Layer):
         """
         forward
         """
+
+        paddle.seed(33)
+        np.random.seed(33)
         out = paddle.multinomial(x,  num_samples=paddle.to_tensor([1], dtype='int32', stop_gradient=False), replacement=True, )
         return out
 

@@ -44,6 +44,12 @@ class LayerTrain(object):
         self.layerfile = layerfile
         self.step = self.testing.get("step")
 
+    def _unset_flags(self, engine_str="test_engine"):
+        """unset flags"""
+        if "FLAGS_enable_auto_recompute" in os.environ:
+            del os.environ["FLAGS_enable_auto_recompute"]
+            Logger(engine_str).get_log().info("已取消环境变量FLAGS_enable_auto_recompute")
+
     def _net_input(self):
         """get input"""
         reset(self.seed)
@@ -240,7 +246,7 @@ class LayerTrain(object):
             return {"res": {"logit": logit, "data_grad": data_grad}, "net": None}
 
     def dy2st_train_inputspec(self):
-        """dy2st cinn train with inputspec"""
+        """dy2st train with dy inputspec"""
         data, input_spec = self._net_input_and_spec()
         Logger("dy2st_train_inputspec").get_log().info(f"待测动态InputSpec为: {input_spec}")
         net = self._net_instant()
@@ -272,7 +278,7 @@ class LayerTrain(object):
             return {"res": {"logit": logit, "data_grad": data_grad}, "net": None}
 
     def dy2st_train_static_inputspec(self):
-        """dy2st cinn train with inputspec"""
+        """dy2st train with st inputspec"""
         data, input_spec = self._net_input_and_static_spec()
         Logger("dy2st_train_static_inputspec").get_log().info(f"待测静态InputSpec为: {input_spec}")
         net = self._net_instant()
@@ -305,6 +311,10 @@ class LayerTrain(object):
 
     def dy2st_train_cinn(self):
         """dy2st cinn train"""
+
+        if os.environ.get("PLT_enable_auto_recompute", "0") == "1":
+            os.environ["FLAGS_enable_auto_recompute"] = "1"
+            Logger("dy2st_train_cinn").get_log().info("已设定环境变量FLAGS_enable_auto_recompute")
         data = self._net_input()
         net = self._net_instant()
         optimizer = self._net_optimizer()
@@ -330,14 +340,19 @@ class LayerTrain(object):
 
         Logger("dy2st_train_cinn").get_log().info(f"已完成 {epoch} 轮训练")
         data_grad = self._get_data_grad(data)
-        # return {"logit": logit, "data_grad": data_grad}
+
+        self._unset_flags(engine_str="dy2st_train_cinn")
         if self.return_net_instance == "True":
             return {"res": {"logit": logit, "data_grad": data_grad}, "net": cinn_net}
         else:
             return {"res": {"logit": logit, "data_grad": data_grad}, "net": None}
 
     def dy2st_train_cinn_inputspec(self):
-        """dy2st cinn train with inputspec"""
+        """dy2st cinn train with dy inputspec"""
+
+        if os.environ.get("PLT_enable_auto_recompute", "0") == "1":
+            os.environ["FLAGS_enable_auto_recompute"] = "1"
+            Logger("dy2st_train_cinn_inputspec").get_log().info("已设定环境变量FLAGS_enable_auto_recompute")
         data, input_spec = self._net_input_and_spec()
         Logger("dy2st_train_cinn_inputspec").get_log().info(f"待测动态InputSpec为: {input_spec}")
         net = self._net_instant()
@@ -364,14 +379,19 @@ class LayerTrain(object):
 
         Logger("dy2st_train_cinn_inputspec").get_log().info(f"已完成 {epoch} 轮训练")
         data_grad = self._get_data_grad(data)
-        # return {"logit": logit, "data_grad": data_grad}
+
+        self._unset_flags(engine_str="dy2st_train_cinn_inputspec")
         if self.return_net_instance == "True":
             return {"res": {"logit": logit, "data_grad": data_grad}, "net": cinn_net}
         else:
             return {"res": {"logit": logit, "data_grad": data_grad}, "net": None}
 
     def dy2st_train_cinn_static_inputspec(self):
-        """dy2st cinn train with inputspec"""
+        """dy2st cinn train with st inputspec"""
+
+        if os.environ.get("PLT_enable_auto_recompute", "0") == "1":
+            os.environ["FLAGS_enable_auto_recompute"] = "1"
+            Logger("dy2st_train_cinn_static_inputspec").get_log().info("已设定环境变量FLAGS_enable_auto_recompute")
         data, input_spec = self._net_input_and_static_spec()
         Logger("dy2st_train_cinn_static_inputspec").get_log().info(f"待测静态InputSpec为: {input_spec}")
         net = self._net_instant()
@@ -398,7 +418,8 @@ class LayerTrain(object):
 
         Logger("dy2st_train_cinn_static_inputspec").get_log().info(f"已完成 {epoch} 轮训练")
         data_grad = self._get_data_grad(data)
-        # return {"logit": logit, "data_grad": data_grad}
+
+        self._unset_flags(engine_str="dy2st_train_cinn_static_inputspec")
         if self.return_net_instance == "True":
             return {"res": {"logit": logit, "data_grad": data_grad}, "net": cinn_net}
         else:

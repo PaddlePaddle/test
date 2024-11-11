@@ -15,6 +15,9 @@ class LayerCase(paddle.nn.Layer):
         """
         forward
         """
+
+        paddle.seed(33)
+        np.random.seed(33)
         out = paddle.allclose(x, y,  rtol=1e-05, atol=1e-08, )
         return out
 

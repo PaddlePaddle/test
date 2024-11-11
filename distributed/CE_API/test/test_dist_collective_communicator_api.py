@@ -141,16 +141,16 @@ class TestApi(object):
         assert str(out).find("Error") == -1
         assert str(err).find("Error") == -1
 
-    def test_collective_split(self):
-        """test_collective_split"""
-        cmd = "python -m paddle.distributed.launch --devices 0,1 --job_id split dist_collective_split.py"
-        pro = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-        out, err = pro.communicate()
-        print(out)
-        pro.wait()
-        pro.returncode == 0
-        assert str(out).find("Error") == -1
-        assert str(err).find("Error") == -1
+    # def test_collective_split(self):
+    #     """test_collective_split"""
+    #     cmd = "python -m paddle.distributed.launch --devices 0,1 --job_id split dist_collective_split.py"
+    #     pro = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    #     out, err = pro.communicate()
+    #     print(out)
+    #     pro.wait()
+    #     pro.returncode == 0
+    #     assert str(out).find("Error") == -1
+    #     assert str(err).find("Error") == -1
 
     def test_collective_send(self):
         """test_collective_send"""

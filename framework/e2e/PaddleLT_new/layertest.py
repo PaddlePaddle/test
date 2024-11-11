@@ -245,18 +245,17 @@ class LayerTest(object):
 
 
 if __name__ == "__main__":
-    # # 精度调试逻辑
-    # layerfile = "./layerModelcase/Ocr_cases/backbones/rec_MobileNetV3.py"
-    # testing = "yaml/dy^dy_train^export_st_inputspec^ppinfer_new_exc_pir.yml"
-    # single_test = LayerTest(title="lzy_naive", layerfile=layerfile, testing=testing)
+    # layerfile = "./layerApicase/math_sublayer/zeros_1_func.py"
+    # testing = "yaml/dy^dy2stcinn_train_inputspec.yml"
+    # single_test = LayerTest(title=layerfile, layerfile=layerfile, testing=testing)
     # single_test._case_run()
+    # exit(0)
 
-    # 性能调试逻辑
-    if os.environ.get("TESTING_MODE") == "performance":
-        if os.environ.get("PLT_PERF_MODE") == "unit-python":
-            import argparse
+    if os.environ.get("PLT_PERF_MODE") == "unit-python":
+        import argparse
 
-            parser = argparse.ArgumentParser(description=__doc__)
+        parser = argparse.ArgumentParser(description=__doc__)
+        if os.environ.get("TESTING_MODE") == "performance":
             # 用于性能测试 单执行器+单子图的 独立python执行模式
             parser.add_argument("--layerfile", type=str, default="layercase/demo/SIR_101.py", help="子图路径")
             parser.add_argument("--testing", type=str, default="yaml/dy_eval.yml", help="执行器配置")
@@ -266,5 +265,14 @@ if __name__ == "__main__":
             title = py_file.replace(".py", "").replace("/", "^").replace(".", "^")
             single_test = LayerTest(title=title, layerfile=args.layerfile, testing=args.testing)
             single_test._perf_unit_case_run(plt_exc=args.plt_exc)
-    else:
-        pass
+
+        elif os.environ.get("TESTING_MODE") == "precision":
+            parser.add_argument("--layerfile", type=str, default="layercase/demo/SIR_101.py", help="子图路径")
+            parser.add_argument("--testing", type=str, default="yaml/dy_eval.yml", help="执行器配置")
+            args = parser.parse_args()
+            py_file = args.layerfile
+            title = py_file.replace(".py", "").replace("/", "^").replace(".", "^")
+            single_test = LayerTest(title=title, layerfile=args.layerfile, testing=args.testing)
+            single_test._case_run()
+        else:
+            pass

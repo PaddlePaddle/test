@@ -16,22 +16,30 @@ class LayerCase(paddle.nn.Layer):
         """
         forward
         """
+
+        paddle.seed(33)
+        np.random.seed(33)
         out = self.func(data, )
         return out
 
 
+def create_inputspec():
+    inputspec = ( 
+        paddle.static.InputSpec(shape=(-1, -1, -1), dtype=paddle.float32, stop_gradient=False), 
+    )
+    return inputspec
+
+
 def create_tensor_inputs():
-    """
-    paddle tensor
-    """
-    inputs = ()
-    return inputs
-
-
-def create_numpy_inputs():
     """
     numpy array
     """
     inputs = (paddle.to_tensor([[[0.6964692, 0.28613934, 0.22685145]], [[0.5513148, 0.71946895, 0.42310646]]], dtype='float32', stop_gradient=False), )
     return inputs
 
+def create_numpy_inputs():
+    """
+    numpy array
+    """
+    inputs = (np.array([[[0.6964692, 0.28613934, 0.22685145]], [[0.5513148, 0.71946895, 0.42310646]]]).astype('float32'), )
+    return inputs

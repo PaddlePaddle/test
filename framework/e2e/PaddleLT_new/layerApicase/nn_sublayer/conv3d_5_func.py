@@ -15,6 +15,9 @@ class LayerCase(paddle.nn.Layer):
         """
         forward
         """
+
+        paddle.seed(33)
+        np.random.seed(33)
         out = paddle.nn.functional.conv3d(x,  weight=paddle.to_tensor(-1 + (1 - -1) * np.random.random([6, 1, 3, 3, 3]).astype('float32'), dtype='float32', stop_gradient=False), bias=paddle.to_tensor(-1 + (1 - -1) * np.random.random([6]).astype('float32'), dtype='float32', stop_gradient=False), stride=2, padding=0, groups=3, )
         return out
 

@@ -217,6 +217,12 @@ do
             && [[ ! $line =~ "release/2.1.0" ]] \
             && [[ ${repo_name} == "PaddleRec" ]]; then
             tar_reponame
+        # PaddleX
+        elif ([[ $line =~ "release" ]] || [[ $line =~ "develop" ]]) \
+            && [[ ! $line =~ "HEAD" ]] \
+            && [[ ! $line =~ "release/2" ]] \
+            && [[ ${repo_name} == "PaddleX" ]]; then
+            tar_reponame
         # PaddleMIX
         elif ([[ $line =~ "release" ]] || [[ $line =~ "develop" ]]) \
             && [[ ! $line =~ "HEAD" ]] \

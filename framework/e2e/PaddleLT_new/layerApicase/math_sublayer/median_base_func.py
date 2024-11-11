@@ -15,7 +15,10 @@ class LayerCase(paddle.nn.Layer):
         """
         forward
         """
-        out = paddle.median(x,  axis=0, keepdims=False, )
+
+        paddle.seed(33)
+        np.random.seed(33)
+        out = paddle.median(x,  axis=0, keepdim=False, )
         return out
 
 

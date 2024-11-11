@@ -15,6 +15,9 @@ class LayerCase(paddle.nn.Layer):
         """
         forward
         """
+
+        paddle.seed(33)
+        np.random.seed(33)
         out = paddle.arange( start=-3.0, end=15.0, step=2.0, dtype='float32', )
         return out
 

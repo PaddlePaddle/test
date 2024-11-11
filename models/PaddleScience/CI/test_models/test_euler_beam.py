@@ -54,7 +54,9 @@ def test_euler_beam_loss():
     """
     epoch_num = 1000  # 迭代次数
     output_dir = "./output/euler_beam"  # 输出目录
-    base_loss = 0.00181  # 基准损失值
+    # base_loss = 0.00181  # 基准损失值
+    # CI机器改为T4,因此更改base值
+    base_loss = 0.00188
 
     # 获取训练过程的日志文件并计算最后一轮迭代的损失值
     log_file = os.path.join(output_dir, "train.log")

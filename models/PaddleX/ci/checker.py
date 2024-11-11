@@ -139,7 +139,7 @@ class PostTrainingChecker:
                 if not os.path.exists(os.path.join(output_dir, config_path)):
                     check_train_json_message.append(f"检查失败：配置文件 {config_path} 不存在")
                     pass_flag = False
-                if not ("text" in module_name or "table" in module_name):
+                if not ("text" in module_name or "table" in module_name or "formula" in module_name):
                     if not os.path.exists(os.path.join(output_dir, visualdl_log_path)):
                         check_train_json_message.append(f"检查失败：VisualDL日志文件 {visualdl_log_path} 不存在")
                         pass_flag = False
@@ -197,7 +197,8 @@ class PostTrainingChecker:
                 check_dataset_json_message.append("检查失败：未正确返回报错信息")
         # 检查config和visualdl_log字段对应的文件是否存在
         dataset_path = json_data.get("dataset_path")
-        if not os.path.exists(os.path.join(output_dir, dataset_path)):
+        # if not os.path.exists(os.path.join(output_dir, dataset_path)):
+        if not os.path.exists(dataset_path):
             check_dataset_json_message.append(f"检查失败：数据集路径 {dataset_path} 不存在")
             pass_flag = False
         if "ts" in module_name:
@@ -219,7 +220,12 @@ class PostTrainingChecker:
                 check_dataset_json_message.append(f"检查失败：{show_type} 必须为'image', 'txt', 'csv'其中一个")
                 pass_flag = False
 
-            for tag in ["train", "val"]:
+            if module_name == "general_recognition":
+                tag_list = ["train", "gallery", "query"]
+            else:
+                tag_list = ["train", "val"]
+
+            for tag in tag_list:
                 samples_key = f"{tag}_sample_paths"
                 samples_path = json_data["attributes"].get(samples_key)
                 for sample_path in samples_path:
@@ -227,7 +233,12 @@ class PostTrainingChecker:
                     if not samples_path or not os.path.exists(sample_path):
                         check_dataset_json_message.append(f"检查失败：在 {samples_key} 中，{sample_path} 对应的文件不存在或为空")
                         pass_flag = False
-            if "text" not in module_name and "table" not in module_name:
+            if not (
+                "text" in module_name
+                or "table" in module_name
+                or "formula" in module_name
+                or module_name == "general_recognition"
+            ):
                 try:
                     num_class = int(json_data["attributes"].get("num_classes"))
                 except ValueError:
@@ -346,7 +357,7 @@ class PostTrainingChecker:
 
         if args.check_train_result_json:
             # 检查 train_result.json 内容
-            train_result_json = os.path.join(output_dir, "train_result.json")
+            train_result_json = os.path.join(output_dir, "train_results.json")
             check_weights_items = args.check_weights_items
             check_train_json_message = []
             check_train_json_flag, check_train_json_message = self.check_train_json_content(

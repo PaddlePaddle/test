@@ -22,8 +22,9 @@ from pltools.logger import Logger
 from pltools.yaml_loader import YamlLoader
 from pltools.json_loader import JSONLoader
 from pltools.res_save import xlsx_save, download_sth, create_tar_gz, extract_tar_gz, load_pickle, save_txt
+from pltools.nv_tool import get_nv_memory
 from pltools.upload_bos import UploadBos
-from pltools.statistics import split_list, sublayer_perf_gsb_gen, kernel_perf_gsb_gen
+from pltools.statistics import split_list, sublayer_perf_gsb_gen, kernel_perf_gsb_gen, sublayer_perf_ratio_gen
 from pltools.alarm import Alarm
 
 
@@ -63,11 +64,13 @@ class Run(object):
         self.AGILE_PIPELINE_BUILD_ID = os.environ.get("AGILE_PIPELINE_BUILD_ID", 0)
         self.now_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
+        self.storage = "apibm_config.yml"
+
         if os.environ.get("FRAMEWORK") == "paddle":
             import paddle
 
             self.logger.get_log().info(f"Paddle框架commit: {paddle.__git_commit__}, 版本: {paddle.__version__}")
-
+            os.environ["paddle_commit"] = paddle.__git_commit__
             if os.environ.get("USE_PADDLE_MODEL", "None") == "PaddleOCR":
                 os.system(
                     "wget -q https://xly-devops.bj.bcebos.com/PaddleTest/PaddleOCR/PaddleOCR.tar.gz --no-proxy "
@@ -119,7 +122,7 @@ class Run(object):
         """Database interaction"""
         # 数据库交互
         if os.environ.get("PLT_BM_DB") == "insert":  # 存入数据, 作为基线或对比
-            layer_db = LayerBenchmarkDB(storage="apibm_config.yml")
+            layer_db = LayerBenchmarkDB(storage=self.storage)
             if os.environ.get("PLT_BM_MODE") == "baseline":
                 layer_db.baseline_insert(data_dict=sublayer_dict, error_list=error_list)
 
@@ -142,7 +145,7 @@ class Run(object):
                     "baseline mode, latest_as_baseline mode or latest mode"
                 )
         elif os.environ.get("PLT_BM_DB") == "select":  # 不存数据, 仅对比并生成表格
-            layer_db = LayerBenchmarkDB(storage="apibm_config.yml")
+            layer_db = LayerBenchmarkDB(storage=self.storage)
             baseline_dict, baseline_layer_type = layer_db.get_baseline_dict()
 
             return baseline_dict, baseline_layer_type
@@ -196,7 +199,7 @@ class Run(object):
 
         if os.environ.get("PLT_BM_EMAIL") == "True":
             desc = os.environ.get("TESTING").split("/")[-1].split(".")[0]
-            alarm = Alarm(storage="apibm_config.yml")
+            alarm = Alarm(storage=self.storage)
             alarm.email_send(
                 alarm.receiver,
                 f"Paddle {self.layer_type}子图性能数据{desc}",
@@ -384,17 +387,28 @@ class Run(object):
 
     def _test_run(self, py_list):
         """run some test"""
+        sublayer_dict = {}
         error_list = []
         error_count = 0
         for py_file in py_list:
+            self.logger.get_log().info(get_nv_memory(int(os.environ.get("PLT_DEVICE_ID"))))
             _py_file, _exit_code = self._single_pytest_run(py_file=py_file, testing=self.testing)
             if _exit_code is not None:
                 error_list.append(_py_file)
                 error_count += 1
+                prec_dict = {self.testing: "fail"}
+            else:
+                prec_dict = {self.testing: "pass"}
+
+            title = py_file.replace(".py", "").replace("/", "^").replace(".", "^")
+            sublayer_dict[title] = prec_dict
 
         if not os.environ.get("PLT_GT_UPLOAD_URL") == "None":
             self._gt_upload()
+
         self._exit_code_txt(error_count=error_count, error_list=error_list)
+
+        baseline_dict, baseline_layer_type = self._db_interact(sublayer_dict=sublayer_dict, error_list=error_list)
 
     def _multiprocess_perf_test_run(self):
         """
@@ -643,6 +657,9 @@ class Run(object):
                     latest_layer_type=self.layer_type,
                 )
                 gsb_dict = sublayer_perf_gsb_gen(compare_dict=compare_dict, compare_list=compare_list)
+                ratio_dict = sublayer_perf_ratio_gen(compare_dict=compare_dict, compare_list=compare_list)
+                for key, value in gsb_dict.items():
+                    gsb_dict[key] = {**gsb_dict[key], **ratio_dict[key]}
             save_txt(data=gsb_dict, filename="gsb_dict")
             xlsx_save(
                 sublayer_dict=compare_dict,

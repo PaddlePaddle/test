@@ -33,11 +33,20 @@ jobs:
           SK: ${{ secrets.BOS_SK }}
         run: |
           git log -n 3
+          current_commit=$(git rev-parse HEAD)
           tree -L 3
           REPO_NAME=${{ github.event.client_payload.repository }}
           REPO_NAME=${REPO_NAME##*/}
           file_name=$REPO_NAME.tar
+          cd ${{ github.event.client_payload.path }}
+          current_commit=$(git rev-parse HEAD)
+          current_commit_time=$(git show -s --format=%ct HEAD)
+          cd -
           tar -cf $REPO_NAME.tar ${{ github.event.client_payload.path }}
           python -m pip install bce-python-sdk==0.8.74
           python tools/bos_upload.py ${file_name} paddle-qa/CodeSync/${{ github.event.client_payload.ref }}/
           echo "Bos link: https://paddle-qa.bj.bcebos.com/CodeSync/${{ github.event.client_payload.ref }}/$file_name"
+          echo "${current_commit}" >> ${current_commit}
+          python tools/bos_upload.py ${current_commit} paddle-qa/CodeSync/${{ github.event.client_payload.repository }}/${{ github.event.client_payload.ref }}
+          echo "${current_commit_time}" >> latest_commit_time
+          python tools/bos_upload.py latest_commit_time paddle-qa/CodeSync/${{ github.event.client_payload.repository }}/${{ github.event.client_payload.ref }}

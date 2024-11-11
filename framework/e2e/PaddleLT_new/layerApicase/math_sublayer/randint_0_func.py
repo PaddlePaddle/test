@@ -15,6 +15,9 @@ class LayerCase(paddle.nn.Layer):
         """
         forward
         """
+
+        paddle.seed(33)
+        np.random.seed(33)
         out = paddle.randint( low=2, high=5, shape=[2, 3, 4, 4], )
         return out
 

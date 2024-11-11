@@ -4,7 +4,8 @@ python -m pip install scipy>=1.13
 export FLAGS_use_curand=1
 export FLAGS_set_to_1d=0
 
-case_dir_list=('device' 'incubate' 'linalg' 'paddlebase' 'loss' 'nn' 'optimizer' 'distribution' 'utils')
+case_dir_list=('device' 'incubate' 'linalg' 'paddlebase' 'loss' 'nn' 'optimizer' 'distribution' 'utils' 'saveload')
+
 result_array=()
 for case_dir in ${case_dir_list[@]}
 do

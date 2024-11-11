@@ -121,6 +121,45 @@ class DB(object):
             print(e)
         return results
 
+    def select_use_date(self, table, date_str, condition_dict):
+        """按照condition_list 查询数据"""
+        results = []
+        # sql_table = "`" + table + "`"
+        # condition_list.append("DATE(update_time) = %s")
+        # sql = "SELECT * FROM %s " % sql_table + " WHERE " + " AND ".join("%s" % k for k in condition_list)
+
+        # 构建条件列表，注意日期条件的特殊处理
+        conditions = []
+        params = []
+
+        # 添加日期条件
+        conditions.append("DATE(update_time) = %s")
+        params.append(date_str)  # 确保date_str是"YYYY-MM-DD"格式的字符串
+
+        # 添加其他条件
+        for key, value in condition_dict.items():
+            # 这里假设value已经是适合数据库查询的格式（如字符串、数字等）
+            # 如果value是日期或时间，请确保它在这里被正确格式化
+            conditions.append(f"{key} = %s")
+            params.append(value)
+
+        # 构建完整的SQL查询语句
+        sql = "SELECT * FROM {} WHERE {}".format(table, " AND ".join(conditions))
+        try:
+            self.cursor.execute(sql, tuple(params))
+            res = self.cursor.fetchall()
+
+            index_list = self.show_list(table=table)
+            for row in res:
+                tmp = {}
+                for i, v in enumerate(row):
+                    tmp[index_list[i]] = row[i]
+                results.append(tmp)
+        except Exception as e:
+            print(traceback.format_exc())
+            print(e)
+        return results
+
     def select_by_id(self, table, id):
         """按照id 查询数据"""
         results = []
@@ -146,9 +185,11 @@ class DB(object):
         self,
         comment,
         status,
+        result,
         env_info,
         framework,
         agile_pipeline_build_id,
+        testing_mode,
         testing,
         plt_perf_content,
         layer_type,
@@ -167,9 +208,11 @@ class DB(object):
         data = {
             "comment": comment,
             "status": status,
+            "result": result,
             "env_info": env_info,
             "framework": framework,
             "agile_pipeline_build_id": agile_pipeline_build_id,
+            "testing_mode": testing_mode,
             "testing": testing,
             "plt_perf_content": plt_perf_content,
             "layer_type": layer_type,
@@ -248,7 +291,13 @@ class DB(object):
 if __name__ == "__main__":
     db = DB(storage="storage.yaml")
 
-    table = "layer_case"
-    condition_list = ["jid = 71"]
-    res = db.select(table=table, condition_list=condition_list)
+    # table = "layer_case"
+    # condition_list = ["jid = 71"]
+    # res = db.select(table=table, condition_list=condition_list)
+    # print("res is: ", res)
+
+    table = "layer_job"
+    condition_dict = {"md5_id": "0b00a671d6e8db2e16afc619c7289970"}
+    date_str = "2024-11-03"
+    res = db.select_use_date(table=table, date_str=date_str, condition_dict=condition_dict)
     print("res is: ", res)

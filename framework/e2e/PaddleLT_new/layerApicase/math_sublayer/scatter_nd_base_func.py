@@ -15,6 +15,9 @@ class LayerCase(paddle.nn.Layer):
         """
         forward
         """
+
+        paddle.seed(33)
+        np.random.seed(33)
         out = paddle.scatter_nd(index,  updates=paddle.to_tensor(-1 + (1 - -1) * np.random.random([3, 9, 10]).astype('float32'), dtype='float32', stop_gradient=False), shape=[3, 5, 9, 10], )
         return out
 

@@ -15,6 +15,9 @@ class LayerCase(paddle.nn.Layer):
         """
         forward
         """
+
+        paddle.seed(33)
+        np.random.seed(33)
         out = paddle.split(x,  num_or_sections=[2, -1, 1], axis=0, )
         return out
 

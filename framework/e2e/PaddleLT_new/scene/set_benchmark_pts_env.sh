@@ -5,6 +5,7 @@ export CASE_TYPE="${CASE_TYPE:-layercase}"
 export CASE_DIR="${CASE_DIR:-perf_monitor}"
 export TESTING="${TESTING:-yaml/dy2stcinn_eval_benchmark.yml}" # 设定测试项目配置yaml
 export TESTING_MODE="${TESTING_MODE:-performance}" # 设定测试模式为性能
+export PLT_MD5="${PLT_MD5:-0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a}"
 export PLT_PERF_MODE="${PLT_PERF_MODE:-none}" # 设定性能测试方式, 可选参数: unit-python(独立python执行方式)
 export PLT_PERF_CONTENT="${PLT_PERF_CONTENT:-layer}" # 设定性能测试内容, 可选参数: layer(端到端子图), kernel(nv工具kernel分析)
 export PLT_SET_DEVICE="${PLT_SET_DEVICE:-gpu}" # 硬件
@@ -25,19 +26,33 @@ export PLT_BM_STATIS="${PLT_BM_STATIS:-trimmean}"  # 统计策略trimmean, mean,
 export PLT_BM_ERROR_CHECK="${PLT_BM_ERROR_CHECK:-True}"  # True: 执行性能测试前先执行一次精度测试
 export PLT_BM_PLOT="${PLT_BM_PLOT:-False}"  # True: 执行性能测试后生成性能图表
 
-echo "wheel_url is: ${wheel_url}"
-echo "python_ver is: ${python_ver}"
-echo "CASE_TYPE is: ${CASE_TYPE}"
-echo "CASE_DIR is: ${CASE_DIR}"
-echo "TESTING is: ${TESTING}"
-echo "CUDA_VISIBLE_DEVICES is: ${CUDA_VISIBLE_DEVICES}"
+echo "wheel_url=${wheel_url}"
+echo "python_ver=${python_ver}"
+echo "docker_image=${docker_image}"
+unset GREP_OPTIONS
+env | grep CASE_
+env | grep TESTING
+env | grep CUDA_VISIBLE_DEVICES
+env | grep FRAMEWORK
+env | grep USE_PADDLE_MODEL
+env | grep TIMEIT_NUM
+env | grep MULTI_
+env | grep PLT_
+env | grep FLAGS_
 
-echo "TESTING_MODE is: ${TESTING_MODE}"
-echo "PLT_SET_DEVICE is: ${PLT_SET_DEVICE}"
-echo "PLT_DEVICE_ID is: ${PLT_DEVICE_ID}"
-echo "FRAMEWORK is: ${FRAMEWORK}"
-echo "MULTI_WORKER is: ${MULTI_WORKER}"
-echo "PLT_BM_MODE is: ${PLT_BM_MODE}"
-echo "PLT_BM_DB is: ${PLT_BM_DB}"
-echo "PLT_BM_REPEAT is: ${PLT_BM_REPEAT}"
-echo "PLT_BM_STATIS is: ${PLT_BM_STATIS}"
+# echo "wheel_url is: ${wheel_url}"
+# echo "python_ver is: ${python_ver}"
+# echo "CASE_TYPE is: ${CASE_TYPE}"
+# echo "CASE_DIR is: ${CASE_DIR}"
+# echo "TESTING is: ${TESTING}"
+# echo "CUDA_VISIBLE_DEVICES is: ${CUDA_VISIBLE_DEVICES}"
+
+# echo "TESTING_MODE is: ${TESTING_MODE}"
+# echo "PLT_SET_DEVICE is: ${PLT_SET_DEVICE}"
+# echo "PLT_DEVICE_ID is: ${PLT_DEVICE_ID}"
+# echo "FRAMEWORK is: ${FRAMEWORK}"
+# echo "MULTI_WORKER is: ${MULTI_WORKER}"
+# echo "PLT_BM_MODE is: ${PLT_BM_MODE}"
+# echo "PLT_BM_DB is: ${PLT_BM_DB}"
+# echo "PLT_BM_REPEAT is: ${PLT_BM_REPEAT}"
+# echo "PLT_BM_STATIS is: ${PLT_BM_STATIS}"

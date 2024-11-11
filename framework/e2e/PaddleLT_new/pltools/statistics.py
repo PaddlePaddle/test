@@ -313,6 +313,53 @@ def kernel_perf_gsb_gen(compare_dict, compare_list):
     return gsb_dict
 
 
+def sublayer_perf_ratio_gen(compare_dict, compare_list):
+    """
+    平均性能提升, 计算公式: mean(layer1_perf_engine1/layer1_perf_engine2 + layer2_perf_engine1/layer2_perf_engine2...)
+    :param compare_dict:{'layer1':
+    {'dy2st_eval_cinn_perf^layercase': 0.2333,
+    'dy_eval_perf^layercase': 0.114514,
+    'dy2st_eval_cinn_perf^dy_eval_perf^compare': '20%'}}
+    :return: dict
+    """
+    ratio_dict = {}
+    for compare in compare_list:
+        if compare["baseline"] == "ground_truth":
+            ratio_dict[compare["latest"] + "^" + "compare"] = {"add_ratio": 0, "num_count": 0}
+        else:
+            ratio_dict[compare["latest"] + "^" + compare["baseline"] + "^" + "compare"] = {
+                "add_ratio": 0,
+                "num_count": 0,
+            }
+
+    for layer_name, perf_dict in compare_dict.items():
+        for compare in compare_list:
+            if compare["baseline"] == "ground_truth":
+                if perf_dict[compare["latest"] + "^" + "compare"] == "None":
+                    continue
+                ratio_dict[compare["latest"] + "^" + "compare"]["add_ratio"] = (
+                    ratio_dict[compare["latest"] + "^" + "compare"]["add_ratio"]
+                    + float(perf_dict[compare["latest"] + "^" + "compare"].strip("%")) / 100
+                )
+                ratio_dict[compare["latest"] + "^" + "compare"]["num_count"] += 1
+
+            else:
+                if perf_dict[compare["latest"] + "^" + compare["baseline"] + "^" + "compare"] == "None":
+                    continue
+                ratio_dict[compare["latest"] + "^" + compare["baseline"] + "^" + "compare"]["add_ratio"] = (
+                    ratio_dict[compare["latest"] + "^" + compare["baseline"] + "^" + "compare"]["add_ratio"]
+                    + float(perf_dict[compare["latest"] + "^" + compare["baseline"] + "^" + "compare"].strip("%")) / 100
+                )
+                ratio_dict[compare["latest"] + "^" + compare["baseline"] + "^" + "compare"]["num_count"] += 1
+
+    for key, value in ratio_dict.items():
+        ratio_dict[key][
+            "mean_ratio"
+        ] = f"{round(ratio_dict[key]['add_ratio'] / ratio_dict[key]['num_count'] * 100, 2)}%"
+
+    return ratio_dict
+
+
 # def gsb_gen(sublayer_dict, compare_list):
 #     """
 #     等级分类

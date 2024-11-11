@@ -15,6 +15,9 @@ class LayerCase(paddle.nn.Layer):
         """
         forward
         """
+
+        paddle.seed(33)
+        np.random.seed(33)
         out = paddle.uniform( shape=[2, 3, 4, 4], min=1.0, max=5.0, seed=33, )
         return out
 

@@ -15,6 +15,9 @@ class LayerCase(paddle.nn.Layer):
         """
         forward
         """
+
+        paddle.seed(33)
+        np.random.seed(33)
         out = paddle.strided_slice(x,  axes=[1, 2, 3], starts=[-3, 0, 2], ends=[3, 2, 4], strides=[1, 1, 1], )
         return out
 

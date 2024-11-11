@@ -15,6 +15,9 @@ class LayerCase(paddle.nn.Layer):
         """
         forward
         """
+
+        paddle.seed(33)
+        np.random.seed(33)
         out = paddle.nn.functional.max_pool2d(x,  kernel_size=[3, 3], stride=(1, 2), padding=[0, 0], )
         return out
 

@@ -15,7 +15,11 @@ class LayerCase(paddle.nn.Layer):
         """
         forward
         """
+
+        paddle.seed(33)
+        np.random.seed(33)
         out = paddle.broadcast_shape( x_shape=[2, 1, 3, 1, 4, 2, 3], y_shape=[1, 2, 1, 1, 3], )
+        out = paddle.to_tensor(out, stop_gradient=False)
         return out
 
 

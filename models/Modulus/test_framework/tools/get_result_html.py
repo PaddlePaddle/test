@@ -45,6 +45,8 @@ def get_html(json_data,html_data,env_json="../env_json.json",model_class="model_
                         html_content += '<td style="background-color:rgb(250,234,200);">Timeout</td>'
                     elif sub_key == "dy2st":
                         html_content += '<td style="background-color:rgb(135,141,153)">Skipped</td>'
+                    # elif "darcy" in model_name and sub_key != "dynamic":
+                    #     html_ctenont += '<td style="background-color:rgb(135,141,153)">Skipped</td>'
                     else:
                         html_content += '<td style="background-color:rgb(254,230,230);">N/A</td>'
                     continue

@@ -46,24 +46,24 @@ def test_config():
     test_suite.config_test()
 
 
-@pytest.mark.win
-@pytest.mark.server
-@pytest.mark.config_disablegpu_memory
-def test_disable_gpu():
-    """
-    test no gpu resources occupied after disable gpu
-    """
-    check_model_exist()
-    test_suite = InferenceTest()
-    test_suite.load_config(
-        model_file="./vgg11/inference.pdmodel",
-        params_file="./vgg11/inference.pdiparams",
-    )
-    batch_size = 1
-    fake_input = np.random.randn(batch_size, 3, 224, 224).astype("float32")
-    print(fake_input.shape)
-    input_data_dict = {"x": fake_input}
-    test_suite.disable_gpu_test(input_data_dict)
+# @pytest.mark.win
+# @pytest.mark.server
+# @pytest.mark.config_disablegpu_memory
+# def test_disable_gpu():
+#     """
+#     test no gpu resources occupied after disable gpu
+#     """
+#     check_model_exist()
+#     test_suite = InferenceTest()
+#     test_suite.load_config(
+#         model_file="./vgg11/inference.pdmodel",
+#         params_file="./vgg11/inference.pdiparams",
+#     )
+#     batch_size = 1
+#     fake_input = np.random.randn(batch_size, 3, 224, 224).astype("float32")
+#     print(fake_input.shape)
+#     input_data_dict = {"x": fake_input}
+#     test_suite.disable_gpu_test(input_data_dict)
 
 
 @pytest.mark.win

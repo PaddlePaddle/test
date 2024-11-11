@@ -15,6 +15,9 @@ class LayerCase(paddle.nn.Layer):
         """
         forward
         """
+
+        paddle.seed(33)
+        np.random.seed(33)
         out = paddle.gather_nd(x,  index=paddle.to_tensor([[0, 1]], dtype='int32', stop_gradient=False), )
         return out
 

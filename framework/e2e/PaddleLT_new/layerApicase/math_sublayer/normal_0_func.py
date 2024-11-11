@@ -15,6 +15,9 @@ class LayerCase(paddle.nn.Layer):
         """
         forward
         """
+
+        paddle.seed(33)
+        np.random.seed(33)
         out = paddle.normal( mean=paddle.to_tensor(-1 + (1 - -1) * np.random.random([2, 3, 5]).astype('float32'), dtype='float32', stop_gradient=False), std=paddle.to_tensor(0 + (1 - 0) * np.random.random([2, 3, 5]).astype('float32'), dtype='float32', stop_gradient=False), )
         return out
 
