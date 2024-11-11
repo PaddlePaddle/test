@@ -151,7 +151,7 @@ class Run(object):
             return baseline_dict, baseline_layer_type
         elif os.environ.get("PLT_BM_DB") == "non-db":  # 不加载数据库，仅生成表格
 
-            return {}, "none"
+            return "none", "none"
         else:
             Exception("unknown benchmark datebase mode, only support insert, select or non-db")
 
@@ -409,7 +409,8 @@ class Run(object):
 
         self._exit_code_txt(error_count=error_count, error_list=error_list)
 
-        baseline_dict, baseline_layer_type = self._db_interact(sublayer_dict=sublayer_dict, error_list=error_list)
+        if os.environ.get("PLT_BM_DB") != "non-db":
+            baseline_dict, baseline_layer_type = self._db_interact(sublayer_dict=sublayer_dict, error_list=error_list)
 
     def _multiprocess_perf_test_run(self):
         """

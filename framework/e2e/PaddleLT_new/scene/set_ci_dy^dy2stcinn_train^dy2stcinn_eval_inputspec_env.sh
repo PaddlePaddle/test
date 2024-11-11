@@ -21,6 +21,8 @@ export PLT_SAVE_GT=False  # 是否保存精度ground truth, 也就是plt_gt
 export PLT_GT_UPLOAD_URL=None  # plt_gt的上传路径, paddle-qa/PaddleLT/PaddleLTGroundTruth/latest
 export PLT_GT_DOWNLOAD_URL=None  # plt_gt的下载url, https://paddle-qa.bj.bcebos.com/PaddleLT/PaddleLTGroundTruth/latest/gpu
 
+export PLT_BM_DB=non-db
+
 export FLAGS_prim_forward_blacklist=pd_op.dropout
 export FLAGS_enable_pir_api=1
 export FLAGS_prim_enable_dynamic=true
