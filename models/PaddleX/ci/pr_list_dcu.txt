@@ -1,0 +1,2 @@
+# For PaddleClas
+config_path:paddlex/configs/image_classification/ResNet18.yaml
