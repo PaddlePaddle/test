@@ -391,7 +391,8 @@ class Run(object):
         error_list = []
         error_count = 0
         for py_file in py_list:
-            self.logger.get_log().info(get_nv_memory(int(os.environ.get("PLT_DEVICE_ID"))))
+            if os.environ.get("PLT_GET_NV_MEMORY") == "True":
+                self.logger.get_log().info(get_nv_memory(int(os.environ.get("PLT_DEVICE_ID"))))
             _py_file, _exit_code = self._single_pytest_run(py_file=py_file, testing=self.testing)
             if _exit_code is not None:
                 error_list.append(_py_file)

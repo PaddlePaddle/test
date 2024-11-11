@@ -7,6 +7,7 @@ export CASE_DIR=sublayer1000
 export TESTING=yaml/CI_dy^dy2stcinn_train^dy2stcinn_eval_inputspec.yml # 设定测试项目配置yaml
 export TESTING_MODE=precision_multi_gpu # 设定测试模型为精度
 export PLT_SET_DEVICE=gpu
+export PLT_GET_NV_MEMORY=False
 export PLT_DEVICE_ID="${PLT_DEVICE_ID:-0,1}"
 export CUDA_VISIBLE_DEVICES="${PLT_DEVICE_ID:-0,1}"
 export FRAMEWORK=paddle

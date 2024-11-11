@@ -8,6 +8,7 @@ export TESTING_MODE="${TESTING_MODE:-precision}" # 设定测试模型为精度
 export PLT_MD5="${PLT_MD5:-0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a}"
 export PLT_PERF_CONTENT="${PLT_PERF_CONTENT:-layer}"
 export PLT_SET_DEVICE="${PLT_SET_DEVICE:-gpu}"
+export PLT_GET_NV_MEMORY="${PLT_GET_NV_MEMORY:-True}"
 export PLT_DEVICE_ID="${PLT_DEVICE_ID:-6}"
 export CUDA_VISIBLE_DEVICES="${PLT_DEVICE_ID:-6}"
 export FRAMEWORK="${FRAMEWORK:-paddle}"

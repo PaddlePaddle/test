@@ -9,6 +9,7 @@ export PLT_MD5="${PLT_MD5:-0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a}"
 export PLT_PERF_MODE="${PLT_PERF_MODE:-none}" # 设定性能测试方式, 可选参数: unit-python(独立python执行方式)
 export PLT_PERF_CONTENT="${PLT_PERF_CONTENT:-layer}" # 设定性能测试内容, 可选参数: layer(端到端子图), kernel(nv工具kernel分析)
 export PLT_SET_DEVICE="${PLT_SET_DEVICE:-gpu}" # 硬件
+export PLT_GET_NV_MEMORY="${PLT_GET_NV_MEMORY:-True}"
 export PLT_DEVICE_ID="${PLT_DEVICE_ID:-6}"  # 设备编号
 export CUDA_VISIBLE_DEVICES="${PLT_DEVICE_ID:-6}"
 export FRAMEWORK="${FRAMEWORK:-paddle}"  # 框架种类
