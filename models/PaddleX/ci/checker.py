@@ -11,10 +11,14 @@ Author: PaddlePaddle Authors
 
 import os
 import json
+import time
 import shutil
 import tarfile
 import argparse
+from pathlib import Path
 import requests
+from markdown import markdown
+from bs4 import BeautifulSoup
 from tqdm import tqdm
 from yaml import safe_load, dump
 from requests.packages.urllib3.util.retry import Retry
@@ -24,6 +28,11 @@ from requests.adapters import HTTPAdapter
 def parse_args():
     """Parse the arguments"""
     parser = argparse.ArgumentParser()
+    parser.add_argument("--check_url", action="store_true", default=False)
+    parser.add_argument("-d", "--dir", default="./docs", type=str, help="The directory to search for Markdown files.")
+    parser.add_argument(
+        "-m", "--mode", default="all", choices=["all", "internal", "external"], help="The type of links to check."
+    )
     parser.add_argument("--download_dataset", action="store_true", default=False)
     parser.add_argument("--module_name", type=str, default=False)
     parser.add_argument("--config_path", type=str, default=False)
@@ -46,6 +55,7 @@ def parse_args():
     return check_items, args
 
 
+################################### 下载数据集 ###############################################
 def download_dataset(args):
     """Download dataset"""
     with open(args.config_path, "r") as file:
@@ -80,6 +90,7 @@ def download_dataset(args):
     os.remove(save_path)
 
 
+################################### 检查训练结果 #############################################
 class PostTrainingChecker:
     """Post training checker class"""
 
@@ -388,7 +399,111 @@ class PostTrainingChecker:
             self.check_flag.append(check_eval_json_flag)
 
         assert False not in self.check_flag, print("校验检查失败，请查看产出", " ".join(str(item) for item in self.check_results))
-        # print("&&&&&&&&&&&&&", self.check_flag, "!!!!!!!!!!!!!!!!!!!!!!", self.check_results)
+
+
+################################### 检查文档超链接 ###############################################
+
+
+def extract_links(markdown_text):
+    """Extract links from Markdown text"""
+    # 使用BeautifulSoup从HTML中提取链接
+    html = markdown(markdown_text)
+    soup = BeautifulSoup(html, "html.parser")
+    links = [a.get("href") for a in soup.find_all("a", href=True)]
+    real_links = []
+    for link in links:
+        if link.startswith("#"):
+            continue
+        real_links.append(link)
+    return real_links
+
+
+def is_valid_link(url):
+    """Check whether URL is valid or not"""
+    headers = {"User-Agent": "Mozilla/5.0"}
+    is_valid = False
+    for i in range(10):
+        try:
+            response = requests.get(url, allow_redirects=True, headers=headers, timeout=5)
+            is_valid = True if response.status_code == 200 else False
+            break
+        except:
+            time.sleep(1)
+            continue
+    return is_valid
+
+
+def check_internal_link(base_path, link):
+    """Check internal link validity"""
+    # 如果链接包含锚点(#)，只检查文件部分
+    link = link.split("#")[0]
+    target_path = (base_path / link).resolve()
+    return target_path.exists()
+
+
+def check_links_in_markdown(file_path, index, total, check_mode):
+    """Check links in Markdown file"""
+    with open(file_path, "r", encoding="utf-8") as file:
+        markdown_text = file.read()
+
+    links = extract_links(markdown_text)
+    invalid_links = []
+    links_num = len(links)
+
+    for i, link in enumerate(links):
+        print(f"[File schedule {index}/{total}][{i+1}/{links_num}]: {link}")
+        if link.startswith("http"):
+            if check_mode in ["all", "external"]:
+                # 检查外部链接
+                if not is_valid_link(link):
+                    invalid_links.append(link)
+        else:
+            if check_mode in ["all", "internal"]:
+                # 检查内部链接
+                check_result = check_internal_link(Path(file_path).parent, link)
+                if not check_result:
+                    invalid_links.append(link)
+
+    return invalid_links
+
+
+def check_all_markdown_files(args):
+    """Check all Markdown files"""
+    markdown_files = list(Path(args.dir).rglob("*.md"))
+    all_invalid_links = {}
+    markdown_num = len(markdown_files)
+
+    for i, markdown_file in enumerate(markdown_files):
+        invalid_links = check_links_in_markdown(markdown_file, i + 1, markdown_num, check_mode=args.mode)
+        if invalid_links:
+            all_invalid_links[markdown_file] = invalid_links
+
+    return all_invalid_links
+
+
+def check_documentation_url(args):
+    """Check documentation URL"""
+    invalid_links = check_all_markdown_files(args)
+    output_file = "invalid_links.txt"
+
+    if len(invalid_links) > 0:
+        print("Found invalid links in the documentation files, details are as follows:")
+        print("*" * 80)
+        for file, links in invalid_links.items():
+            print(f"Invalid links in {file}:")
+            for link in links:
+                print(f"  - {link}")
+        print("*" * 80)
+
+        with open(output_file, "w", encoding="utf-8") as f:
+            for file, links in invalid_links.items():
+                f.write(f"Invalid links in {file}: \n")
+                for link in links:
+                    f.write(f"  - {link}\n")
+        print(f"Invalid links have been saved to {output_file}.")
+        exit(1)
+    else:
+        pass
 
 
 if __name__ == "__main__":
@@ -398,3 +513,5 @@ if __name__ == "__main__":
         checker.run_checks(args)
     elif args.download_dataset:
         download_dataset(args)
+    elif args.check_url:
+        check_documentation_url(args)

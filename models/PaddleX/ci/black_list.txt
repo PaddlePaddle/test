@@ -32,4 +32,5 @@ Predict:FasterRCNN-ResNet34-FPN
 ################################## Export ################################
 ################################# Pipeline ###############################
 Pipeline:PP-ChatOCRv3-doc
-Pipeline:PP-ShiTu
+Pipeline:PP-ShiTuV2
+Pipeline:face_recognition

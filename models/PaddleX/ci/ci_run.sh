@@ -8,13 +8,13 @@ MODEL_LIST_FILE=$2
 # DEVICE_TYPE: 设备类型，默认gpu，只支持小写，设置示例：export DEVICE_TYPE=gpu
 # DEVICE_ID: 使用卡号，默认4卡，设置示例：export DEVICE_ID='0,1,2,3'
 # TEST_RANGE: 测试范围，默认为空，设置示例：export TEST_RANGE='inference'
+# MD_NUM: PR中MD文件改动数量，用于判断是否需要进行文档超链接检测，默认为空，设置示例：export MD_NUM=10
+# WITHOUT_MD_NUM: PR中MD文件改动之外的改动文件数量，用于判断进行文档超链接检测后是否进行正常的CI，默认为空，设置示例：export WITHOUT_MD_NUM=10
 
 # set -x
 if [[ $MODE == 'PaddleX' ]];then
     failed_cmd_list=""
 fi
-
-
 
 
 #################################################### Functions ######################################################
@@ -214,7 +214,6 @@ function prepare_and_run(){
 # 全量级：根据 config.txt 抓取 PaddleX 支持的所有模型并测试，示例 bash ci_run.sh PaddleX
 # 增量级：根据 config.txt 和 传入的 changed_list.txt 抓取新增或修改的模型，对新增模型进行增量测试，示例 bash ci_run.sh PaddleX changed_list.txt
 
-
 # 指定 python
 PYTHON_PATH="python"
 # 获取当前脚本的绝对路径，获得基准目录
@@ -222,8 +221,32 @@ BASE_PATH=$(cd "$(dirname $0)"; pwd)
 MODULE_OUTPUT_PATH=${BASE_PATH}/outputs
 CONFIG_FILE=${BASE_PATH}/config.txt
 pip config set global.index-url https://mirrors.bfsu.edu.cn/pypi/web/simple
+pip install beautifulsoup4==4.12.3
+pip install markdown
 declare -A weight_dict
 declare -A model_dict
+
+#################################################### 代码风格检查 ######################################################
+pre-commit
+last_status=${PIPESTATUS[0]}
+if [[ $last_status != 0 ]]; then
+    echo "pre-commit check failed, please fix it first."
+    exit 1
+fi
+
+#################################################### 文档超链接检查 ######################################################
+if [[ ! $MD_NUM -eq 0 && ! -z $MD_NUM  ]];then
+    checker_url_cmd="${PYTHON_PATH} ${BASE_PATH}/checker.py --check_url -m internal"
+    eval $checker_url_cmd
+    last_status=${PIPESTATUS[0]}
+    if [[ $last_status != 0 ]]; then
+        echo "check urls in documentation failed. please fix invalid urls."
+        exit 1
+    elif [[ $WITHOUT_MD_NUM -eq 0 ]];then
+        echo "this pr is all markdown files, so skip it."
+        exit 0
+    fi
+fi
 
 # 安装paddlex，完成环境准备
 install_pdx_cmd="pip install -e ."
@@ -290,7 +313,7 @@ IFS='*'
 modules_info_list=($(cat ${CONFIG_FILE}))
 all_module_names=`cat $CONFIG_FILE | grep module_name | awk -F ':' {'print$2'}`
 
-unset http_proxy https_proxy
+unset http_proxy https_proxy no_proxy
 IFS=$' '
 for modules_info in ${modules_info_list[@]}; do
     IFS='='
@@ -394,6 +417,12 @@ for pipeline_yaml in ${PIPELINE_YAML_LIST[@]};do
     input=`cat paddlex/pipelines/${pipeline_yaml} | grep input | awk {'print$2'}`
     check_pipeline $pipeline_name "" "" $input
 done
+
+# 全量CI检查全部URL
+if [[ $MODE == 'PaddleX' && -z $MODEL_LIST_FILE ]];then
+    checker_url_cmd="${PYTHON_PATH} ${BASE_PATH}/checker.py --check_url -m all"
+    eval $checker_url_cmd
+fi
 
 if [[ $MODE == 'PaddleX' && ! -z $failed_cmd_list ]];then
     echo $failed_cmd_list
