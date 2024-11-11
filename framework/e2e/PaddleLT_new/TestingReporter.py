@@ -7,6 +7,7 @@
 """
 
 import os
+from pltools.res_save import xlsx_save
 from pltools.logger import Logger
 from db.layer_db import LayerBenchmarkDB
 from db.info_map import precision_md5, performance_md5
@@ -27,7 +28,6 @@ class TestingReporter(object):
         self.pwd = os.getcwd()
 
         self.storage = "./apibm_config.yml"
-
         self.task_list = task_list
         self.date_interval = date_interval
         self.logger = Logger("PLTReporter")
@@ -40,9 +40,10 @@ class TestingReporter(object):
         relative_fail_dict, absolute_fail_dict = layer_db.get_precision_fail_case_dict(
             task_list=self.task_list, date_interval=self.date_interval
         )
+        xlsx_save(relative_fail_dict, "./relative_fail_dict.xlsx")
         return relative_fail_dict, absolute_fail_dict
 
-    def pisector_user(self):
+    def binary_search(self):
         """
         使用二分工具
         """
@@ -60,16 +61,17 @@ class TestingReporter(object):
                     bs = BinarySearch(
                         good_commit=baseline_commit, bad_commit=latest_commit, layerfile=layer_file, testing=testing
                     )
-                    final_commit, commit_list, commit_list_origin = bs._run()
+                    final_commit, commit_list, commit_list_origin, check_info = bs._run()
                     res_dict[task][layer_file] = {
                         "final_commit": final_commit,
                         "commit_list": commit_list,
                         "commit_list_origin": commit_list_origin,
+                        "check_info": check_info,
                     }
 
         return res_dict
 
-    # def pisector_user_old(self):
+    # def binary_search_old(self):
     #     """
     #     使用二分工具
     #     """
@@ -112,6 +114,6 @@ if __name__ == "__main__":
     relative_fail_dict, absolute_fail_dict = reporter.get_fail_case_info()
     print(f"relative_fail_dict:{relative_fail_dict}")
     # 打印出commit定位结果
-    res_dict = reporter.pisector_user()
+    res_dict = reporter.binary_search()
     print("test end")
     print(f"res_dict:{res_dict}")

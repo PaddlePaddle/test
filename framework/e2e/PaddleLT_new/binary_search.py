@@ -18,25 +18,6 @@ from pltools.logger import Logger
 from pltools.res_save import save_pickle
 
 
-# def get_commits(start, end):
-#     """
-#     get all the commits in search interval
-#     """
-#     print("start:{}".format(start))
-#     print("end:{}".format(end))
-#     cmd = "git log {}..{} --pretty=oneline".format(start, end)
-#     log = subprocess.getstatusoutput(cmd)
-#     print(log[1])
-#     commit_list = []
-#     candidate_commit = log[1].split("\n")
-#     print(candidate_commit)
-#     for commit in candidate_commit:
-#         commit = commit.split(" ")[0]
-#         print("commit:{}".format(commit))
-#         commit_list.append(commit)
-#     return commit_list
-
-
 class BinarySearch(object):
     """
     性能/精度通用二分定位工具
@@ -256,35 +237,41 @@ class BinarySearch(object):
         self.logger.get_log().info(f"real commit list is: {commit_list}")
         save_pickle(data=commit_list, filename="commit_list.pickle")
 
-        final_commit = self._commit_locate(commits=commit_list)
+        final_commit = self._commit_locate(commits=commit_list)  # 理论报错commit
 
-        return final_commit, commit_list, commit_list_origin
+        self.logger.get_log().info("准备进行二分定位结果复验")
+        final_index = commit_list.index(final_commit)
+        check_commit = commit_list[final_index + 1]  # 前一个commit(list不包含未编出的包)
+        final_index_origin = commit_list_origin.index(final_commit)
+        check_commit_origin = commit_list_origin[final_index_origin + 1]  # 前一个commit(list包含未编出的包)
+
+        # 开始复验
+        bool_final_res = 0
+        bool_check_res = 0
+        loop_num = 5
+        self._install_paddle(final_commit)
+        for i in range(loop_num):
+            bool_res_0 = self._precision_debug(final_commit)
+            bool_final_res += int(bool_res_0)
+        self._install_paddle(check_commit)
+        for i in range(loop_num):
+            bool_res_1 = self._precision_debug(check_commit)
+            bool_check_res += int(bool_res_1)
+
+        if bool_final_res == 0 and bool_check_res == loop_num and check_commit == check_commit_origin:
+            check_info = "复验流程通过, 定位到的commit就是最终结果。"
+            self.logger.get_log().info(check_info)
+        elif bool_final_res == 0 and bool_check_res == loop_num and check_commit != check_commit_origin:
+            check_info = "复验流程通过, 但有些whl包缺失, 所以定位到的commit可能不是最终结果。"
+            self.logger.get_log().info(check_info)
+        else:
+            check_info = "复验流程未通过, 该case存在偶现报错, 需要手动排查。"
+            self.logger.get_log().info(check_info)
+
+        return final_commit, commit_list, commit_list_origin, check_info
 
 
 if __name__ == "__main__":
-    # cur_path = os.getcwd()
-    # if not os.path.exists("paddle"):
-    #     os.system("git clone -b develop http://github.com/paddlepaddle/paddle.git")
-    # os.chdir(os.path.join(cur_path, "paddle"))
-    # start_commit = "651e66ba06f3ae26c3cf649f83a9a54b486ce75d"  # 成功commit
-    # end_commit = "5ad596c983e6f6626a6d879b17834d15664946bc"  # 失败commit
-    # commits = get_commits(start=start_commit, end=end_commit)
-    # save_pickle(data=commits, filename="candidate_commits.pickle")
-    # print("the candidate commits is {}".format(commits))
-
-    # os.chdir(cur_path)
-    # final_commit = BinarySearch(
-    #     commit_list=commits,
-    #     title="PrecisionBS",
-    #     layerfile="./layercase/sublayer1000/Det_cases/gfl_gfl_r101vd_fpn_mstrain_2x_coco/SIR_145.py",
-    #     testing="yaml/dy^dy2stcinn_train_inputspec.yml",
-    #     perf_decay=None,  # ["dy2st_eval_cinn_perf", 0.042814, -0.3]
-    #     test_obj=LayerTest,
-    # )._commit_locate(commits)
-    # print("the pr with problem is {}".format(final_commit))
-    # f = open("final_commit.txt", "w")
-    # f.writelines("the final commit is:{}".format(final_commit))
-    # f.close()
     bs = BinarySearch(
         good_commit="651e66ba06f3ae26c3cf649f83a9a54b486ce75d",
         bad_commit="5ad596c983e6f6626a6d879b17834d15664946bc",
@@ -293,8 +280,9 @@ if __name__ == "__main__":
         perf_decay=None,  # ["dy2st_eval_cinn_perf", 0.042814, -0.3]
         test_obj=LayerTest,
     )
-    final_commit, commit_list, commit_list_origin = bs._run()
+    final_commit, commit_list, commit_list_origin, check_info = bs._run()
     print("test end")
     print("final_commit:{}".format(final_commit))
     print("commit_list:{}".format(commit_list))
     print("commit_list_origin:{}".format(commit_list_origin))
+    print("check_info:{}".format(check_info))
