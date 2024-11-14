@@ -48,6 +48,11 @@ jobs:
             submodules: "false"
             fetch_depth: 1
             path: "PaddleNLP"
+          - repository: "PaddlePaddle/PaddleVideo"
+            ref: "develop"
+            submodules: "false"
+            fetch_depth: 1
+            path: "PaddleVideo"
     steps:
       - name: PaddleTest Checkout
         uses: actions/checkout@v4
