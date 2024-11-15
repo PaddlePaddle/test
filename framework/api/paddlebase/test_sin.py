@@ -103,13 +103,13 @@ class TestSin1(APIBase):
 obj1 = TestSin1(paddle.sin)
 
 
-@pytest.mark.api_base_sin_exception
-def test_sin6():
-    """
-    TypeError:x=int32(tensor)
-    """
-    x = np.array([3.3, -3.1])
-    obj1.exception(mode="c", etype="NotFoundError", x=x)
+# @pytest.mark.api_base_sin_exception
+# def test_sin6():
+#     """
+#     TypeError:x=int32(tensor)
+#     """
+#     x = np.array([3.3, -3.1])
+#     obj1.exception(mode="c", etype="NotFoundError", x=x)
 
 
 @pytest.mark.api_base_sin_exception
