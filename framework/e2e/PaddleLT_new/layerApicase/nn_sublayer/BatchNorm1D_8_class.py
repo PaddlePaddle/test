@@ -10,7 +10,7 @@ class LayerCase(paddle.nn.Layer):
 
     def __init__(self):
         super(LayerCase, self).__init__()
-        self.func = paddle.nn.BatchNorm1D(num_features=1, momentum=0.1, epsilon=1e-05, weight_attr=False, data_format='NCL', )
+        self.func = paddle.nn.BatchNorm1D(num_features=1, momentum=0.1, epsilon=1e-05, weight_attr=False, bias_attr=False, data_format='NCL', )
 
     def forward(self, data, ):
         """
