@@ -2,7 +2,6 @@
 # exit 0
 
 
-#pip install paddlenlp==3.0.0b0
 
 pip install paddlenlp==v3.0.0-beta2 
 # 尝试切换到develop的部分

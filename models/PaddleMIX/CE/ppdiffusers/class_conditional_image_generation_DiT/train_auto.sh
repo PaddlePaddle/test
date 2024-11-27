@@ -15,7 +15,7 @@ SHARDING_DEGREE=8 # sharding_parallel_degree
 
 config_file=config/DiT_XL_patch2.json
 OUTPUT_DIR=./output_trainer/DiT_XL_patch2_auto_trainer
-feature_path=./fastdit_imagenet256
+feature_path=./fastdit_imagenet256_tiny
 
 per_device_train_batch_size=32
 gradient_accumulation_steps=1

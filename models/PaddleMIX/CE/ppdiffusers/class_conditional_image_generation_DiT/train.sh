@@ -63,5 +63,15 @@ ${TRAINING_PYTHON} train_image_generation_trainer.py \
     --pipeline_parallel_degree 1 \
     --sep_parallel_degree 1
 
-rm -rf ./fastdit_imagenet256_tiny
-rm -rf ${OUTPUT_DIR}
+#!/bin/bash
+TARGET_DIR="./"
+FILES=$(find "$TARGET_DIR" -type f -name "test_*.py")
+if [ -z "$FILES" ]; then
+    echo "没有找到以test_开头的文件。"
+    exit 1
+for FILE in $FILES; do
+    echo "正在执行测试文件：$FILE"
+    pytest "$FILE"
+    if [ $? -ne 0 ]; then
+        echo "测试文件 $FILE 执行失败。"
+    fi
