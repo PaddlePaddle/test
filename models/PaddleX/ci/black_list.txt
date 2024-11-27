@@ -1,36 +1,11 @@
 ################################### All ##################################
-All:PP-YOLOE_plus_SOD-largesize-L
 ################################## Train #################################
 ################################ Evaluate ################################
 ################################# Predict ################################
-Predict:PP-YOLOE_seg-S
-Predict:MaskRCNN-ResNet50
-Predict:MaskRCNN-ResNet50-FPN
-Predict:MaskRCNN-ResNet50-vd-FPN
-Predict:MaskRCNN-ResNet101-FPN
-Predict:MaskRCNN-ResNet101-vd-FPN
-Predict:MaskRCNN-ResNeXt101-vd-FPN
-Predict:Cascade-MaskRCNN-ResNet50-vd-SSLDv2-FPN
-Predict:Cascade-MaskRCNN-ResNet50-FPN
-Predict:Nonstationary_ad
 Predict:TimesNet_ad
-Predict:PatchTST_ad
-Predict:DLinear_ad
-Predict:PP-YOLOE_plus_SOD-L
-Predict:PP-YOLOE_plus_SOD-S
-Predict:Cascade-FasterRCNN-ResNet50-vd-SSLDv2-FPN
-Predict:Cascade-FasterRCNN-ResNet50-FPN
-Predict:FasterRCNN-Swin-Tiny-FPN
-Predict:FasterRCNN-ResNeXt101-vd-FPN
-Predict:FasterRCNN-ResNet101-FPN
-Predict:FasterRCNN-ResNet101
-Predict:FasterRCNN-ResNet50-vd-SSLDv2-FPN
-Predict:FasterRCNN-ResNet50-vd-FPN
-Predict:FasterRCNN-ResNet50-FPN
-Predict:FasterRCNN-ResNet50
-Predict:FasterRCNN-ResNet34-FPN
 ################################## Export ################################
 ################################# Pipeline ###############################
 Pipeline:PP-ChatOCRv3-doc
 Pipeline:PP-ShiTuV2
 Pipeline:face_recognition
+Pipeline:ts_ad

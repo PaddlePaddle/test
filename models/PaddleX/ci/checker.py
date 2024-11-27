@@ -227,8 +227,8 @@ class PostTrainingChecker:
                     pass_flag = False
         else:
             show_type = json_data.get("show_type")
-            if show_type not in ["image", "txt", "csv"]:
-                check_dataset_json_message.append(f"检查失败：{show_type} 必须为'image', 'txt', 'csv'其中一个")
+            if show_type not in ["image", "txt", "csv", "video"]:
+                check_dataset_json_message.append(f"检查失败：{show_type} 必须为'image', 'txt', 'csv','video'其中一个")
                 pass_flag = False
 
             if module_name == "general_recognition":
@@ -249,6 +249,7 @@ class PostTrainingChecker:
                 or "table" in module_name
                 or "formula" in module_name
                 or module_name == "general_recognition"
+                or module_name == "face_feature"
             ):
                 try:
                     num_class = int(json_data["attributes"].get("num_classes"))
@@ -368,7 +369,7 @@ class PostTrainingChecker:
 
         if args.check_train_result_json:
             # 检查 train_result.json 内容
-            train_result_json = os.path.join(output_dir, "train_results.json")
+            train_result_json = os.path.join(output_dir, "train_result.json")
             check_weights_items = args.check_weights_items
             check_train_json_message = []
             check_train_json_flag, check_train_json_message = self.check_train_json_content(

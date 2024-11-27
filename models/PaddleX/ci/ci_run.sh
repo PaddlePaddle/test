@@ -11,8 +11,8 @@ MODEL_LIST_FILE=$2
 # MD_NUM: PR中MD文件改动数量，用于判断是否需要进行文档超链接检测，默认为空，设置示例：export MD_NUM=10
 # WITHOUT_MD_NUM: PR中MD文件改动之外的改动文件数量，用于判断进行文档超链接检测后是否进行正常的CI，默认为空，设置示例：export WITHOUT_MD_NUM=10
 
-# set -x
 if [[ $MODE == 'PaddleX' ]];then
+    set -x
     failed_cmd_list=""
 fi
 
@@ -52,25 +52,25 @@ function run_command(){
     printf "\e[32m|%-20s| %-50s | %-20s\n\e[0m" "[${time_stamp}]" "${command}"
     eval $command
     last_status=${PIPESTATUS[0]}
+    n=1
+    # Try 2 times to run command if it fails
     if [[ $MODE != 'PaddleX' ]];then
-        n=1
-        # Try 3 times to run command if it fails
         while [[ $last_status != 0 ]]; do
             sleep 10
             n=`expr $n + 1`
             printf "\e[32m|%-20s| %-50s | %-20s\n\e[0m" "[${time_stamp}]" "${command}"
+            sync
+            echo 1 > /proc/sys/vm/drop_caches
             eval $command
             last_status=${PIPESTATUS[0]}
-            if [[ $n -eq 3 && $last_status != 0 ]]; then
-                echo "Retry 3 times failed with command: ${command}"
+            if [[ $n -eq 2 && $last_status != 0 ]]; then
+                echo "Retry 2 times failed with command: ${command}"
                 exit 1
             fi
         done
-    else
-        if [[ $last_status != 0 ]];then
-            failed_cmd_list="$failed_cmd_list \n ${module_name} | command: ${command}"
-            echo "Run ${command} failed"
-        fi
+    elif [[ $last_status != 0 ]]; then
+        failed_cmd_list="$failed_cmd_list \n ${module_name} | command: ${command}"
+        echo "Run ${command} failed"
     fi
 }
 
@@ -188,7 +188,9 @@ function run_models(){
                 checker_cmd="${PYTHON_PATH} ${BASE_PATH}/checker.py --check --$check_option --output ${model_output_path} --check_weights_items ${check_weights_items} --module_name ${module_name}"
                 run_command ${checker_cmd} ${module_name}
             done
-            rm -rf ${model_output_path}/*[0-9]*
+            if [[ $last_status -eq 0 ]];then
+                rm -rf ${model_output_path}
+            fi
         fi
     done
     model_dict[$module_name]="$model_list"
@@ -222,16 +224,19 @@ MODULE_OUTPUT_PATH=${BASE_PATH}/outputs
 CONFIG_FILE=${BASE_PATH}/config.txt
 pip config set global.index-url https://mirrors.bfsu.edu.cn/pypi/web/simple
 pip install beautifulsoup4==4.12.3
+pip install tqdm
 pip install markdown
 declare -A weight_dict
 declare -A model_dict
 
 #################################################### 代码风格检查 ######################################################
-pre-commit
-last_status=${PIPESTATUS[0]}
-if [[ $last_status != 0 ]]; then
-    echo "pre-commit check failed, please fix it first."
-    exit 1
+if [[ DEVICE_TYPE == 'gpu' ]];then
+    pre-commit
+    last_status=${PIPESTATUS[0]}
+    if [[ $last_status != 0 ]]; then
+        echo "pre-commit check failed, please fix it first."
+        exit 1
+    fi
 fi
 
 #################################################### 文档超链接检查 ######################################################
@@ -256,9 +261,16 @@ eval $install_pdx_cmd
 if [[ -z $MEM_SIZE ]]; then
     MEM_SIZE=16
 fi
+
 if [[ -z $DEVICE_TYPE ]]; then
     DEVICE_TYPE='gpu'
 fi
+
+PIPE_TYPE=$DEVICE_TYPE
+if [[ $DEVICE_TYPE == 'dcu' ]]; then
+    DEVICE_TYPE='gpu'
+fi
+
 if [[ -z $DEVICE_ID ]]; then
     DEVICE_ID='0,1,2,3'
 fi
@@ -380,6 +392,9 @@ for modules_info in ${modules_info_list[@]}; do
     done
 done
 
+if [[ $PIPE_TYPE != 'gpu' ]];then
+    exit 0
+fi
 #################################################### 产线级测试 ######################################################
 IFS=$'\n'
 PIPELINE_YAML_LIST=`ls paddlex/pipelines | grep .yaml`
