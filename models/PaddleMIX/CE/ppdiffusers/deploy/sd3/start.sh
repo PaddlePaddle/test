@@ -6,7 +6,7 @@ log_dir=${root_path}/deploy_log
 if [ ! -d "$log_dir" ]; then
     mkdir -p "$log_dir"
 fi
-
+export PYTHONPATH=$PYTHONPATH:${cur_path}/PaddleMIX
 
 
 work_path2=${root_path}/PaddleMIX/ppdiffusers/deploy/sd3
