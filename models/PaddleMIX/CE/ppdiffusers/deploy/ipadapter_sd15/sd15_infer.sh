@@ -8,7 +8,6 @@ fi
 
 export FLAGS_use_cuda_managed_memory=true
 export USE_PPXFORMERS=False
-export CUDA_VISIBLE_DEVICES=5
 
 export FLAGS_allocator_strategy=auto_growth
 

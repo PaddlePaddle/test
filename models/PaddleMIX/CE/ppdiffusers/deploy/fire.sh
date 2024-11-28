@@ -34,7 +34,21 @@ done
 
 echo "exit code: $exit_code"
 
+echo "*****************pip list********************"
+pip list | grep paddle
+
+echo "*****************pip list fastdeploy********************"
+
+pip list | grep fastdeploy
+
+python -c "
+import paddle
+
+print('Paddle Commit:', paddle.version.commit)
+"
+
 # 查看结果
 cat ${log_dir}/ce_res.log
+
 
 exit $exit_code
