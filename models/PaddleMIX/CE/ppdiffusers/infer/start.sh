@@ -1112,8 +1112,15 @@ echo "*******infer video_to_video_generation_video_to_video end***********"
 echo "*****************pip list********************"
 pip list | grep paddle
 
+echo "*****************pip list fastdeploy********************"
 
 pip list | grep fastdeploy
+
+python -c "
+import paddle
+
+print('Paddle Commit:', paddle.version.commit)
+"
 
 echo "*****************infer result********************"
 cat ${log_dir}/infer_res.log
