@@ -32,6 +32,10 @@ pip install fastdeploy-gpu-python -f https://www.paddlepaddle.org.cn/whl/fastdep
 cd ${work_path}
 exit_code=0
 
+export FLAGS_use_cuda_managed_memory=true
+export FLAGS_allocator_strategy=auto_growth
+export FLAGS_embedding_deterministic=1
+export FLAGS_cudnn_deterministic=1
 
 echo "*******infer dual_text_and_image_guided_generation-versatile_diffusion begin***********"
 (python dual_text_and_image_guided_generation-versatile_diffusion.py) 2>&1 | tee ${log_dir}/dual_text_and_image_guided_generation-versatile_diffusion.log
@@ -1103,6 +1107,16 @@ else
     echo "infer video_to_video_generation_video_to_video run fail" >>"${log_dir}/infer_res.log"
 fi
 echo "*******infer video_to_video_generation_video_to_video end***********"
+
+# 查看结果
+echo "*****************pip list********************"
+pip list | grep paddle
+
+
+pip list | grep fastdeploy
+
+echo "*****************infer result********************"
+cat ${log_dir}/infer_res.log
 
 echo exit_code:${exit_code}
 exit ${exit_code}
