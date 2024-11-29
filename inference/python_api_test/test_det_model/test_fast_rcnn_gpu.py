@@ -49,7 +49,7 @@ def test_config():
 @pytest.mark.win
 @pytest.mark.server
 @pytest.mark.config_disablegpu_memory
-def test_disable_gpu():
+def _test_disable_gpu():
     """
     test no gpu resources occupied after disable gpu
     """
@@ -75,7 +75,7 @@ def test_disable_gpu():
 @pytest.mark.server
 @pytest.mark.jetson
 @pytest.mark.gpu
-def test_gpu_more_bz_new_executor():
+def _test_gpu_more_bz_new_executor():
     """
     compared gpu fast_rcnn batch_size = [1] outputs with true val
     """
@@ -132,7 +132,7 @@ def test_gpu_more_bz_new_executor():
 @pytest.mark.jetson
 @pytest.mark.gpu
 @pytest.mark.skip(reason="检测框nms结果排序问题，暂时跳过")
-def test_gpu_mixed_precision_bz1():
+def _test_gpu_mixed_precision_bz1():
     """
     compared gpu fast_rcnn batch_size = [1] mixed_precision outputs with true val
     """

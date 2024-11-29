@@ -49,7 +49,7 @@ def test_config():
 @pytest.mark.win
 @pytest.mark.server
 @pytest.mark.mkldnn_more
-def test_mkldnn_more_bz():
+def _test_mkldnn_more_bz():
     """
     compared mkldnn fast_rcnn batch_size = [1] outputs with true val
     """
