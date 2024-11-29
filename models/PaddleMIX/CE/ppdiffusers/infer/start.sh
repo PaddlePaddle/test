@@ -275,19 +275,6 @@ fi
 echo "*******infer instruct_pix2pix-stable_diffusion_xl end***********"
 
 
-
-echo "*******infer sd15_infer_demo begin***********"
-(python sd15_infer_demo.py) 2>&1 | tee ${log_dir}/sd15_infer_demo.log
-tmp_exit_code=${PIPESTATUS[0]}
-exit_code=$(($exit_code + ${tmp_exit_code}))
-if [ ${tmp_exit_code} -eq 0 ]; then
-    echo "infer sd15_infer_demo run success" >>"${log_dir}/infer_res.log"
-else
-    echo "infer sd15_infer_demo run fail" >>"${log_dir}/infer_res.log"
-fi
-echo "*******infer sd15_infer_demo end***********"
-
-
 echo "*******infer super_resolution-latent_diffusion begin***********"
 (python super_resolution-latent_diffusion.py) 2>&1 | tee ${log_dir}/super_resolution-latent_diffusion.log
 tmp_exit_code=${PIPESTATUS[0]}
