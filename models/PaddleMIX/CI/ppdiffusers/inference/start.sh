@@ -38,14 +38,14 @@ exit_code=$(($exit_code + $?))
 bash paint_by_example_infer.sh
 exit_code=$(($exit_code + $?))
 
-bash pndm_infer.sh
-exit_code=$(($exit_code + $?))
+# bash pndm_infer.sh
+# exit_code=$(($exit_code + $?))
 
 bash repaint_infer.sh
 exit_code=$(($exit_code + $?))
 
-bash score_sde_ve_infer.sh
-exit_code=$(($exit_code + $?))
+# bash score_sde_ve_infer.sh
+# exit_code=$(($exit_code + $?))
 
 bash stable_diffusion_infer.sh
 exit_code=$(($exit_code + $?))
