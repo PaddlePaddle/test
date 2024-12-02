@@ -10,5 +10,5 @@ echo ${work_path}/
 cd ${work_path}
 pip install -e .
 
-
+cp ../change_paddlenlp_version.sh ${root_path}/PaddleMIX
 bash ${root_path}/PaddleMIX/change_paddlenlp_version.sh
