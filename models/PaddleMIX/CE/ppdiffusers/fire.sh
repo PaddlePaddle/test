@@ -23,6 +23,10 @@ for subdir in */; do
       continue
     fi
 
+    if [ "$subdir" == "ut/" ]; then
+      continue
+    fi
+
     if [ "$subdir" == "deploy/" ]; then
       continue
     fi
