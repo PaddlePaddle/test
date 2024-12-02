@@ -39,6 +39,10 @@ for subdir in */; do
       continue
     fi
 
+    if [ "$subdir" == "sdxl/" ]; then
+      continue
+    fi
+
     start_script_path="$subdir/start.sh"
 
     # 检查start.sh文件是否存在
