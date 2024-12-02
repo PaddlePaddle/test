@@ -23,19 +23,19 @@ for subdir in */; do
       continue
     fi
 
-    if [ "$subdir" == "ipadapter_sd15" ]; then
+    if [ "$subdir" == "ipadapter_sd15/" ]; then
       continue
     fi
 
-    if [ "$subdir" == "ipadapter_sdxl" ]; then
+    if [ "$subdir" == "ipadapter_sdxl/" ]; then
       continue
     fi
 
-    if [ "$subdir" == "sd15" ]; then
+    if [ "$subdir" == "sd15/" ]; then
       continue
     fi
 
-    if [ "$subdir" == "sd3" ]; then
+    if [ "$subdir" == "sd3/" ]; then
       continue
     fi
 
