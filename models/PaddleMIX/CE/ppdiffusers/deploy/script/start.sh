@@ -19,7 +19,7 @@ cd ${work_path}
 
 # controlnet
 cd controlnet
-(bash controlnet/scripts/benchmark_paddle_deploy.sh) 2>&1 | tee ${log_dir}/controlnet.log
+(bash scripts/benchmark_paddle_deploy.sh) 2>&1 | tee ${log_dir}/controlnet.log
 tmp_exit_code=${PIPESTATUS[0]}
 exit_code=$(($exit_code + ${tmp_exit_code}))
 if [ ${tmp_exit_code} -eq 0 ]; then
@@ -31,7 +31,7 @@ echo "*******ppdiffusers/deploy/controlnet end***********"
 
 
 # controlnet_tensorrt
-(bash controlnet/scripts/benchmark_paddle_deploy_tensorrt.sh) 2>&1 | tee ${log_dir}/controlnet_tensorrt.log
+(bash scripts/benchmark_paddle_deploy_tensorrt.sh) 2>&1 | tee ${log_dir}/controlnet_tensorrt.log
 tmp_exit_code=${PIPESTATUS[0]}
 exit_code=$(($exit_code + ${tmp_exit_code}))
 if [ ${tmp_exit_code} -eq 0 ]; then
@@ -46,7 +46,7 @@ cd ..
 
 # ipadapter/sd15
 cd ipadapter/sd15
-(bash ipadapter/sd15/scripts/benchmark_paddle_deploy.sh) 2>&1 | tee ${log_dir}/ipadapter_sd15.log
+(bash scripts/benchmark_paddle_deploy.sh) 2>&1 | tee ${log_dir}/ipadapter_sd15.log
 tmp_exit_code=${PIPESTATUS[0]}
 exit_code=$(($exit_code + ${tmp_exit_code}))
 if [ ${tmp_exit_code} -eq 0 ]; then
@@ -57,7 +57,7 @@ fi
 echo "*******ppdiffusers/deploy/ipadapter_sd15 end***********"
 
 # ipadapter/sd15 tensorrt
-(bash ipadapter/sd15/scripts/benchmark_paddle_deploy_tensorrt.sh) 2>&1 | tee ${log_dir}/ipadapter_sd15_tensorrt.log
+(bash scripts/benchmark_paddle_deploy_tensorrt.sh) 2>&1 | tee ${log_dir}/ipadapter_sd15_tensorrt.log
 tmp_exit_code=${PIPESTATUS[0]}
 exit_code=$(($exit_code + ${tmp_exit_code}))
 if [ ${tmp_exit_code} -eq 0 ]; then
@@ -70,7 +70,7 @@ cd ../../
 
 # ipadapter sdxl
 cd ipadapter/sdxl
-(bash ipadapter/sdxl/scripts/benchmark_paddle_deploy.sh) 2>&1 | tee ${log_dir}/ipadapter_sdxl.log
+(bash scripts/benchmark_paddle_deploy.sh) 2>&1 | tee ${log_dir}/ipadapter_sdxl.log
 tmp_exit_code=${PIPESTATUS[0]}
 exit_code=$(($exit_code + ${tmp_exit_code}))
 if [ ${tmp_exit_code} -eq 0 ]; then
@@ -81,7 +81,7 @@ fi
 echo "*******ppdiffusers/deploy/ipadapter_sdxl end***********"
 
 # ipadapter sdxl tensorrt
-(bash ipadapter/sdxl/scripts/benchmark_paddle_deploy_tensorrt.sh) 2>&1 | tee ${log_dir}/ipadapter_sdxl_tensorrt.log
+(bash scripts/benchmark_paddle_deploy_tensorrt.sh) 2>&1 | tee ${log_dir}/ipadapter_sdxl_tensorrt.log
 tmp_exit_code=${PIPESTATUS[0]}
 exit_code=$(($exit_code + ${tmp_exit_code}))
 if [ ${tmp_exit_code} -eq 0 ]; then
@@ -94,7 +94,7 @@ cd ../../
 
 # sd15
 cd sd15
-(bash sd15/scripts/benchmark_paddle_deploy.sh) 2>&1 | tee ${log_dir}/sd15.log
+(bash scripts/benchmark_paddle_deploy.sh) 2>&1 | tee ${log_dir}/sd15.log
 tmp_exit_code=${PIPESTATUS[0]}
 exit_code=$(($exit_code + ${tmp_exit_code}))
 if [ ${tmp_exit_code} -eq 0 ]; then
@@ -106,7 +106,7 @@ echo "*******ppdiffusers/deploy/sd15 end***********"
 
 
 # sd15_tensorrt
-(bash sd15/scripts/benchmark_paddle_deploy_tensorrt.sh) 2>&1 | tee ${log_dir}/sd15_tensorrt.log
+(bash scripts/benchmark_paddle_deploy_tensorrt.sh) 2>&1 | tee ${log_dir}/sd15_tensorrt.log
 tmp_exit_code=${PIPESTATUS[0]}
 exit_code=$(($exit_code + ${tmp_exit_code}))
 if [ ${tmp_exit_code} -eq 0 ]; then
@@ -119,7 +119,7 @@ cd ..
 
 # sdxl
 cd sdxl
-(bash sdxl/scripts/benchmark_paddle_deploy.sh) 2>&1 | tee ${log_dir}/sdxl.log
+(bash scripts/benchmark_paddle_deploy.sh) 2>&1 | tee ${log_dir}/sdxl.log
 tmp_exit_code=${PIPESTATUS[0]}
 exit_code=$(($exit_code + ${tmp_exit_code}))
 if [ ${tmp_exit_code} -eq 0 ]; then
@@ -131,7 +131,7 @@ echo "*******ppdiffusers/deploy/sdxl end***********"
 
 
 # sdxl_tensorrt
-(bash sdxl/scripts/benchmark_paddle_deploy_tensorrt.sh) 2>&1 | tee ${log_dir}/sdxl_tensorrt.log
+(bash scripts/benchmark_paddle_deploy_tensorrt.sh) 2>&1 | tee ${log_dir}/sdxl_tensorrt.log
 tmp_exit_code=${PIPESTATUS[0]}
 exit_code=$(($exit_code + ${tmp_exit_code}))
 if [ ${tmp_exit_code} -eq 0 ]; then
@@ -144,7 +144,7 @@ cd ..
 
 # sd3 
 cd sd3
-(bash sd3/scripts/benchmark_paddle.sh) 2>&1 | tee ${log_dir}/sd3.log
+(bash scripts/benchmark_paddle.sh) 2>&1 | tee ${log_dir}/sd3.log
 tmp_exit_code=${PIPESTATUS[0]}
 exit_code=$(($exit_code + ${tmp_exit_code}))
 if [ ${tmp_exit_code} -eq 0 ]; then
