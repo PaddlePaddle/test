@@ -19,6 +19,26 @@ for subdir in */; do
       continue
     fi
 
+    if [ "$subdir" == "controlnet/" ]; then
+      continue
+    fi
+
+    if [ "$subdir" == "ipadapter_sd15" ]; then
+      continue
+    fi
+
+    if [ "$subdir" == "ipadapter_sdxl" ]; then
+      continue
+    fi
+
+    if [ "$subdir" == "sd15" ]; then
+      continue
+    fi
+
+    if [ "$subdir" == "sd3" ]; then
+      continue
+    fi
+
     start_script_path="$subdir/start.sh"
 
     # 检查start.sh文件是否存在
