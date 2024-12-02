@@ -19,14 +19,18 @@ for subdir in */; do
   if [ -d "$subdir" ]; then
 
     # 检查子目录是否为"deploy"，如果是，则跳过(该目录需要在A100设备下跑)
-    # if [ "$subdir" == "deploy/" ]; then
-    #   continue
-    # fi
+    if [ "$subdir" == "infer/" ]; then
+      continue
+    fi
+
+    if [ "$subdir" == "deploy/" ]; then
+      continue
+    fi
     
     # 32g显存跑不了
-    # if [ "$subdir" == "kandinsky2_2_text_to_image/" ]; then
-    #   continue
-    # fi
+    if [ "$subdir" == "kandinsky2_2_text_to_image/" ]; then
+      continue
+    fi
 
     # examples extra
     if [ "$subdir" == "ppdiffusers_example_test/" ]; then
