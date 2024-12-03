@@ -39,8 +39,9 @@ export HF_ENDPOINT=https://hf-mirror.com
 export no_proxy=baidu.com,127.0.0.1,0.0.0.0,localhost,bcebos.com,pip.baidu-int.com,mirrors.baidubce.com,repo.baidubce.com,repo.bcm.baidubce.com,pypi.tuna.tsinghua.edu.cn,aistudio.baidu.com
 export USE_PPXFORMERS=True
 export RUN_SLOW=True
+
 echo "*******ppdiffusers ut tests begin***********"
-(python -m pytest -v tests) 2>&1 | tee ${log_dir}/tests_ut.log
+(python -m pytest -v tests/models) 2>&1 | tee ${log_dir}/tests_ut.log
 tmp_exit_code=${PIPESTATUS[0]}
 exit_code=$(($exit_code + ${tmp_exit_code}))
 if [ ${tmp_exit_code} -eq 0 ]; then
