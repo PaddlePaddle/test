@@ -68,119 +68,119 @@ else
 fi
 echo "*******controlnet multi infer end***********"
 
-echo "*******controlnet gradio_canny2image begin***********"
-(python gradio_canny2image.py) 2>&1 | tee ${log_dir}/controlnet_gradio_canny2image.log
-tmp_exit_code=${PIPESTATUS[0]}
-exit_code=$(($exit_code + ${tmp_exit_code}))
-if [ ${tmp_exit_code} -eq 0 ]; then
-    echo "controlnet gradio_canny2image run success" >>"${log_dir}/ce_res.log"
-else
-    echo "controlnet gradio_canny2image run fail" >>"${log_dir}/ce_res.log"
-fi
-echo "*******controlnet gradio_canny2image end***********"
+# echo "*******controlnet gradio_canny2image begin***********"
+# (python gradio_canny2image.py) 2>&1 | tee ${log_dir}/controlnet_gradio_canny2image.log
+# tmp_exit_code=${PIPESTATUS[0]}
+# exit_code=$(($exit_code + ${tmp_exit_code}))
+# if [ ${tmp_exit_code} -eq 0 ]; then
+#     echo "controlnet gradio_canny2image run success" >>"${log_dir}/ce_res.log"
+# else
+#     echo "controlnet gradio_canny2image run fail" >>"${log_dir}/ce_res.log"
+# fi
+# echo "*******controlnet gradio_canny2image end***********"
 
-echo "*******controlnet gradio_hed2image begin***********"
-(python gradio_hed2image.py) 2>&1 | tee ${log_dir}/controlnet_gradio_hed2image.log
-tmp_exit_code=${PIPESTATUS[0]}
-exit_code=$(($exit_code + ${tmp_exit_code}))
-if [ ${tmp_exit_code} -eq 0 ]; then
-    echo "controlnet gradio_hed2image run success" >>"${log_dir}/ce_res.log"
-else
-    echo "controlnet gradio_hed2image run fail" >>"${log_dir}/ce_res.log"
-fi
-echo "*******controlnet gradio_hed2image end***********"
+# echo "*******controlnet gradio_hed2image begin***********"
+# (python gradio_hed2image.py) 2>&1 | tee ${log_dir}/controlnet_gradio_hed2image.log
+# tmp_exit_code=${PIPESTATUS[0]}
+# exit_code=$(($exit_code + ${tmp_exit_code}))
+# if [ ${tmp_exit_code} -eq 0 ]; then
+#     echo "controlnet gradio_hed2image run success" >>"${log_dir}/ce_res.log"
+# else
+#     echo "controlnet gradio_hed2image run fail" >>"${log_dir}/ce_res.log"
+# fi
+# echo "*******controlnet gradio_hed2image end***********"
 
-echo "*******controlnet gradio_pose2image begin***********"
-(python gradio_pose2image.py) 2>&1 | tee ${log_dir}/controlnet_gradio_hed2image.log
-tmp_exit_code=${PIPESTATUS[0]}
-exit_code=$(($exit_code + ${tmp_exit_code}))
-if [ ${tmp_exit_code} -eq 0 ]; then
-    echo "controlnet gradio_hed2image run success" >>"${log_dir}/ce_res.log"
-else
-    echo "controlnet gradio_hed2image run fail" >>"${log_dir}/ce_res.log"
-fi
-echo "*******controlnet gradio_hed2image end***********"
+# echo "*******controlnet gradio_pose2image begin***********"
+# (python gradio_pose2image.py) 2>&1 | tee ${log_dir}/controlnet_gradio_hed2image.log
+# tmp_exit_code=${PIPESTATUS[0]}
+# exit_code=$(($exit_code + ${tmp_exit_code}))
+# if [ ${tmp_exit_code} -eq 0 ]; then
+#     echo "controlnet gradio_hed2image run success" >>"${log_dir}/ce_res.log"
+# else
+#     echo "controlnet gradio_hed2image run fail" >>"${log_dir}/ce_res.log"
+# fi
+# echo "*******controlnet gradio_hed2image end***********"
 
-echo "*******controlnet gradio_seg2image_segmenter begin***********"
-(python gradio_seg2image_segmenter.py) 2>&1 | tee ${log_dir}/controlnet_gradio_seg2image_segmenter.log
-tmp_exit_code=${PIPESTATUS[0]}
-exit_code=$(($exit_code + ${tmp_exit_code}))
-if [ ${tmp_exit_code} -eq 0 ]; then
-    echo "controlnet gradio_seg2image_segmenter run success" >>"${log_dir}/ce_res.log"
-else
-    echo "controlnet gradio_seg2image_segmenter run fail" >>"${log_dir}/ce_res.log"
-fi
-echo "*******controlnet gradio_seg2image_segmenter end***********"
+# echo "*******controlnet gradio_seg2image_segmenter begin***********"
+# (python gradio_seg2image_segmenter.py) 2>&1 | tee ${log_dir}/controlnet_gradio_seg2image_segmenter.log
+# tmp_exit_code=${PIPESTATUS[0]}
+# exit_code=$(($exit_code + ${tmp_exit_code}))
+# if [ ${tmp_exit_code} -eq 0 ]; then
+#     echo "controlnet gradio_seg2image_segmenter run success" >>"${log_dir}/ce_res.log"
+# else
+#     echo "controlnet gradio_seg2image_segmenter run fail" >>"${log_dir}/ce_res.log"
+# fi
+# echo "*******controlnet gradio_seg2image_segmenter end***********"
 
-echo "*******controlnet gradio_seg2image_segmenter begin***********"
-(python gradio_seg2image_segmenter.py) 2>&1 | tee ${log_dir}/controlnet_gradio_seg2image_segmenter.log
-tmp_exit_code=${PIPESTATUS[0]}
-exit_code=$(($exit_code + ${tmp_exit_code}))
-if [ ${tmp_exit_code} -eq 0 ]; then
-    echo "controlnet gradio_seg2image_segmenter run success" >>"${log_dir}/ce_res.log"
-else
-    echo "controlnet gradio_seg2image_segmenter run fail" >>"${log_dir}/ce_res.log"
-fi
-echo "*******controlnet gradio_seg2image_segmenter end***********"
+# echo "*******controlnet gradio_seg2image_segmenter begin***********"
+# (python gradio_seg2image_segmenter.py) 2>&1 | tee ${log_dir}/controlnet_gradio_seg2image_segmenter.log
+# tmp_exit_code=${PIPESTATUS[0]}
+# exit_code=$(($exit_code + ${tmp_exit_code}))
+# if [ ${tmp_exit_code} -eq 0 ]; then
+#     echo "controlnet gradio_seg2image_segmenter run success" >>"${log_dir}/ce_res.log"
+# else
+#     echo "controlnet gradio_seg2image_segmenter run fail" >>"${log_dir}/ce_res.log"
+# fi
+# echo "*******controlnet gradio_seg2image_segmenter end***********"
 
-echo "*******controlnet gradio_depth2image begin***********"
-(python gradio_depth2image.py) 2>&1 | tee ${log_dir}/controlnet_gradio_depth2image.log
-tmp_exit_code=${PIPESTATUS[0]}
-exit_code=$(($exit_code + ${tmp_exit_code}))
-if [ ${tmp_exit_code} -eq 0 ]; then
-    echo "controlnet gradio_depth2image run success" >>"${log_dir}/ce_res.log"
-else
-    echo "controlnet gradio_depth2image run fail" >>"${log_dir}/ce_res.log"
-fi
-echo "*******controlnet gradio_depth2image end***********"
-
-
-echo "*******controlnet gradio_normal2image begin***********"
-(python gradio_normal2image.py) 2>&1 | tee ${log_dir}/controlnet_gradio_normal2image.log
-tmp_exit_code=${PIPESTATUS[0]}
-exit_code=$(($exit_code + ${tmp_exit_code}))
-if [ ${tmp_exit_code} -eq 0 ]; then
-    echo "controlnet gradio_normal2image run success" >>"${log_dir}/ce_res.log"
-else
-    echo "controlnet gradio_normal2image run fail" >>"${log_dir}/ce_res.log"
-fi
-echo "*******controlnet gradio_normal2image end***********"
+# echo "*******controlnet gradio_depth2image begin***********"
+# (python gradio_depth2image.py) 2>&1 | tee ${log_dir}/controlnet_gradio_depth2image.log
+# tmp_exit_code=${PIPESTATUS[0]}
+# exit_code=$(($exit_code + ${tmp_exit_code}))
+# if [ ${tmp_exit_code} -eq 0 ]; then
+#     echo "controlnet gradio_depth2image run success" >>"${log_dir}/ce_res.log"
+# else
+#     echo "controlnet gradio_depth2image run fail" >>"${log_dir}/ce_res.log"
+# fi
+# echo "*******controlnet gradio_depth2image end***********"
 
 
-echo "*******controlnet gradio_hough2image begin***********"
-(python gradio_hough2image.py) 2>&1 | tee ${log_dir}/controlnet_gradio_hough2image.log
-tmp_exit_code=${PIPESTATUS[0]}
-exit_code=$(($exit_code + ${tmp_exit_code}))
-if [ ${tmp_exit_code} -eq 0 ]; then
-    echo "controlnet gradio_hough2image run success" >>"${log_dir}/ce_res.log"
-else
-    echo "controlnet gradio_hough2image run fail" >>"${log_dir}/ce_res.log"
-fi
-echo "*******controlnet gradio_hough2image end***********"
+# echo "*******controlnet gradio_normal2image begin***********"
+# (python gradio_normal2image.py) 2>&1 | tee ${log_dir}/controlnet_gradio_normal2image.log
+# tmp_exit_code=${PIPESTATUS[0]}
+# exit_code=$(($exit_code + ${tmp_exit_code}))
+# if [ ${tmp_exit_code} -eq 0 ]; then
+#     echo "controlnet gradio_normal2image run success" >>"${log_dir}/ce_res.log"
+# else
+#     echo "controlnet gradio_normal2image run fail" >>"${log_dir}/ce_res.log"
+# fi
+# echo "*******controlnet gradio_normal2image end***********"
 
 
-echo "*******controlnet gradio_ip2p2image begin***********"
-(python gradio_ip2p2image.py) 2>&1 | tee ${log_dir}/controlnet_gradio_ip2p2image.log
-tmp_exit_code=${PIPESTATUS[0]}
-exit_code=$(($exit_code + ${tmp_exit_code}))
-if [ ${tmp_exit_code} -eq 0 ]; then
-    echo "controlnet gradio_ip2p2image run success" >>"${log_dir}/ce_res.log"
-else
-    echo "controlnet gradio_ip2p2image run fail" >>"${log_dir}/ce_res.log"
-fi
-echo "*******controlnet gradio_ip2p2image end***********"
+# echo "*******controlnet gradio_hough2image begin***********"
+# (python gradio_hough2image.py) 2>&1 | tee ${log_dir}/controlnet_gradio_hough2image.log
+# tmp_exit_code=${PIPESTATUS[0]}
+# exit_code=$(($exit_code + ${tmp_exit_code}))
+# if [ ${tmp_exit_code} -eq 0 ]; then
+#     echo "controlnet gradio_hough2image run success" >>"${log_dir}/ce_res.log"
+# else
+#     echo "controlnet gradio_hough2image run fail" >>"${log_dir}/ce_res.log"
+# fi
+# echo "*******controlnet gradio_hough2image end***********"
 
 
-echo "*******controlnet gradio_shuffle2image begin***********"
-(python gradio_shuffle2image.py) 2>&1 | tee ${log_dir}/controlnet_gradio_shuffle2imagelog
-tmp_exit_code=${PIPESTATUS[0]}
-exit_code=$(($exit_code + ${tmp_exit_code}))
-if [ ${tmp_exit_code} -eq 0 ]; then
-    echo "controlnet gradio_shuffle2image run success" >>"${log_dir}/ce_res.log"
-else
-    echo "controlnet gradio_shuffle2image run fail" >>"${log_dir}/ce_res.log"
-fi
-echo "*******controlnet gradio_shuffle2image end***********"
+# echo "*******controlnet gradio_ip2p2image begin***********"
+# (python gradio_ip2p2image.py) 2>&1 | tee ${log_dir}/controlnet_gradio_ip2p2image.log
+# tmp_exit_code=${PIPESTATUS[0]}
+# exit_code=$(($exit_code + ${tmp_exit_code}))
+# if [ ${tmp_exit_code} -eq 0 ]; then
+#     echo "controlnet gradio_ip2p2image run success" >>"${log_dir}/ce_res.log"
+# else
+#     echo "controlnet gradio_ip2p2image run fail" >>"${log_dir}/ce_res.log"
+# fi
+# echo "*******controlnet gradio_ip2p2image end***********"
+
+
+# echo "*******controlnet gradio_shuffle2image begin***********"
+# (python gradio_shuffle2image.py) 2>&1 | tee ${log_dir}/controlnet_gradio_shuffle2imagelog
+# tmp_exit_code=${PIPESTATUS[0]}
+# exit_code=$(($exit_code + ${tmp_exit_code}))
+# if [ ${tmp_exit_code} -eq 0 ]; then
+#     echo "controlnet gradio_shuffle2image run success" >>"${log_dir}/ce_res.log"
+# else
+#     echo "controlnet gradio_shuffle2image run fail" >>"${log_dir}/ce_res.log"
+# fi
+# echo "*******controlnet gradio_shuffle2image end***********"
 # # 查看结果
 # cat ${log_dir}/ce_res.log
 rm -rf ${work_path}/sd15_control/*
