@@ -55,5 +55,9 @@ unset https_proxy
 # # 查看结果
 cat ${log_dir}/ut_res.log
 
+# 查看pip list 
+pip list | grep paddle
+
+pip list | grep huggingface
 echo exit_code:${exit_code}
 exit ${exit_code}
