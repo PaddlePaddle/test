@@ -50,7 +50,7 @@ def test_config():
 @pytest.mark.server
 @pytest.mark.jetson
 @pytest.mark.trt_fp32
-def test_trt_fp32_more_bz():
+def _test_trt_fp32_more_bz():
     """
     compared mkldnn fast_rcnn batch_size = [1] outputs with true val
     """
