@@ -3,8 +3,8 @@
     "freeze_include": ["*llama*", "*lm_head*"],
     "freeze_exclude": ["*llama.mm_projector*"],
     "dataset": {
-      "train":[{"name": "chatml_dataset", "data_files": "ScienceQA/llava_train_part.json","chat_template":"ScienceQA/llava_chat_template.json"}],
-      "eval":[{"name": "chatml_dataset", "data_files": "ScienceQA/llava_val_part.json","chat_template":"ScienceQA/llava_chat_template.json"}]
+      "train":[{"name": "chatml_dataset", "data_files": "ScienceQA/llava_train_part.json", "chat_template":"ScienceQA/llava_chat_template.json"}],
+      "eval":[{"name": "chatml_dataset", "data_files": "ScienceQA/llava_val_part.json", "chat_template":"ScienceQA/llava_chat_template.json"}]
     },
     "mixtoken": false,
     "output_dir": "./checkpoints/llava_pretrain_ckpts",
