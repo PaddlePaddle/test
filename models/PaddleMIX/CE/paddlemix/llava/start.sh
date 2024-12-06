@@ -51,7 +51,7 @@ fi
 echo "*******paddlemix llava finetune end***********"
 
 echo "*******paddlemix llava sft***********"
-(python paddlemix/examples/llava/pretrain.py llava_v100_sft.json) 2>&1 | tee ${log_dir}/paddlemix_llava_sft.log
+(python paddlemix/tools/supervised_finetune.py llava_v100_sft.json) 2>&1 | tee ${log_dir}/paddlemix_llava_sft.log
 tmp_exit_code=${PIPESTATUS[0]}
 exit_code=$(($exit_code + ${tmp_exit_code}))
 if [ ${tmp_exit_code} -eq 0 ]; then
@@ -63,7 +63,7 @@ echo "*******paddlemix llava sft end***********"
 
 echo "*******paddlemix llava lora***********"
 
-(python paddlemix/examples/llava/pretrain.py llava_lora_lora.json) 2>&1 | tee ${log_dir}/paddlemix_llava_lora.log
+(python paddlemix/tools/supervised_finetune.py llava_v100_lora.json) 2>&1 | tee ${log_dir}/paddlemix_llava_lora.log
 tmp_exit_code=${PIPESTATUS[0]}
 exit_code=$(($exit_code + ${tmp_exit_code}))
 if [ ${tmp_exit_code} -eq 0 ]; then
