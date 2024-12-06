@@ -51,7 +51,7 @@ fi
 echo "*******paddlemix llava finetune end***********"
 
 echo "*******paddlemix llava sft***********"
-(python paddlemix/examples/llava/pretrain.py v100_pretrain.json) 2>&1 | tee ${log_dir}/paddlemix_llava_sft.log
+(python paddlemix/examples/llava/pretrain.py llava_v100_sft.json) 2>&1 | tee ${log_dir}/paddlemix_llava_sft.log
 tmp_exit_code=${PIPESTATUS[0]}
 exit_code=$(($exit_code + ${tmp_exit_code}))
 if [ ${tmp_exit_code} -eq 0 ]; then
@@ -60,6 +60,18 @@ else
     echo "paddlemix llava sft run fail" >>"${log_dir}/ce_res.log"
 fi
 echo "*******paddlemix llava sft end***********"
+
+echo "*******paddlemix llava lora***********"
+
+(python paddlemix/examples/llava/pretrain.py llava_lora_lora.json) 2>&1 | tee ${log_dir}/paddlemix_llava_lora.log
+tmp_exit_code=${PIPESTATUS[0]}
+exit_code=$(($exit_code + ${tmp_exit_code}))
+if [ ${tmp_exit_code} -eq 0 ]; then
+    echo "paddlemix llava lora run success" >>"${log_dir}/ce_res.log"
+else
+    echo "paddlemix llava lora run fail" >>"${log_dir}/ce_res.log"
+fi
+echo "*******paddlemix llava lora end***********"
 
 unset FLAGS_use_cuda_managed_memory
 unset FLAGS_allocator_strategy
