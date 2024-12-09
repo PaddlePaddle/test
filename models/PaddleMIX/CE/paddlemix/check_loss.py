@@ -35,7 +35,7 @@ def run_cmd(cmd, true_flag, wrong_flag):
 
             # 打印输出 (可选)
             if output:
-                #print(output.strip())
+                print(output.strip())
                 # 检查是否包含 Traceback 关键字
                 if wrong_flag in output.lower():
                     if not capturing_traceback:
