@@ -28,21 +28,15 @@ def run_cmd(task_cmd, true_flag, wrong_flag):
     try:
         # 实时读取 stdout 输出
         while True:
-            stdout_line = process.stdout.readline()
-            stderr_line = process.stderr.readline()
+            stdout_line = process.stdout.read(1)  # 逐字节读取，确保捕获进度条
+            stderr_line = process.stderr.read(1)
 
-
-            # 检查 stdout 无输出的话就退出循环
-            if stdout_line == "" and stderr_line == "" and process.poll() is not None:
-                break
-
-            # 打印输出 (可选)
-            # 实时打印 stdout
             if stdout_line:
-                print("[STDOUT]:", stdout_line.strip())
-            # 实时打印 stderr
+                sys.stdout.write(stdout_line)  # 直接输出到终端，保留进度条效果
+                sys.stdout.flush()
             if stderr_line:
-                print("[STDERR]:", stderr_line.strip())
+                sys.stderr.write(stderr_line)  # 同样处理 stderr
+                sys.stderr.flush()
 
             if stdout_line or stderr_line:
                 # 检查是否包含 Traceback 关键字
