@@ -87,8 +87,8 @@ if __name__ == "__main__":
         raise ValueError("Usage: python check_loss.py <task_cmd> <true_flag> <wrong_flag>")
 
     task_cmd = sys.argv[1]
-    true_flag = 'loss'
-    wrong_flag = 'error'
+    true_flag = 'loss:'
+    wrong_flag = 'traceback'
     result = run_cmd(task_cmd, true_flag, wrong_flag)
     if result:
         print("任务成功完成")
