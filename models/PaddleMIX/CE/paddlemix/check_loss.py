@@ -28,24 +28,32 @@ def run_cmd(task_cmd, true_flag, wrong_flag):
     try:
         # 实时读取 stdout 输出
         while True:
-            output = process.stdout.readline()
+            stdout_line = process.stdout.readline()
+            stderr_line = process.stderr.readline()
+
 
             # 检查 stdout 无输出的话就退出循环
-            if output == "" and process.poll() is not None:
+            if stdout_line == "" and stderr_line == "" and process.poll() is not None:
                 break
 
             # 打印输出 (可选)
-            if output:
-                print(output.strip())
+            # 实时打印 stdout
+            if stdout_line:
+                print("[STDOUT]:", stdout_line.strip())
+            # 实时打印 stderr
+            if stderr_line:
+                print("[STDERR]:", stderr_line.strip())
+
+            if stdout_line or stderr_line:
                 # 检查是否包含 Traceback 关键字
-                if wrong_flag in output.lower():
+                if wrong_flag in stdout_line.lower() or wrong_flag in stderr_line.lower():
                     if not capturing_traceback:
                         capturing_traceback = True
                         capture_output = 'traceback'
                         print("捕获到" + wrong_flag)
                         start_time = time.time()  # 记录开始时间
                 
-                if true_flag in output.lower():
+                if true_flag in stdout_line.lower() or true_flag in stderr_line.lower():
                     if not capturing_traceback:
                         capturing_traceback = True
                         capture_output = 'loss'
