@@ -11,7 +11,7 @@ export PYTHONPATH="${PYTHONPATH}:$(pwd)"
 export MASTER_PORT=34229
 export TF_CPP_MIN_LOG_LEVEL=3
 
-OUTPUT_DIR='work_dirs/internvl_chat_v2_0/internvl2_2b_internlm2_1_8b_dynamic_res_2nd_finetune_full-2B'
+OUTPUT_DIR='work_dirs/internvl_chat_v2_0/internvl2_2b_internlm2_1_8b_dynamic_res_2nd_finetune_full'
 
 if [ ! -d "$OUTPUT_DIR" ]; then
   mkdir -p "$OUTPUT_DIR"
@@ -25,13 +25,14 @@ fi
 
 TRAINING_MODEL_RESUME="None"
 TRAINER_INSTANCES='127.0.0.1'
-MASTER='127.0.0.1:8009'
+
+MASTER='127.0.0.1:8080'
 
 TRAINING_PYTHON="python -m paddle.distributed.launch --master ${MASTER} --nnodes 1 --nproc_per_node ${GPUS} --rank 0 --ips ${TRAINER_INSTANCES} --run_mode=collective"
 ${TRAINING_PYTHON} --log_dir ${OUTPUT_DIR}/paddle_distributed_logs \
   paddlemix/examples/internvl2/internvl_chat_finetune.py \
   --do_train \
-  --model_name_or_path "OpenGVLab/InternVL2-1B" \
+  --model_name_or_path "OpenGVLab/InternVL2-2B" \
   --conv_style "internlm2-chat" \
   --output_dir ${OUTPUT_DIR} \
   --logging_dir ${OUTPUT_DIR}/logs \
@@ -50,16 +51,16 @@ ${TRAINING_PYTHON} --log_dir ${OUTPUT_DIR}/paddle_distributed_logs \
   --fp16 False \
   --fp16_opt_level "O1" \
   --num_train_epochs 1 \
+  --device "npu" \
   --per_device_train_batch_size ${PER_DEVICE_BATCH_SIZE} \
   --gradient_accumulation_steps ${GRADIENT_ACC} \
   --recompute True \
-  --max_steps 20 \
   --max_grad_norm 1.0 \
   --evaluation_strategy "no" \
   --save_strategy "epoch" \
-  --save_steps 20 \
+  --save_steps 200 \
   --save_total_limit 2 \
-  --learning_rate 4e-5 \
+    --learning_rate 4e-5 \
   --weight_decay 0.01 \
   --warmup_ratio 0.03 \
   --optim "adamw" \

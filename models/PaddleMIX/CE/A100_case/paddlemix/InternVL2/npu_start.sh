@@ -12,9 +12,9 @@ if [ ! -d "$log_dir" ]; then
     mkdir -p "$log_dir"
 fi
 
-# /bin/cp -rf ../change_paddlenlp_version.sh ${work_path}
+/bin/cp -rf ../change_paddlenlp_version.sh ${work_path}
 /bin/cp -rf ./* ${work_path}
-/bin/cp -f ../check_loss.py ${work_path}
+
 cd ${work_path}
 exit_code=0
 
@@ -28,13 +28,18 @@ exit_code=0
 export no_proxy=baidu.com,127.0.0.1,0.0.0.0,localhost,bcebos.com,pip.baidu-int.com,mirrors.baidubce.com,repo.baidubce.com,repo.bcm.baidubce.com,pypi.tuna.tsinghua.edu.cn,aistudio.baidu.com
 
 bash prepare.sh
-# 准备图片做物料
+export FLAGS_use_stride_kernel=0
+export FLAGS_npu_storage_format=0 # 关闭私有格式
+export FLAGS_npu_jit_compile=0 # 关闭即时编译
+export FLAGS_npu_scale_aclnn=True # aclnn加速
+export FLAGS_npu_split_aclnn=True # aclnn加速
+export CUSTOM_DEVICE_BLACK_LIST=set_value,set_value_with_tensor 
 echo "*******paddlemix InternVL2_picture_infer begin begin***********"
 cp ${work_path}/paddlemix/demo_images/examples_image1.jpg .
 
 (python paddlemix/examples/internvl2/chat_demo.py \
-    --model_name_or_path "OpenGVLab/InternVL2-1B" \
-    --image_path 'paddlemix/demo_images/examples_image1.jpg' \
+    --model_name_or_path "OpenGVLab/InternVL2-8B" \
+    --image_path 'examples_image1.jpg' \
     --text "Please describe this image in detail.") 2>&1 | tee ${log_dir}/InternVL2_picture_infer.log
 tmp_exit_code=${PIPESTATUS[0]}
 exit_code=$(($exit_code + ${tmp_exit_code}))
@@ -51,8 +56,8 @@ echo "*******paddlemix InternVL2_video_infer begin begin***********"
 cp ${work_path}/paddlemix/demo_images/red-panda.mp4 .
 
 (python paddlemix/examples/internvl2/chat_demo_video.py \
-    --model_name_or_path "OpenGVLab/InternVL2-1B" \
-    --video_path 'paddlemix/demo_images/red-panda.mp4' \
+    --model_name_or_path "OpenGVLab/InternVL2-8B" \
+    --video_path 'red-panda.mp4' \
     --text "Please describe this video in detail.") 2>&1 | tee ${log_dir}/InternVL2_video_infer.log
 tmp_exit_code=${PIPESTATUS[0]}
 exit_code=$(($exit_code + ${tmp_exit_code}))

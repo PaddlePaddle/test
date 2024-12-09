@@ -33,7 +33,7 @@ echo "*******paddlemix InternVL2_picture_infer begin begin***********"
 cp ${work_path}/paddlemix/demo_images/examples_image1.jpg .
 
 (python paddlemix/examples/internvl2/chat_demo.py \
-    --model_name_or_path "OpenGVLab/InternVL2-1B" \
+    --model_name_or_path "OpenGVLab/InternVL2-8B" \
     --image_path 'paddlemix/demo_images/examples_image1.jpg' \
     --text "Please describe this image in detail.") 2>&1 | tee ${log_dir}/InternVL2_picture_infer.log
 tmp_exit_code=${PIPESTATUS[0]}
@@ -51,7 +51,7 @@ echo "*******paddlemix InternVL2_video_infer begin begin***********"
 cp ${work_path}/paddlemix/demo_images/red-panda.mp4 .
 
 (python paddlemix/examples/internvl2/chat_demo_video.py \
-    --model_name_or_path "OpenGVLab/InternVL2-1B" \
+    --model_name_or_path "OpenGVLab/InternVL2-8B" \
     --video_path 'paddlemix/demo_images/red-panda.mp4' \
     --text "Please describe this video in detail.") 2>&1 | tee ${log_dir}/InternVL2_video_infer.log
 tmp_exit_code=${PIPESTATUS[0]}
