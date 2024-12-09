@@ -37,9 +37,9 @@ echo "*******paddlemix ops_install begin begin***********"
 tmp_exit_code=${PIPESTATUS[0]}
 exit_code=$(($exit_code + ${tmp_exit_code}))
 if [ ${tmp_exit_code} -eq 0 ]; then
-    echo "qwen2_vl_ops_install run success" >>"${log_dir}/ut_res.log"
+    echo "qwen2_vl_ops_install run success" >>"${log_dir}/ce_res.log"
 else
-    echo "qwen2_vl_ops_install run fail" >>"${log_dir}/ut_res.log"
+    echo "qwen2_vl_ops_install run fail" >>"${log_dir}/ce_res.log"
 fi
 echo "*******paddlemix qwen2_vl_ops_install end***********"
 
@@ -52,9 +52,9 @@ echo "*******paddlemix qwen2_vl_infer begin begin***********"
 tmp_exit_code=${PIPESTATUS[0]}
 exit_code=$(($exit_code + ${tmp_exit_code}))
 if [ ${tmp_exit_code} -eq 0 ]; then
-    echo "qwen2_vl_infer run success" >>"${log_dir}/ut_res.log"
+    echo "qwen2_vl_infer run success" >>"${log_dir}/ce_res.log"
 else
-    echo "qwen2_vl_infer run fail" >>"${log_dir}/ut_res.log"
+    echo "qwen2_vl_infer run fail" >>"${log_dir}/ce_res.log"
 fi
 echo "*******paddlemix qwen2_vl_infer end***********"
 
@@ -64,9 +64,9 @@ echo "*******paddlemix qwen2_vl_multi_image_infer begin begin***********"
 tmp_exit_code=${PIPESTATUS[0]}
 exit_code=$(($exit_code + ${tmp_exit_code}))
 if [ ${tmp_exit_code} -eq 0 ]; then
-    echo "qwen2_vl_multi_image_infer run success" >>"${log_dir}/ut_res.log"
+    echo "qwen2_vl_multi_image_infer run success" >>"${log_dir}/ce_res.log"
 else
-    echo "qwen2_vl_multi_image_infer run fail" >>"${log_dir}/ut_res.log"
+    echo "qwen2_vl_multi_image_infer run fail" >>"${log_dir}/ce_res.log"
 fi
 echo "*******paddlemix qwen2_vl_multi_image_infer end***********"
 
@@ -76,9 +76,9 @@ echo "*******paddlemix qwen2_vl_video begin begin***********"
 tmp_exit_code=${PIPESTATUS[0]}
 exit_code=$(($exit_code + ${tmp_exit_code}))
 if [ ${tmp_exit_code} -eq 0 ]; then
-    echo "qwen2_vl_video run success" >>"${log_dir}/ut_res.log"
+    echo "qwen2_vl_video run success" >>"${log_dir}/ce_res.log"
 else
-    echo "qwen2_vl_video run fail" >>"${log_dir}/ut_res.log"
+    echo "qwen2_vl_video run fail" >>"${log_dir}/ce_res.log"
 fi
 echo "*******paddlemix qwen2_vl_video end***********"
 
@@ -87,9 +87,9 @@ echo "*******paddlemix qwen2_vl_train begin begin***********"
 tmp_exit_code=${PIPESTATUS[0]}
 exit_code=$(($exit_code + ${tmp_exit_code}))
 if [ ${tmp_exit_code} -eq 0 ]; then
-    echo "qwen2_vl_train run success" >>"${log_dir}/ut_res.log"
+    echo "qwen2_vl_train run success" >>"${log_dir}/ce_res.log"
 else
-    echo "qwen2_vl_train run fail" >>"${log_dir}/ut_res.log"
+    echo "qwen2_vl_train run fail" >>"${log_dir}/ce_res.log"
 fi
 echo "*******paddlemix qwen2_vl_train end***********"
 
@@ -98,9 +98,9 @@ echo "*******paddlemix qwen2_vl_train_infer begin begin***********"
 tmp_exit_code=${PIPESTATUS[0]}
 exit_code=$(($exit_code + ${tmp_exit_code}))
 if [ ${tmp_exit_code} -eq 0 ]; then
-    echo "qwen2_vl_train_infer run success" >>"${log_dir}/ut_res.log"
+    echo "qwen2_vl_train_infer run success" >>"${log_dir}/ce_res.log"
 else
-    echo "qwen2_vl_train_infer run fail" >>"${log_dir}/ut_res.log"
+    echo "qwen2_vl_train_infer run fail" >>"${log_dir}/ce_res.log"
 fi
 echo "*******paddlemix qwen2_vl_train_infer end***********"
 unset http_proxy
@@ -111,14 +111,14 @@ echo "*******paddlemix qwen2_vl_lora_train begin begin***********"
 tmp_exit_code=${PIPESTATUS[0]}
 exit_code=$(($exit_code + ${tmp_exit_code}))
 if [ ${tmp_exit_code} -eq 0 ]; then
-    echo "qwen2_vl_train run success" >>"${log_dir}/ut_res.log"
+    echo "qwen2_vl_train run success" >>"${log_dir}/ce_res.log"
 else
-    echo "qwen2_vl_train run fail" >>"${log_dir}/ut_res.log"
+    echo "qwen2_vl_train run fail" >>"${log_dir}/ce_res.log"
 fi
 echo "*******paddlemix qwen2_vl_train end***********"
 
 # # 查看结果
-cat ${log_dir}/ut_res.log
+cat ${log_dir}/ce_res.log
 echo exit_code:${exit_code}
 exit ${exit_code}
 
