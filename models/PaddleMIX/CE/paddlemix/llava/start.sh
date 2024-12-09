@@ -13,6 +13,7 @@ if [ ! -d "$log_dir" ]; then
 fi
 
 /bin/cp -rf ./* ${work_path}/
+/bin/cp -f ../check_loss.py ${work_path}/
 exit_code=0
 
 cd ${work_path}
@@ -40,7 +41,7 @@ export FLAGS_allocator_strategy=auto_growth
 
 echo "*******paddlemix llava finetune***********"
 # llava pretain 有报错
-(python paddlemix/examples/llava/pretrain.py llava_v100_pretrain.json) 2>&1 | tee ${log_dir}/paddlemix_llava_finetune.log
+(python  -u check_loss.py "python paddlemix/examples/llava/pretrain.py llava_v100_pretrain.json") 2>&1 | tee ${log_dir}/paddlemix_llava_finetune.log
 tmp_exit_code=${PIPESTATUS[0]}
 exit_code=$(($exit_code + ${tmp_exit_code}))
 if [ ${tmp_exit_code} -eq 0 ]; then
@@ -51,7 +52,7 @@ fi
 echo "*******paddlemix llava finetune end***********"
 
 echo "*******paddlemix llava sft***********"
-(python paddlemix/tools/supervised_finetune.py llava_v100_sft.json) 2>&1 | tee ${log_dir}/paddlemix_llava_sft.log
+(python  -u check_loss.py "python paddlemix/tools/supervised_finetune.py llava_v100_sft.json") 2>&1 | tee ${log_dir}/paddlemix_llava_sft.log
 tmp_exit_code=${PIPESTATUS[0]}
 exit_code=$(($exit_code + ${tmp_exit_code}))
 if [ ${tmp_exit_code} -eq 0 ]; then
@@ -63,7 +64,7 @@ echo "*******paddlemix llava sft end***********"
 
 echo "*******paddlemix llava lora***********"
 
-(python paddlemix/tools/supervised_finetune.py llava_v100_lora.json) 2>&1 | tee ${log_dir}/paddlemix_llava_lora.log
+(python  -u check_loss.py "python paddlemix/tools/supervised_finetune.py llava_v100_lora.json") 2>&1 | tee ${log_dir}/paddlemix_llava_lora.log
 tmp_exit_code=${PIPESTATUS[0]}
 exit_code=$(($exit_code + ${tmp_exit_code}))
 if [ ${tmp_exit_code} -eq 0 ]; then
