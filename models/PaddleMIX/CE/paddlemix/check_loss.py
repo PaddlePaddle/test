@@ -8,7 +8,7 @@ import requests
 import subprocess
 import time
 import sys
-
+sys.stdout.reconfigure(line_buffering=True)
 def run_cmd(task_cmd, true_flag, wrong_flag):
     """
     运行命令
