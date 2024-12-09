@@ -65,7 +65,7 @@ def test_linspace2():
 
 
 @pytest.mark.api_base_linspace_parameters
-def test_linspace3():
+def test_linspace4():
     """
     num=1
     """
@@ -77,7 +77,7 @@ def test_linspace3():
 
 
 @pytest.mark.api_base_linspace_exception
-def test_linspace4():
+def test_linspace5():
     """
     TypeError:num=float
     Cannot catch exception(it's a bug)
@@ -89,7 +89,7 @@ def test_linspace4():
 
 
 @pytest.mark.api_base_linspace_parameters
-def test_linspace5():
+def test_linspace6():
     """
     start>stop
     """
@@ -101,7 +101,7 @@ def test_linspace5():
 
 
 @pytest.mark.api_base_linspace_parameters
-def test_linspace6():
+def test_linspace7():
     """
     dtype=np.dtype
     """
@@ -114,7 +114,7 @@ def test_linspace6():
 
 
 @pytest.mark.api_base_linspace_parameters
-def test_linspace7():
+def test_linspace8():
     """
     dtype=float32
     """
@@ -127,7 +127,7 @@ def test_linspace7():
 
 
 @pytest.mark.api_base_linspace_parameters
-def test_linspace8():
+def test_linspace9():
     """
     dtype=float64
     """
@@ -140,7 +140,7 @@ def test_linspace8():
 
 
 @pytest.mark.api_base_linspace_exception
-def test_linspace9():
+def test_linspace10():
     """
     TypeError:dtype=bool
     """
@@ -169,7 +169,7 @@ obj1 = TestLinspace1(paddle.linspace)
 
 
 @pytest.mark.api_base_linspace_parameters
-def test_linspace10():
+def test_linspace11():
     """
     num=tensor
     """
@@ -181,7 +181,7 @@ def test_linspace10():
 
 
 @pytest.mark.api_base_linspace_parameters
-def test_linspace11():
+def test_linspace12():
     """
     input and stop is int32 tensor
     """
