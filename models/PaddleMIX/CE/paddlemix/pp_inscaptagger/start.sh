@@ -3,7 +3,7 @@
 cur_path=$(pwd)
 echo ${cur_path}
 
-bash prepare.sh
+#bash prepare.sh
 
 
 work_path=${root_path}/PaddleMIX

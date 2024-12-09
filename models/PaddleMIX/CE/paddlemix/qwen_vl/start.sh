@@ -13,6 +13,7 @@ if [ ! -d "$log_dir" ]; then
 fi
 
 /bin/cp -rf ./* ${work_path}/
+/bin/cp -f ../check_loss.py ${work_path}/
 exit_code=0
 
 cd ${work_path}
@@ -60,7 +61,7 @@ bash prepare.sh
 
 
 echo "*******paddlemix qwen_vl sft***********"
-(python paddlemix/tools/supervised_finetune.py qwen_vl_v100_sft.json) 2>&1 | tee ${log_dir}/paddlemix_qwen_vl_sft.log
+(python check_loss.py "python paddlemix/tools/supervised_finetune.py qwen_vl_v100_sft.json") 2>&1 | tee ${log_dir}/paddlemix_qwen_vl_sft.log
 tmp_exit_code=${PIPESTATUS[0]}
 exit_code=$(($exit_code + ${tmp_exit_code}))
 if [ ${tmp_exit_code} -eq 0 ]; then
@@ -72,7 +73,7 @@ echo "*******paddlemix qwen_vl sft end***********"
 
 echo "*******paddlemix qwen_vl lora***********"
 
-(python paddlemix/tools/supervised_finetune.py qwen_vl_v100_lora.json) 2>&1 | tee ${log_dir}/paddlemix_qwen_vl_lora.log
+(ython check_loss.py "paddlemix/tools/supervised_finetune.py qwen_vl_v100_lora.json") 2>&1 | tee ${log_dir}/paddlemix_qwen_vl_lora.log
 tmp_exit_code=${PIPESTATUS[0]}
 exit_code=$(($exit_code + ${tmp_exit_code}))
 if [ ${tmp_exit_code} -eq 0 ]; then
