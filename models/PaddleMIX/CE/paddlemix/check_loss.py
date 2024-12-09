@@ -11,7 +11,7 @@ import sys
 import pexpect
 
 sys.stdout.reconfigure(line_buffering=True)
-def execute_task_with_flag_detection(task_cmd, wrong_flag, true_flag):
+def execute_task_with_flag_detection(task_cmd, true_flag, wrong_flag):
     try:
         print("正在执行命令：", task_cmd)
         
