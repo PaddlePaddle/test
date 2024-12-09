@@ -13,6 +13,7 @@ if [ ! -d "$log_dir" ]; then
 fi
 
 /bin/cp -rf ./* ${work_path}/
+/bin/cp -f ../check_loss.py ${work_path}/
 exit_code=0
 
 cd ${work_path}
@@ -48,7 +49,7 @@ export FLAGS_embedding_deterministic=1
 export FLAGS_cudnn_deterministic=1
 
 echo "*******paddlemix internlm_xcomposer2 train fp16***********"
-(python paddlemix/tools/supervised_finetune.py interlm_xcomposer2_sft_argument.json) 2>&1 | tee ${log_dir}/paddlemix_internlm_xcomposer2_train_fp32.log
+(python  -u check_loss.py "python paddlemix/tools/supervised_finetune.py interlm_xcomposer2_sft_argument.json") 2>&1 | tee ${log_dir}/paddlemix_internlm_xcomposer2_train_fp32.log
 tmp_exit_code=${PIPESTATUS[0]}
 exit_code=$(($exit_code + ${tmp_exit_code}))
 if [ ${tmp_exit_code} -eq 0 ]; then
