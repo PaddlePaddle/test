@@ -23,6 +23,7 @@ def run_cmd(task_cmd, true_flag, wrong_flag):
     process = subprocess.Popen(
         task_cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True
     )
+    print("正在执行命令：", task_cmd)
 
     try:
         # 实时读取 stdout 输出
@@ -87,8 +88,9 @@ if __name__ == "__main__":
         raise ValueError("Usage: python check_loss.py <task_cmd> <true_flag> <wrong_flag>")
 
     task_cmd = sys.argv[1]
+    print(task_cmd)
     true_flag = 'loss:'
-    wrong_flag = 'traceback'
+    wrong_flag = 'tracebsack'
     result = run_cmd(task_cmd, true_flag, wrong_flag)
     if result:
         print("任务成功完成")
