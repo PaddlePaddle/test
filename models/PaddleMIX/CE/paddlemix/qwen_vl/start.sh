@@ -73,7 +73,7 @@ echo "*******paddlemix qwen_vl sft end***********"
 
 echo "*******paddlemix qwen_vl lora***********"
 
-(python -u check_loss.py "paddlemix/tools/supervised_finetune.py qwen_vl_v100_lora.json") 2>&1 | tee ${log_dir}/paddlemix_qwen_vl_lora.log
+(python -u check_loss.py "python paddlemix/tools/supervised_finetune.py qwen_vl_v100_lora.json") 2>&1 | tee ${log_dir}/paddlemix_qwen_vl_lora.log
 tmp_exit_code=${PIPESTATUS[0]}
 exit_code=$(($exit_code + ${tmp_exit_code}))
 if [ ${tmp_exit_code} -eq 0 ]; then
@@ -83,4 +83,6 @@ else
 fi
 echo "*******paddlemix q wen lora end***********"
 echo exit_code:${exit_code}
+
+cat ${log_dir}/ce_res.log
 exit ${exit_code}
