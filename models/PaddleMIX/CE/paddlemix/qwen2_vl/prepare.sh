@@ -13,7 +13,7 @@ else
     echo "playground不存在，已下载解压"
 fi
 cd playground
-if [ -e "opensource_json.tar"]; then
+if [ -e "opensource_json.tar" ]; then
     tar xf opensource_json.tar
     echo "opensource_json.tar文件存在，已解压"
 else
