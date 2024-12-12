@@ -31,6 +31,9 @@ pip install -r requirements.txt
 # 测试环境需要
 pip install pexpect
 pip install einops
+cd ppdiffusers
+pip install -e .
+cd ..
 pip install -e .
 # unset http_proxy
 # unset https_proxy
