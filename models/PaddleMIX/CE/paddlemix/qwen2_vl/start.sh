@@ -94,30 +94,30 @@ else
     echo "qwen2_vl_sft_train run fail" >>"${log_dir}/ce_res.log"
 fi
 echo "*******paddlemix qwen2_vl_sft_train end***********"
-#
-# echo "*******paddlemix qwen2_vl_train_infer begin begin***********"
-# (python iner_qwen.py) 2>&1 | tee ${log_dir}/qwen2_vl_train_infer.log
-# tmp_exit_code=${PIPESTATUS[0]}
-# exit_code=$(($exit_code + ${tmp_exit_code}))
-# if [ ${tmp_exit_code} -eq 0 ]; then
-#     echo "qwen2_vl_train_infer run success" >>"${log_dir}/ce_res.log"
-# else
-#     echo "qwen2_vl_train_infer run fail" >>"${log_dir}/ce_res.log"
-# fi
-# echo "*******paddlemix qwen2_vl_train_infer end***********"
-# unset http_proxy
-# unset https_proxy
 
-# echo "*******paddlemix qwen2_vl_lora_train begin begin***********"
-# (bash train_qwen2_lora.sh) 2>&1 | tee ${log_dir}/qwen2_vl_lora_train.log
-# tmp_exit_code=${PIPESTATUS[0]}
-# exit_code=$(($exit_code + ${tmp_exit_code}))
-# if [ ${tmp_exit_code} -eq 0 ]; then
-#     echo "qwen2_vl_train run success" >>"${log_dir}/ce_res.log"
-# else
-#     echo "qwen2_vl_train run fail" >>"${log_dir}/ce_res.log"
-# fi
-# echo "*******paddlemix qwen2_vl_lora_train end***********"
+echo "*******paddlemix qwen2_vl_train_infer begin begin***********"
+(python iner_qwen.py) 2>&1 | tee ${log_dir}/qwen2_vl_train_infer.log
+tmp_exit_code=${PIPESTATUS[0]}
+exit_code=$(($exit_code + ${tmp_exit_code}))
+if [ ${tmp_exit_code} -eq 0 ]; then
+    echo "qwen2_vl_train_infer run success" >>"${log_dir}/ce_res.log"
+else
+    echo "qwen2_vl_train_infer run fail" >>"${log_dir}/ce_res.log"
+fi
+echo "*******paddlemix qwen2_vl_train_infer end***********"
+unset http_proxy
+unset https_proxy
+
+echo "*******paddlemix qwen2_vl_lora_train begin begin***********"
+(bash train_qwen2_lora.sh) 2>&1 | tee ${log_dir}/qwen2_vl_lora_train.log
+tmp_exit_code=${PIPESTATUS[0]}
+exit_code=$(($exit_code + ${tmp_exit_code}))
+if [ ${tmp_exit_code} -eq 0 ]; then
+    echo "qwen2_vl_train run success" >>"${log_dir}/ce_res.log"
+else
+    echo "qwen2_vl_train run fail" >>"${log_dir}/ce_res.log"
+fi
+echo "*******paddlemix qwen2_vl_lora_train end***********"
 
 # # 查看结果
 cat ${log_dir}/ce_res.log
