@@ -26,7 +26,7 @@ cd ${work_path}
 run_list=("llava", "qwen_vl", "qwen2_vl","InternVL2", "InternLM-XComposer2")
 # 遍历当前目录下的子目录
 for subdir in */; do
-  if [[ " ${run_list[*]} " =~ " $subdir "]]; then
+  if [[ " ${run_list[*]} " =~ " $subdir " ]]; then
     start_script_path="$subdir/start.sh"
     if [ -f "$start_script_path" ]; then
       # 执行start.sh文件，并将退出码存储在变量中
