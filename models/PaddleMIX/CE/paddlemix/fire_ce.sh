@@ -2,6 +2,7 @@
 
 exit_code=0
 
+log_dir=${root_path}/paddlemix_examples_log
 work_path=$(pwd)
 echo ${work_path}
 
@@ -24,10 +25,14 @@ pip install -e .
 cd ${work_path}
 
 run_list=("llava/", "qwen_vl/", "qwen2_vl/","InternVL2/", "InternLM-XComposer2/")
+# 将数组转换为字符串，以便使用正则匹配
+list_str="${run_list[*]}"
 # 遍历当前目录下的子目录
 for subdir in */; do
-  if [[ " ${run_list[*]} " =~ " $subdir " ]]; then
+  if [[ " ${list_str} " =~ " ${subdir} " ]]; then
+    echo "子目录 ${subdir} 在列表中"
     start_script_path="$subdir/start.sh"
+    # 检查start.sh文件是否存在
     if [ -f "$start_script_path" ]; then
       # 执行start.sh文件，并将退出码存储在变量中
       cd $subdir
@@ -36,7 +41,7 @@ for subdir in */; do
       cd ..
     fi
   else
-    echo "$subdir not in run list"
+    echo "子目录 ${subdir} 不在列表中"
   fi
 done
 
