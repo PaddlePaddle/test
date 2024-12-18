@@ -30,8 +30,8 @@ run_list=("llava/" "qwen_vl/" "qwen2_vl/" "InternVL2/" "InternLM-XComposer2/")
 for subdir in */; do
   found=0
   for item in "${run_list[@]}"; do
-    echo "$item"
-    echo "$subdir"
+    # echo "$item"
+    # echo "$subdir"
     if [[ "$item" == "$subdir" ]]; then
       echo "start $subdir"
       found=1
@@ -39,6 +39,12 @@ for subdir in */; do
   done
   if [ $found -eq 1 ]; then
     echo "start $subdir"
+    start_script_path="$subdir/start.sh"
+    if [ -f "$start_script_path" ]; then
+      cd $subdir
+      bash start.sh
+      exit_code=$((exit_code + $?))
+      cd ..
   else
     echo "skip $subdir"
   fi
