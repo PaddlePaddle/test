@@ -41,7 +41,7 @@ for subdir in */; do
       cd ..
     fi
   else
-    echo "子目录 ${subdir} 不在列表中"
+    echo "子目录 ${subdir} 不在${list_str}中"
   fi
 done
 
