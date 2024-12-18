@@ -35,6 +35,8 @@ for subdir in */; do
       exit_code=$((exit_code + $?))
       cd ..
     fi
+  else
+    echo "no start.sh in $subdir"
   fi
 done
 
