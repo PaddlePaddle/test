@@ -30,6 +30,8 @@ run_list=("llava/", "qwen_vl/", "qwen2_vl/","InternVL2/", "InternLM-XComposer2/"
 for subdir in */; do
   found=0
   for item in "${run_list[@]}"; do
+    echo "$item"
+    echo "$subdir"
     if [[ "$item" == "$subdir" ]]; then
       echo "start $subdir"
       found=1
