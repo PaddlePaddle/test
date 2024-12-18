@@ -33,7 +33,7 @@ for subdir in */; do
     # echo "$item"
     # echo "$subdir"
     if [[ "$item" == "$subdir" ]]; then
-      echo "start $subdir"
+      # echo "start $subdir"
       found=1
     fi
   done
@@ -45,6 +45,7 @@ for subdir in */; do
       bash start.sh
       exit_code=$((exit_code + $?))
       cd ..
+    fi
   else
     echo "skip $subdir"
   fi
