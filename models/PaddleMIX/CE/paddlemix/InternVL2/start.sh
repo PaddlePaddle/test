@@ -45,23 +45,23 @@ else
 fi
 echo "*******paddlemix InternVL2_picture_infer end***********"
 
+# V100不支持此case
+# echo "*******paddlemix InternVL2_video_infer begin begin***********"
+# # 准备视频做物料
+# cp ${work_path}/paddlemix/demo_images/red-panda.mp4 .
 
-echo "*******paddlemix InternVL2_video_infer begin begin***********"
-# 准备视频做物料
-cp ${work_path}/paddlemix/demo_images/red-panda.mp4 .
-
-(python paddlemix/examples/internvl2/chat_demo_video.py \
-    --model_name_or_path "OpenGVLab/InternVL2-1B" \
-    --video_path 'paddlemix/demo_images/red-panda.mp4' \
-    --text "Please describe this video in detail.") 2>&1 | tee ${log_dir}/InternVL2_video_infer.log
-tmp_exit_code=${PIPESTATUS[0]}
-exit_code=$(($exit_code + ${tmp_exit_code}))
-if [ ${tmp_exit_code} -eq 0 ]; then
-    echo "InternVL2_video_infer run success" >>"${log_dir}/ce_res.log"
-else
-    echo "InternVL2_video_infer run fail" >>"${log_dir}/ce_res.log"
-fi
-echo "*******paddlemix InternVL2_video_infer end***********"
+# (python paddlemix/examples/internvl2/chat_demo_video.py \
+#     --model_name_or_path "OpenGVLab/InternVL2-1B" \
+#     --video_path 'paddlemix/demo_images/red-panda.mp4' \
+#     --text "Please describe this video in detail.") 2>&1 | tee ${log_dir}/InternVL2_video_infer.log
+# tmp_exit_code=${PIPESTATUS[0]}
+# exit_code=$(($exit_code + ${tmp_exit_code}))
+# if [ ${tmp_exit_code} -eq 0 ]; then
+#     echo "InternVL2_video_infer run success" >>"${log_dir}/ce_res.log"
+# else
+#     echo "InternVL2_video_infer run fail" >>"${log_dir}/ce_res.log"
+# fi
+# echo "*******paddlemix InternVL2_video_infer end***********"
 
 
 echo "*******paddlemix InternVL2_train begin begin***********"
