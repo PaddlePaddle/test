@@ -23,7 +23,7 @@ pip install -e .
 
 cd ${work_path}
 
-run_list=("llava", "qwen_vl", "qwen2_vl","InternVL2", "InternLM-XComposer2")
+run_list=("llava/", "qwen_vl/", "qwen2_vl/","InternVL2/", "InternLM-XComposer2/")
 # 遍历当前目录下的子目录
 for subdir in */; do
   if [[ " ${run_list[*]} " =~ " $subdir " ]]; then
@@ -36,7 +36,7 @@ for subdir in */; do
       cd ..
     fi
   else
-    echo "no start.sh in $subdir"
+    echo "$subdir not in run list"
   fi
 done
 
