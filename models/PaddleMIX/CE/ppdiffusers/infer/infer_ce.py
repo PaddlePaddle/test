@@ -122,7 +122,7 @@ def infer_process(executed_log_path, model_num):
         current_epoch += 1
 
     selected_dirs = random.sample(remaining_dirs, min(model_num, len(remaining_dirs)))
-    print(f"Epoch {current_epoch}: Selected directories: {selected_dirs}")
+    
 
     # 更新已执行的目录记录
     executed_dirs.update(selected_dirs)
@@ -177,6 +177,7 @@ def infer_process(executed_log_path, model_num):
 
     # 执行接下来的操作（如模型推理等）
     exit_code = 0
+    print(f"Epoch {current_epoch}: Selected directories: {selected_dirs}")
 
     # 你可以继续根据需要添加其他的 脚本执行或操作
     # 例如运行某些 文件
