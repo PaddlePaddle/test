@@ -143,8 +143,8 @@ def infer_process(executed_log_path, model_num):
         os.makedirs(log_dir)
 
     # 复制文件
-    shutil.copy(work_path3 + "/change_paddlenlp_version.sh", os.path.join(root_path, "PaddleMIX"), dirs_exist_ok=True)
-    shutil.copytree('.', work_path, dirs_exist_ok=True)
+    shutil.copy(work_path3 + "/change_paddlenlp_version.sh", os.path.join(root_path, "PaddleMIX"))
+    shutil.copytree('.', work_path)
 
     # 安装依赖
     os.chdir(work_path2)
