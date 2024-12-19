@@ -121,7 +121,7 @@ fi
 echo "*******paddlemix qwen2_vl_lora_train end***********"
 
 # # 查看结果
-cat ${log_dir}/ce_res.log
+# cat ${log_dir}/ce_res.log
 echo exit_code:${exit_code}
 exit ${exit_code}
 

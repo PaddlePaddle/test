@@ -84,5 +84,5 @@ fi
 echo "*******paddlemix q wen lora end***********"
 echo exit_code:${exit_code}
 
-cat ${log_dir}/ce_res.log
+# cat ${log_dir}/ce_res.log
 exit ${exit_code}

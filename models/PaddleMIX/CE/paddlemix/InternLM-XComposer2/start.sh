@@ -58,9 +58,6 @@ else
     echo "paddlemix internlm_xcomposer2 train fp16 run fail" >>"${log_dir}/ce_res.log"
 fi
 echo "*******paddlemix internlm_xcomposer2 train fp16 end***********"
-echo exit_code:${exit_code}
-exit ${exit_code}
-
 
 echo exit_code:${exit_code}
 exit ${exit_code}
