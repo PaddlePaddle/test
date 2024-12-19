@@ -3,7 +3,7 @@ import subprocess
 import random
 import json
 import sys
-
+import shutil
 # 初始化变量
 def process_init(executed_log_path, model_num=5):
 
