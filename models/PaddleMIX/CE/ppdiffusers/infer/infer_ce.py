@@ -144,7 +144,8 @@ def infer_process(executed_log_path, model_num):
 
     # 复制文件
     shutil.copy(work_path3 + "/change_paddlenlp_version.sh", os.path.join(root_path, "PaddleMIX"))
-    shutil.copytree('.', work_path)
+    command = f"/bin/cp -rf ./* {work_path}/"
+    subprocess.run(command, shell=True, check=True)
 
     # 安装依赖
     os.chdir(work_path2)
