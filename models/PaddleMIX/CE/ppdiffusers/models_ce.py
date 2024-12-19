@@ -14,7 +14,7 @@ def process_init(executed_log_path, model_num=5):
     work_path = os.getcwd()
     shutil.copy("change_paddlenlp_version.sh", os.path.join(root_path, "PaddleMIX"))
 
-# 执行 bash prepare.sh 脚本
+    # 执行 bash prepare.sh 脚本
     subprocess.run(["bash", "prepare.sh"], check=True)
 
     # executed_log_path = os.path.join(root_path, "executed_dirs.json")  # 用于记录已执行的目录和轮次
@@ -80,6 +80,8 @@ def process_init(executed_log_path, model_num=5):
     # 保存更新后的已执行目录和轮次
     with open(executed_log_path, "w") as file:
         json.dump({"executed_dirs": list(executed_dirs), "epoch": current_epoch}, file)
+        print(f"Epoch {current_epoch}: Selected directories: {selected_dirs}")
+        print(f"Executed models in this epoch {executed_dirs}")
 
     print(f"Exit code: {exit_code}")
 
