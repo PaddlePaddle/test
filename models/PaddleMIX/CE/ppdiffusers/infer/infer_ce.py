@@ -189,6 +189,7 @@ def infer_process(executed_log_path, model_num):
     for script in selected_dirs:
         print(f"******* Running {script} ***********")
         process_log = os.path.join(log_dir, script+".log")
+        tmp_exit_code = -1
         with open(process_log, "w") as log_process:
             process = subprocess.Popen(
                 ["python", script], 
@@ -211,13 +212,13 @@ def infer_process(executed_log_path, model_num):
             # 获取脚本的退出状态
             tmp_exit_code = process.wait()
             
-            if tmp_exit_code == 0:
-                with open(f"{log_dir}/infer_res.log", "a") as log_file:
-                    log_file.write(f"{script} run success\n")
-            else:
-                with open(f"{log_dir}/infer_res.log", "a") as log_file:
-                    log_file.write(f"{script} run fail\n")
-            print(f"******* Finished running {script} ***********")
+        if tmp_exit_code == 0:
+            with open(f"{log_dir}/infer_res.log", "a") as log_file:
+                log_file.write(f"{script} run success\n")
+        else:
+            with open(f"{log_dir}/infer_res.log", "a") as log_file:
+                log_file.write(f"{script} run fail\n")
+        print(f"******* Finished running {script} ***********")
     
     # 保存更新后的已执行目录和轮次
     with open(executed_log_path, "w") as file:
