@@ -4,6 +4,7 @@ import shutil
 import subprocess
 import sys
 import json
+import pexpect
 # 假设我们有一个脚本列表
 def infer_process(executed_log_path, model_num):
     scripts = [
@@ -156,6 +157,7 @@ def infer_process(executed_log_path, model_num):
     subprocess.run(['python', '-m', 'pip', 'install', '--upgrade', 'pip'], check=True)
     subprocess.run(['pip', 'install', '-r', 'requirements.txt'], check=True)
     subprocess.run(['pip', 'install', '-e', '.'], check=True)
+    os.system('pip install pexpect')
 
     # 执行更改 PaddleNLP 版本的脚本
    
@@ -188,37 +190,41 @@ def infer_process(executed_log_path, model_num):
 
     for script in selected_dirs:
         print(f"******* Running {script} ***********")
-        process_log = os.path.join(log_dir, script+".log")
-        tmp_exit_code = -1
-        with open(process_log, "w") as log_process:
-            process = subprocess.Popen(
-                ["python", script], 
-                stdout=subprocess.PIPE, 
-                stderr=subprocess.PIPE,
-                text=True  # 以文本模式处理输出
-            )
-            for line in iter(process.stdout.readline, ""):  # 读取标准输出
-                print(line, end="")  # 实时打印到控制台
-                log_process.write(line)  # 写入日志文件
+        process_log = os.path.join(log_dir, f"{script}.log")
+        tmp_exit_code = -1  # 初始化为默认值
 
-            for line in iter(process.stderr.readline, ""):  # 读取标准错误
-                print(line, end="")  # 实时打印错误到控制台
-                log_process.write(line)  # 写入日志文件
+        try:
+            # 打开日志文件以记录输出
+            with open(process_log, "w") as log_process:
+                # 启动子进程
+                child = pexpect.spawn(f"python {script}", encoding="utf-8", logfile=log_process)
 
-            # 等待子进程结束
-            process.stdout.close()
-            process.stderr.close()
+                while True:
+                    try:
+                        # 尝试读取一行输出
+                        line = child.readline().strip()
+                        if not line:  # 如果没有新行，子进程可能结束
+                            break
+                        print(line)  # 实时打印到控制台
+                    except pexpect.exceptions.EOF:
+                        # 子进程结束
+                        break
 
-            # 获取脚本的退出状态
-            tmp_exit_code = process.wait()
-            
-        if tmp_exit_code == 0:
+                # 等待子进程退出并获取退出状态
+                child.wait()
+                tmp_exit_code = child.exitstatus
+
+        except Exception as e:
+            print(f"Error running script {script}: {e}")
+
+        finally:
+            # 记录运行结果
             with open(f"{log_dir}/infer_res.log", "a") as log_file:
-                log_file.write(f"{script} run success\n")
-        else:
-            with open(f"{log_dir}/infer_res.log", "a") as log_file:
-                log_file.write(f"{script} run fail\n")
-        print(f"******* Finished running {script} ***********")
+                if tmp_exit_code == 0:
+                    log_file.write(f"{script} run success\n")
+                else:
+                    log_file.write(f"{script} run fail\n")
+            print(f"******* Finished running {script} ***********")
     
     # 保存更新后的已执行目录和轮次
     with open(executed_log_path, "w") as file:
