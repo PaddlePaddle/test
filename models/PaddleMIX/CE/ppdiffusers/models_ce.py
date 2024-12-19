@@ -5,7 +5,7 @@ import json
 import sys
 
 # 初始化变量
-def process_init(executed_log_path):
+def process_init(executed_log_path, model_num=5):
 
     exit_code = 0
 
@@ -29,11 +29,17 @@ def process_init(executed_log_path):
     ]
 
     # 初始化或加载记录
+
     if os.path.isfile(executed_log_path):
-        with open(executed_log_path, "r") as file:
-            record = json.load(file)
-            executed_dirs = set(record.get("executed_dirs", []))
-            current_epoch = record.get("epoch", 1)
+        try:
+            with open(executed_log_path, "r") as file:
+                record = json.load(file)
+                executed_dirs = set(record.get("executed_dirs", []))
+                current_epoch = record.get("epoch", 1)
+        except Exception as e:
+            print(f"Error loading the executed directory record from {executed_log_path}: {str(e)}")
+            executed_dirs = set()
+            current_epoch = 1
     else:
         executed_dirs = set()
         current_epoch = 1
@@ -49,7 +55,7 @@ def process_init(executed_log_path):
         current_epoch += 1
 
     # 随机选择 5 个目录
-    selected_dirs = random.sample(remaining_dirs, min(5, len(remaining_dirs)))
+    selected_dirs = random.sample(remaining_dirs, min(model_num, len(remaining_dirs)))
     print(f"Epoch {current_epoch}: Selected directories: {selected_dirs}")
 
     # 更新已执行的目录记录
@@ -86,7 +92,8 @@ if __name__ == '__main__':
     try:
         print("Starting script...")
         record_path = sys.argv[1]
-        process_init(record_path)
+        model_num = int(sys.argv[2]) if len(sys.argv) > 2 else 5
+        process_init(record_path, model_num)
     except Exception as e:
         print(e)
     
