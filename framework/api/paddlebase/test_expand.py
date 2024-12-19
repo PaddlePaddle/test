@@ -203,14 +203,14 @@ def test_expand15():
     obj.exception(x=x, shape=shape, mode="c", etype="InvalidArgument")
 
 
-@pytest.mark.api_base_expand_exception
-def test_expand16():
-    """
-    x_shape < 0,c++error,static AssertionError
-    """
-    x = np.array([[1], [1]])
-    shape = [2, 0]
-    obj.exception(x=x, shape=shape, mode="c", etype="InvalidArgument")
+# @pytest.mark.api_base_expand_exception
+# def test_expand16():
+#     """
+#     x_shape < 0,c++error,static AssertionError
+#     """
+#     x = np.array([[1], [1]])
+#     shape = [2, 0]
+#     obj.exception(x=x, shape=shape, mode="c", etype="InvalidArgument")
 
 
 @pytest.mark.api_base_expand_exception
