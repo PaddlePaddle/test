@@ -143,7 +143,9 @@ def infer_process(executed_log_path, model_num):
         os.makedirs(log_dir)
 
     # 复制文件
-    shutil.copy(work_path3 + "/change_paddlenlp_version.sh", os.path.join(root_path, "PaddleMIX"))
+    # 不对paddlenlp的版本进行限制
+    # shutil.copy(work_path3 + "/change_paddlenlp_version.sh", os.path.join(root_path, "PaddleMIX"))
+    # os.system('chmod +x ${root_path}/PaddleMIX/change_paddlenlp_version.sh')
     command = f"/bin/cp -rf ./* {work_path}/"
     subprocess.run(command, shell=True, check=True)
 
