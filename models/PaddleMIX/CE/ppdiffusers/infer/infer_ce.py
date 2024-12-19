@@ -158,7 +158,7 @@ def infer_process(executed_log_path, model_num):
 
     # 执行更改 PaddleNLP 版本的脚本
    
-    subprocess.run([os.path.join(root_path, 'PaddleMIX/change_paddlenlp_version.sh')], shell=True, check=True)
+    # subprocess.run([os.path.join(root_path, 'PaddleMIX/change_paddlenlp_version.sh')], shell=True, check=True)
 
     # 安装其他依赖
     subprocess.run(['pip', 'install', 'pytest', 'safetensors', 'ftfy', 'fastcore', 'opencv-python', 'einops', 'parameterized', 'requests-mock'], check=True)
