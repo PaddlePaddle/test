@@ -95,16 +95,17 @@ else
 fi
 echo "*******paddlemix qwen2_vl_sft_train end***********"
 
-echo "*******paddlemix qwen2_vl_train_infer begin begin***********"
-(python iner_qwen.py) 2>&1 | tee ${log_dir}/qwen2_vl_train_infer.log
-tmp_exit_code=${PIPESTATUS[0]}
-exit_code=$(($exit_code + ${tmp_exit_code}))
-if [ ${tmp_exit_code} -eq 0 ]; then
-    echo "qwen2_vl_train_infer run success" >>"${log_dir}/ce_res.log"
-else
-    echo "qwen2_vl_train_infer run fail" >>"${log_dir}/ce_res.log"
-fi
-echo "*******paddlemix qwen2_vl_train_infer end***********"
+# V100 暂不支持此case
+# echo "*******paddlemix qwen2_vl_train_infer begin begin***********"
+# (python iner_qwen.py) 2>&1 | tee ${log_dir}/qwen2_vl_train_infer.log
+# tmp_exit_code=${PIPESTATUS[0]}
+# exit_code=$(($exit_code + ${tmp_exit_code}))
+# if [ ${tmp_exit_code} -eq 0 ]; then
+#     echo "qwen2_vl_train_infer run success" >>"${log_dir}/ce_res.log"
+# else
+#     echo "qwen2_vl_train_infer run fail" >>"${log_dir}/ce_res.log"
+# fi
+# echo "*******paddlemix qwen2_vl_train_infer end***********"
 unset http_proxy
 unset https_proxy
 
