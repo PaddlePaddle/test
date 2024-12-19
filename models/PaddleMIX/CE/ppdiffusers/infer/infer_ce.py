@@ -2,6 +2,7 @@ import random
 import os
 import shutil
 import subprocess
+import sys
 # 假设我们有一个脚本列表
 def infer_process(executed_log_path, model_num):
     scripts = [
