@@ -188,8 +188,8 @@ def infer_process(executed_log_path, model_num):
 
     for script in selected_dirs:
         print(f"******* Running {script} ***********")
-        log_file = os.path.join(log_dir, script+".log")
-        with open(log_file, "w") as log_file:
+        process_log = os.path.join(log_dir, script+".log")
+        with open(process_log, "w") as log_process:
             process = subprocess.Popen(
                 ["python", script], 
                 stdout=subprocess.PIPE, stderr=subprocess.PIPE
@@ -199,11 +199,11 @@ def infer_process(executed_log_path, model_num):
             # 实时输出脚本的标准输出和标准错误，并同时写入日志文件
             for line in process.stdout:
                 print(line, end="")  # 在控制台中打印
-                log.write(line)  # 写入日志文件
+                log_process.write(line)  # 写入日志文件
 
             for line in process.stderr:
                 print(line, end="")  # 在控制台中打印错误
-                log.write(line)  # 写入日志文件
+                log_process.write(line)  # 写入日志文件
 
             # 获取脚本的退出状态
             tmp_exit_code = process.wait()
