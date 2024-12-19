@@ -192,18 +192,21 @@ def infer_process(executed_log_path, model_num):
         with open(process_log, "w") as log_process:
             process = subprocess.Popen(
                 ["python", script], 
-                stdout=subprocess.PIPE, stderr=subprocess.PIPE
+                stdout=subprocess.PIPE, 
+                stderr=subprocess.PIPE,
+                text=True  # 以文本模式处理输出
             )
-            # 处理脚本的输出和错误信息
-            stdout, stderr = process.communicate()
-            # 实时输出脚本的标准输出和标准错误，并同时写入日志文件
-            for line in process.stdout:
-                print(line, end="")  # 在控制台中打印
+            for line in iter(process.stdout.readline, ""):  # 读取标准输出
+                print(line, end="")  # 实时打印到控制台
                 log_process.write(line)  # 写入日志文件
 
-            for line in process.stderr:
-                print(line, end="")  # 在控制台中打印错误
+            for line in iter(process.stderr.readline, ""):  # 读取标准错误
+                print(line, end="")  # 实时打印错误到控制台
                 log_process.write(line)  # 写入日志文件
+
+            # 等待子进程结束
+            process.stdout.close()
+            process.stderr.close()
 
             # 获取脚本的退出状态
             tmp_exit_code = process.wait()
