@@ -190,7 +190,7 @@ def infer_process(executed_log_path, model_num):
         log_file = os.path.join(log_dir, script+".log")
         with open(log_file, "w") as log_file:
             process = subprocess.Popen(
-                ["python", script_name], 
+                ["python", script], 
                 stdout=subprocess.PIPE, stderr=subprocess.PIPE
             )
             # 处理脚本的输出和错误信息
