@@ -3,98 +3,99 @@ import os
 import shutil
 import subprocess
 import sys
+import json
 # 假设我们有一个脚本列表
 def infer_process(executed_log_path, model_num):
     scripts = [
-        "python dual_text_and_image_guided_generation-versatile_diffusion.py",
-        "python image_guided_image_inpainting-paint_by_example.py",
-        "python image_inpainting-repaint.py",
-        "python image_mixing-clip_guided_stable_diffusion.py",
-        "python image_to_image_text_guided_generation-alt_diffusion.py",
-        "python image_to_image_text_guided_generation-controlnet.py",
-        "python image_to_image_text_guided_generation-deepfloyd_if.py",
-        "python image_to_image_text_guided_generation-kandinsky2_2_controlnet.py",
-        "python image_to_image_text_guided_generation-kandinsky2_2.py",
-        "python image_to_image_text_guided_generation-kandinsky.py",
-        "python image_to_image_text_guided_generation-stable_diffusion_2.py",
-        "python image_to_image_text_guided_generation-stable_diffusion_3.py",
-        "python image_to_image_text_guided_generation-stable_diffusion_controlnet.py",
-        "python image_to_image_text_guided_generation-stable_diffusion.py",
-        "python image_to_image_text_guided_generation-stable_diffusion_xl.py",
-        "python image_to_text_generation-unidiffuser.py",
-        "python image_variation-stable_diffusion.py",
-        "python image_variation-unidiffuser.py",
-        "python image_variation-versatile_diffusion.py",
-        "python instruct_pix2pix-stable_diffusion_xl.py",
-        "python super_resolution-latent_diffusion.py",
-        "python text_guided_generation-semantic_stable_diffusion.py",
-        "python text_guided_image_inpainting-deepfloyd_if.py",
-        "python text_guided_image_inpainting-kandinsky2_2.py",
-        "python text_guided_image_inpainting-kandinsky.py",
-        "python text_guided_image_inpainting-stable_diffusion_2.py",
-        "python text_guided_image_inpainting-stable_diffusion_controlnet.py",
-        "python text_guided_image_inpainting-stable_diffusion.py",
-        "python text_guided_image_inpainting-stable_diffusion_xl.py",
-        "python text_guided_image_upscaling-stable_diffusion_2.py",
-        "python text_to_3d_generation-shape_e.py",
-        "python text_to_3d_generation-shape_e_image2image.py",
-        "python text_to_audio_generation-audio_ldm.py",
-        "python text_to_image_generation-alt_diffusion.py",
-        "python text_to_image_generation-auto.py",
-        "python text_to_image_generation-consistency_models.py",
-        "python text_to_image_generation-deepfloyd_if.py",
-        "python text_to_image_generation-kandinsky2_2_controlnet.py",
-        "python text_to_image_generation-kandinsky2_2.py",
-        "python text_to_image_generation-kandinsky.py",
-        "python text_to_image_generation-latent_diffusion.py",
-        "python text_to_image_generation_mixture_tiling-stable_diffusion.py",
-        "python text_to_image_generation-sdxl_base_with_refiner.py",
-        "python text_to_image_generation-stable_diffusion_2.py",
-        "python text_to_image_generation-stable_diffusion_3.py",
-        "python text_to_image_generation-stable_diffusion_controlnet.py",
-        "python text_to_image_generation-stable_diffusion.py",
-        "python text_to_image_generation-stable_diffusion_safe.py",
-        "python text_to_image_generation-stable_diffusion_t2i_adapter.py",
-        "python text_to_image_generation-stable_diffusion_xl_controlnet.py",
-        "python text_to_image_generation-stable_diffusion_xl.py",
-        "python text_to_image_generation-t2i-adapter.py",
-        "python text_to_image_generation-unclip.py",
-        "python text_to_image_generation-unidiffuser.py",
-        "python text_to_image_generation-versatile_diffusion.py",
-        "python text_to_image_generation-vq_diffusion.py",
-        "python text_to_video_generation-lvdm.py",
-        "python text_to_video_generation-synth_img2img.py",
-        "python text_to_video_generation-synth.py",
-        "python text_to_video_generation-zero.py",
-        "python text_variation-unidiffuser.py",
-        "python unconditional_audio_generation-audio_diffusion.py",
-        "python unconditional_audio_generation-dance_diffusion.py",
-        "python unconditional_audio_generation-spectrogram_diffusion.py",
-        "python unconditional_image_generation-ddim.py",
-        "python unconditional_image_generation-ddpm.py",
-        "python unconditional_image_generation-latent_diffusion_uncond.py",
-        "python unconditional_image_generation-pndm.py",
-        "python unconditional_image_generation-score_sde_ve.py",
-        "python unconditional_image_generation-stochastic_karras_ve.py",
-        "python unconditional_image_text_joint_generation-unidiffuser.py",
-        "python class_conditional_image_generation-dit.py",
-        "python class_conditional_image_generation-large_dit_3b.py",
-        "python class_conditional_image_generation-large_dit_7b.py",
-        "python image_to_video_generation_image_to_video.py",
-        "python image_to_video_generation_stable_video_diffusion.py",
-        "python text_to_audio_generation-audio_ldm2.py",
-        "python text_to_image_generation-latent_diffusion_uvit_small.py",
-        "python text_to_image_generation_consistency_model.py",
-        "python text_to_image_generation_kandinsky3.py",
-        "python text_to_image_generation_largedit_3b.py",
-        "python text_to_image_generation_wuerstchen.py",
-        "python text_to_video_generation-synth.py",
-        "python text_to_video_generation-synth_img2img.py",
-        "python text_to_video_generation-zero.py",
-        "python text_to_video_generation_animediff.py",
-        "python unconditional_audio_generation-audio_diffusion.py",
-        "python unconditional_audio_generation-dance_diffusion.py",
-        "python video_to_video_generation_video_to_video.py"
+        "dual_text_and_image_guided_generation-versatile_diffusion.py",
+        "image_guided_image_inpainting-paint_by_example.py",
+        "image_inpainting-repaint.py",
+        "image_mixing-clip_guided_stable_diffusion.py",
+        "image_to_image_text_guided_generation-alt_diffusion.py",
+        "image_to_image_text_guided_generation-controlnet.py",
+        "image_to_image_text_guided_generation-deepfloyd_if.py",
+        "image_to_image_text_guided_generation-kandinsky2_2_controlnet.py",
+        "image_to_image_text_guided_generation-kandinsky2_2.py",
+        "image_to_image_text_guided_generation-kandinsky.py",
+        "image_to_image_text_guided_generation-stable_diffusion_2.py",
+        "image_to_image_text_guided_generation-stable_diffusion_3.py",
+        "image_to_image_text_guided_generation-stable_diffusion_controlnet.py",
+        "image_to_image_text_guided_generation-stable_diffusion.py",
+        "image_to_image_text_guided_generation-stable_diffusion_xl.py",
+        "image_to_text_generation-unidiffuser.py",
+        "image_variation-stable_diffusion.py",
+        "image_variation-unidiffuser.py",
+        "image_variation-versatile_diffusion.py",
+        "instruct_pix2pix-stable_diffusion_xl.py",
+        "super_resolution-latent_diffusion.py",
+        "text_guided_generation-semantic_stable_diffusion.py",
+        "text_guided_image_inpainting-deepfloyd_if.py",
+        "text_guided_image_inpainting-kandinsky2_2.py",
+        "text_guided_image_inpainting-kandinsky.py",
+        "text_guided_image_inpainting-stable_diffusion_2.py",
+        "text_guided_image_inpainting-stable_diffusion_controlnet.py",
+        "text_guided_image_inpainting-stable_diffusion.py",
+        "text_guided_image_inpainting-stable_diffusion_xl.py",
+        "text_guided_image_upscaling-stable_diffusion_2.py",
+        "text_to_3d_generation-shape_e.py",
+        "text_to_3d_generation-shape_e_image2image.py",
+        "text_to_audio_generation-audio_ldm.py",
+        "text_to_image_generation-alt_diffusion.py",
+        "text_to_image_generation-auto.py",
+        "text_to_image_generation-consistency_models.py",
+        "text_to_image_generation-deepfloyd_if.py",
+        "text_to_image_generation-kandinsky2_2_controlnet.py",
+        "text_to_image_generation-kandinsky2_2.py",
+        "text_to_image_generation-kandinsky.py",
+        "text_to_image_generation-latent_diffusion.py",
+        "text_to_image_generation_mixture_tiling-stable_diffusion.py",
+        "text_to_image_generation-sdxl_base_with_refiner.py",
+        "text_to_image_generation-stable_diffusion_2.py",
+        "text_to_image_generation-stable_diffusion_3.py",
+        "text_to_image_generation-stable_diffusion_controlnet.py",
+        "text_to_image_generation-stable_diffusion.py",
+        "text_to_image_generation-stable_diffusion_safe.py",
+        "text_to_image_generation-stable_diffusion_t2i_adapter.py",
+        "text_to_image_generation-stable_diffusion_xl_controlnet.py",
+        "text_to_image_generation-stable_diffusion_xl.py",
+        "text_to_image_generation-t2i-adapter.py",
+        "text_to_image_generation-unclip.py",
+        "text_to_image_generation-unidiffuser.py",
+        "text_to_image_generation-versatile_diffusion.py",
+        "text_to_image_generation-vq_diffusion.py",
+        "text_to_video_generation-lvdm.py",
+        "text_to_video_generation-synth_img2img.py",
+        "text_to_video_generation-synth.py",
+        "text_to_video_generation-zero.py",
+        "text_variation-unidiffuser.py",
+        "unconditional_audio_generation-audio_diffusion.py",
+        "unconditional_audio_generation-dance_diffusion.py",
+        "unconditional_audio_generation-spectrogram_diffusion.py",
+        "unconditional_image_generation-ddim.py",
+        "unconditional_image_generation-ddpm.py",
+        "unconditional_image_generation-latent_diffusion_uncond.py",
+        "unconditional_image_generation-pndm.py",
+        "unconditional_image_generation-score_sde_ve.py",
+        "unconditional_image_generation-stochastic_karras_ve.py",
+        "unconditional_image_text_joint_generation-unidiffuser.py",
+        "class_conditional_image_generation-dit.py",
+        "class_conditional_image_generation-large_dit_3b.py",
+        "class_conditional_image_generation-large_dit_7b.py",
+        "image_to_video_generation_image_to_video.py",
+        "image_to_video_generation_stable_video_diffusion.py",
+        "text_to_audio_generation-audio_ldm2.py",
+        "text_to_image_generation-latent_diffusion_uvit_small.py",
+        "text_to_image_generation_consistency_model.py",
+        "text_to_image_generation_kandinsky3.py",
+        "text_to_image_generation_largedit_3b.py",
+        "text_to_image_generation_wuerstchen.py",
+        "text_to_video_generation-synth.py",
+        "text_to_video_generation-synth_img2img.py",
+        "text_to_video_generation-zero.py",
+        "text_to_video_generation_animediff.py",
+        "unconditional_audio_generation-audio_diffusion.py",
+        "unconditional_audio_generation-dance_diffusion.py",
+        "video_to_video_generation_video_to_video.py"
     ]
 
     # 随机选择要执行的脚本数量（假设选择5个脚本）
@@ -177,8 +178,8 @@ def infer_process(executed_log_path, model_num):
     # 执行接下来的操作（如模型推理等）
     exit_code = 0
 
-    # 你可以继续根据需要添加其他的 Python 脚本执行或操作
-    # 例如运行某些 Python 文件
+    # 你可以继续根据需要添加其他的 脚本执行或操作
+    # 例如运行某些 文件
     # subprocess.run(['python', 'your_script.py'], check=True)
 
     print(f"Exit code: {exit_code}")
@@ -186,19 +187,33 @@ def infer_process(executed_log_path, model_num):
 
     for script in selected_dirs:
         print(f"******* Running {script} ***********")
-        result = subprocess.run(f"{script} 2>&1", shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-        
-        # 处理脚本的输出和错误信息
-        tmp_exit_code = result.returncode
-        exit_code += tmp_exit_code
-        
-        if tmp_exit_code == 0:
-            with open(f"{log_dir}/infer_res.log", "a") as log_file:
-                log_file.write(f"{script} run success\n")
-        else:
-            with open(f"{log_dir}/infer_res.log", "a") as log_file:
-                log_file.write(f"{script} run fail\n")
-        print(f"******* Finished running {script} ***********")
+        log_file = os.path.join(log_dir, script+".log")
+        with open(log_file, "w") as log_file:
+            process = subprocess.Popen(
+                ["python", script_name], 
+                stdout=subprocess.PIPE, stderr=subprocess.PIPE
+            )
+            # 处理脚本的输出和错误信息
+            stdout, stderr = process.communicate()
+            # 实时输出脚本的标准输出和标准错误，并同时写入日志文件
+            for line in process.stdout:
+                print(line, end="")  # 在控制台中打印
+                log.write(line)  # 写入日志文件
+
+            for line in process.stderr:
+                print(line, end="")  # 在控制台中打印错误
+                log.write(line)  # 写入日志文件
+
+            # 获取脚本的退出状态
+            tmp_exit_code = process.wait()
+            
+            if tmp_exit_code == 0:
+                with open(f"{log_dir}/infer_res.log", "a") as log_file:
+                    log_file.write(f"{script} run success\n")
+            else:
+                with open(f"{log_dir}/infer_res.log", "a") as log_file:
+                    log_file.write(f"{script} run fail\n")
+            print(f"******* Finished running {script} ***********")
     
     # 保存更新后的已执行目录和轮次
     with open(executed_log_path, "w") as file:
