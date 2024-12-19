@@ -146,7 +146,7 @@ def infer_process(executed_log_path, model_num):
     # 不对paddlenlp的版本进行限制
     # shutil.copy(work_path3 + "/change_paddlenlp_version.sh", os.path.join(root_path, "PaddleMIX"))
     # os.system('chmod +x ${root_path}/PaddleMIX/change_paddlenlp_version.sh')
-    command = f"/bin/cp -rf ./* {work_path}/"
+    command = f"cp -rf ./* {work_path}/"
     subprocess.run(command, shell=True, check=True)
 
     # 安装依赖
