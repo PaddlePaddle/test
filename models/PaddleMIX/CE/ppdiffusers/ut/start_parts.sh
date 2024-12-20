@@ -26,8 +26,8 @@ export https_proxy=${mix_proxy}
 
 exit_code=0
 
-# export HF_ENDPOINT=https://hf-mirror.com
-# export no_proxy=baidu.com,127.0.0.1,0.0.0.0,localhost,bcebos.com,pip.baidu-int.com,mirrors.baidubce.com,repo.baidubce.com,repo.bcm.baidubce.com,pypi.tuna.tsinghua.edu.cn,aistudio.baidu.com
+export HF_ENDPOINT=https://hf-mirror.com
+export no_proxy=baidu.com,127.0.0.1,0.0.0.0,localhost,bcebos.com,pip.baidu-int.com,mirrors.baidubce.com,repo.baidubce.com,repo.bcm.baidubce.com,pypi.tuna.tsinghua.edu.cn,aistudio.baidu.com
 export USE_PPXFORMERS=True
 export RUN_SLOW=True
 # tests目前子目录 community models pipelines schedulers others community
