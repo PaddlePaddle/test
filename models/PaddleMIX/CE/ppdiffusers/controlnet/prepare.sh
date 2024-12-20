@@ -6,7 +6,7 @@ rm -rf fill50k.zip
 
 pip install -r requirements.txt
 pip install gradio
-bash ${root_path}/PaddleMIX/change_paddlenlp_version.sh
+#bash ${root_path}/PaddleMIX/change_paddlenlp_version.sh
 
 
 export http_proxy=${proxy}

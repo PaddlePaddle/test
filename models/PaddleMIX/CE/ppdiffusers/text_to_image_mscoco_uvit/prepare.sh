@@ -1,7 +1,7 @@
 #!/bin/bash
 
 pip install -r requirements.txt
-bash ${root_path}/PaddleMIX/change_paddlenlp_version.sh
+#bash ${root_path}/PaddleMIX/change_paddlenlp_version.sh
 
 
 export http_proxy=${mix_proxy}

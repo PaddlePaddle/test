@@ -1,7 +1,6 @@
 #!/bin/bash
 
 pip install -U decord
-bash ${root_path}/PaddleMIX/change_paddlenlp_version.sh
 
 
 wget https://paddlenlp.bj.bcebos.com/models/community/westfish/lvdm_datasets/sky_timelapse_lvdm.zip
