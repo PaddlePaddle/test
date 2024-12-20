@@ -9,8 +9,8 @@ nlp_path=${root_path}/PaddleMIX
 work_path=$(pwd)
 echo ${work_path}
 
-cp change_paddlenlp_version.sh ${root_path}/PaddleMIX
-bash prepare.sh
+# cp change_paddlenlp_version.sh ${root_path}/PaddleMIX
+# bash prepare.sh
 
 cd ${work_path}
 
