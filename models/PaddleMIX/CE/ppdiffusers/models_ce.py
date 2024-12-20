@@ -50,6 +50,10 @@ def process_init(executed_log_path, model_num=5):
         current_epoch = 1
 
     # 找到未执行的目录
+    if model_num > len(all_valid_dirs):
+        model_num = len(all_valid_dirs)
+        executed_dirs = set()
+        current_epoch = 1
     remaining_dirs = list(set(all_valid_dirs) - executed_dirs)
 
     # 如果未执行目录为空，开始新的轮次
