@@ -157,7 +157,6 @@ def infer_process(executed_log_path, model_num):
     subprocess.run(['python', '-m', 'pip', 'install', '--upgrade', 'pip'], check=True)
     subprocess.run(['pip', 'install', '-r', 'requirements.txt'], check=True)
     subprocess.run(['pip', 'install', '-e', '.'], check=True)
-    os.system('pip install pexpect')
 
     # 执行更改 PaddleNLP 版本的脚本
    
