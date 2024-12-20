@@ -32,9 +32,9 @@ for subdir in */; do
     fi
     
     # 32g显存跑不了
-    if [ "$subdir" == "kandinsky2_2_text_to_image/" ]; then
-      continue
-    fi
+    # if [ "$subdir" == "kandinsky2_2_text_to_image/" ]; then
+    #   continue
+    # fi
 
     # examples extra
     if [ "$subdir" == "ppdiffusers_example_test/" ]; then
