@@ -21,17 +21,17 @@ bash prepare.sh
 
 
 
-# 单机训练 二阶段
-echo "*******AnimateAnyone infer begin***********"
-(bash infer.sh) 2>&1 | tee ${log_dir}/AnimateAnyone_infer.log
+
+echo "*******HunyuanDiT infer begin***********"
+(bash infer.sh) 2>&1 | tee ${log_dir}/HunyuanDiT_infer.log
 tmp_exit_code=${PIPESTATUS[0]}
 exit_code=$(($exit_code + ${tmp_exit_code}))
 if [ ${tmp_exit_code} -eq 0 ]; then
-    echo "AnimateAnyone_infer run success" >>"${log_dir}/ce_res.log"
+    echo "HunyuanDiT_infer run success" >>"${log_dir}/ce_res.log"
 else
-    echo "AnimateAnyone_infer run fail" >>"${log_dir}/ce_res.log"
+    echo "HunyuanDiT_infer run fail" >>"${log_dir}/ce_res.log"
 fi
-echo "*******AnimateAnyone infer end***********"
+echo "*******HunyuanDiT infer end***********"
 
 # # 查看结果
 # cat ${log_dir}/ce_res.log
