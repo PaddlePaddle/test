@@ -18,49 +18,54 @@ cd ${work_path}
 exit_code=0
 
 # 下载依赖和数据
-bash prepare.sh
+# bash prepare_new.sh
 
 echo "*******class_conditional_image_generation/DiT train begin***********"
-(bash train.sh) 2>&1 | tee ${log_dir}/class_conditional_image_generation_DiT_train.log
+(sh 0_run_train_dit_trainer.sh) 2>&1 | tee ${log_dir}/class_conditional_image_generation_DiT_train.log
 tmp_exit_code=${PIPESTATUS[0]}
 exit_code=$(($exit_code + ${tmp_exit_code}))
 if [ ${tmp_exit_code} -eq 0 ]; then
-    echo "class_conditional_image_generation/DiT run success" >>"${log_dir}/ce_res.log"
+    echo "class_conditional_image_generation/DiT train run success" >>"${log_dir}/ce_res.log"
 else
-    echo "class_conditional_image_generation/DiT run fail" >>"${log_dir}/ce_res.log"
+    echo "class_conditional_image_generation/DiT train run fail" >>"${log_dir}/ce_res.log"
 fi
-echo "*******class_conditional_image_generation/DiT end***********"
+echo "*******class_conditional_image_generation/DiT train end***********"
 
-echo "*******class_conditional_image_generation/DiT single_train begin***********"
-(bash single_train.sh) 2>&1 | tee ${log_dir}/class_conditional_image_generation_DiT_single_train.log
+
+echo "*******class_conditional_image_generation/DiT multi_train begin***********"
+(sh 1_run_train_dit_notrainer.sh) 2>&1 | tee ${log_dir}/class_conditional_image_generation_DiT_multi_train.log
 tmp_exit_code=${PIPESTATUS[0]}
 exit_code=$(($exit_code + ${tmp_exit_code}))
 if [ ${tmp_exit_code} -eq 0 ]; then
-    echo "class_conditional_image_generation/DiT single_train run success" >>"${log_dir}/ce_res.log"
+    echo "class_conditional_image_generation/DiT multi train run success" >>"${log_dir}/ce_res.log"
 else
-    echo "class_conditional_image_generation/DiT single_train run fail" >>"${log_dir}/ce_res.log"
+    echo "class_conditional_image_generation/DiT multi train run fail" >>"${log_dir}/ce_res.log"
 fi
+echo "*******class_conditional_image_generation/DiT multi train end***********"
 
-echo "*******class_conditional_image_generation/DiT single_train_auto begin***********"
-(bash train_auto.sh) 2>&1 | tee ${log_dir}/class_conditional_image_generation_DiT_train_auto.log
+echo "*******class_conditional_image_generation/DiT auto_train begin***********"
+(sh 0_run_train_dit_trainer_auto.sh) 2>&1 | tee ${log_dir}/class_conditional_image_generation_DiT_auto_train.log
 tmp_exit_code=${PIPESTATUS[0]}
 exit_code=$(($exit_code + ${tmp_exit_code}))
 if [ ${tmp_exit_code} -eq 0 ]; then
-    echo "class_conditional_image_generation/DiT train_auto run success" >>"${log_dir}/ce_res.log"
+    echo "class_conditional_image_generation/DiT auto train run success" >>"${log_dir}/ce_res.log"
 else
-    echo "class_conditional_image_generation/DiT train_auto run fail" >>"${log_dir}/ce_res.log"
+    echo "class_conditional_image_generation/DiT auto train run fail" >>"${log_dir}/ce_res.log"
 fi
+echo "*******class_conditional_image_generation/DiT auto train end***********"
 
 
-echo "*******class_conditional_image_generation/DiT single_train_auto begin***********"
-(bash train_auto.sh) 2>&1 | tee ${log_dir}/class_conditional_image_generation_DiT_train_auto.log
+echo "*******class_conditional_image_generation/DiT large_train begin***********"
+(sh 4_run_train_largedit_3b_trainer_auto.sh) 2>&1 | tee ${log_dir}/class_conditional_image_generation_DiT_large_train.log
 tmp_exit_code=${PIPESTATUS[0]}
 exit_code=$(($exit_code + ${tmp_exit_code}))
 if [ ${tmp_exit_code} -eq 0 ]; then
-    echo "class_conditional_image_generation/DiT train_auto run success" >>"${log_dir}/ce_res.log"
+    echo "class_conditional_image_generation/DiT large train run success" >>"${log_dir}/ce_res.log"
 else
-    echo "class_conditional_image_generation/DiT train_auto run fail" >>"${log_dir}/ce_res.log"
+    echo "class_conditional_image_generation/DiT large train run fail" >>"${log_dir}/ce_res.log"
 fi
+echo "*******class_conditional_image_generation/DiT large train end***********"
+
 
 
 echo "*******class_conditional_image_generation/DiT infer begin***********"
@@ -99,17 +104,6 @@ else
 fi
 
 
-echo "*******class_conditional_image_generation/DiT inference_high begin***********"
-(bash inference_high_performance.sh) 2>&1 | tee ${log_dir}/class_conditional_image_generation_DiT_inference_high.log
-tmp_exit_code=${PIPESTATUS[0]}
-exit_code=$(($exit_code + ${tmp_exit_code}))
-if [ ${tmp_exit_code} -eq 0 ]; then
-    echo "class_conditional_image_generation/DiT inference_high run success" >>"${log_dir}/ce_res.log"
-else
-    echo "class_conditional_image_generation/DiT inference_high run fail" >>"${log_dir}/ce_res.log"
-fi
-
-echo "*******class_conditional_image_generation/DiT end***********"
 
 echo exit_code:${exit_code}
 exit ${exit_code}
