@@ -67,7 +67,7 @@ exit_code=0
 
 
 echo "*******kandinsky2_2_text_to_image decoder_multi_train begin***********"
-(python decoder_multi_train.sh) 2>&1 | tee ${log_dir}/kandinsky2_2_text_to_image_decoder_multi_trainlog
+(bash decoder_multi_train.sh) 2>&1 | tee ${log_dir}/kandinsky2_2_text_to_image_decoder_multi_trainlog
 tmp_exit_code=${PIPESTATUS[0]}
 exit_code=$(($exit_code + ${tmp_exit_code}))
 if [ ${tmp_exit_code} -eq 0 ]; then
