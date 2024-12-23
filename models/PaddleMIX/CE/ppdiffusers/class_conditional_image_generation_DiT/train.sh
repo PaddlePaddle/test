@@ -75,3 +75,4 @@ for FILE in $FILES; do
     if [ $? -ne 0 ]; then
         echo "测试文件 $FILE 执行失败。"
     fi
+done
