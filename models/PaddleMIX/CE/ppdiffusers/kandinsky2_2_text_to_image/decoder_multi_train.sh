@@ -1,6 +1,13 @@
 #!/bin/bash
 
-export DATASET_NAME="lambdalabs/naruto-blip-captions"
+import os
+
+# 设置环境变量
+os.environ["DATASET_NAME"] = "lambdalabs/naruto-blip-captions"
+
+# 验证环境变量
+# print(os.environ["DATASET_NAME"])
+
 
 python -u -m paddle.distributed.launch --gpus "0,1,2,3" train_text_to_image_decoder.py \
   --dataset_name=$DATASET_NAME \
