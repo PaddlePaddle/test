@@ -1,7 +1,7 @@
 #!/bin/bash
 
 pip install visualdl
-cd examples/dreambooth
+# cd examples/dreambooth
 pip install -r requirements_sd3.txt
 pip install huggingface_hub==0.23.0
 #bash change_paddlenlp_version.sh

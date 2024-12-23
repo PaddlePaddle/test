@@ -3,7 +3,7 @@
 cur_path=$(pwd)
 echo ${cur_path}
 
-work_path=${root_path}/PaddleMIX/ppdiffusers/examples/dreambooth_sd3/
+work_path=${root_path}/PaddleMIX/ppdiffusers/examples/dreambooth/
 echo ${work_path}
 
 log_dir=${root_path}/log
@@ -18,6 +18,7 @@ cd ${work_path}
 exit_code=0
 
 bash prepare.sh
+
 
 
 # 单机训练
