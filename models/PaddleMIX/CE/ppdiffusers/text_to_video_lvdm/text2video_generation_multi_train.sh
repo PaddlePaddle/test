@@ -7,7 +7,7 @@ python -u -m paddle.distributed.launch --gpus "0,1" train_lvdm_text2video.py \
     --do_train \
     --do_eval \
     --label_names pixel_values \
-    --eval_steps 1000 \
+    --eval_steps 20 \
     --vae_type 2d \
     --vae_name_or_path  None \
     --output_dir temp/checkpoints_text2video \
@@ -16,7 +16,7 @@ python -u -m paddle.distributed.launch --gpus "0,1" train_lvdm_text2video.py \
     --per_device_eval_batch_size 4 \
     --gradient_accumulation_steps 2 \
     --learning_rate 6e-5 \
-    --max_steps 100 \
+    --max_steps 20 \
     --lr_scheduler_type constant \
     --warmup_steps 0 \
     --image_logging_steps 100 \

@@ -16,12 +16,12 @@ python -u train_lvdm_text2video.py \
     --per_device_eval_batch_size 4 \
     --gradient_accumulation_steps 2 \
     --learning_rate 6e-5 \
-    --max_steps 100 \
+    --max_steps 20 \
     --lr_scheduler_type constant \
     --warmup_steps 0 \
     --image_logging_steps 100 \
     --logging_steps 50 \
-    --save_steps 100 \
+    --save_steps 20 \
     --seed 23 \
     --dataloader_num_workers 8 \
     --weight_decay 0.01 \
