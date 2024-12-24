@@ -96,7 +96,8 @@ def infer_process(executed_log_path, model_num):
         "text_to_video_generation_animediff.py",
         "unconditional_audio_generation-audio_diffusion.py",
         "unconditional_audio_generation-dance_diffusion.py",
-        "video_to_video_generation_video_to_video.py"
+        "video_to_video_generation_video_to_video.py",
+        "text_to_image_generation-stable_diffusion_3_5.py"
     ]
 
     # 随机选择要执行的脚本数量（假设选择5个脚本）

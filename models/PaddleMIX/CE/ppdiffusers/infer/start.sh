@@ -1089,7 +1089,19 @@ else
 fi
 echo "*******infer video_to_video_generation_video_to_video end***********"
 
-# 查看结果
+echo "*******infer text_to_image_generation-stable_diffusion_3_5.py begin***********"
+(python text_to_image_generation-stable_diffusion_3_5.py) 2>&1 | tee ${log_dir}/text_to_image_generation-stable_diffusion_3_5.log
+tmp_exit_code=${PIPESTATUS[0]}
+exit_code=$(($exit_code + ${tmp_exit_code}))
+if [ ${tmp_exit_code} -eq 0 ]; then
+    echo "infer text_to_image_generation-stable_diffusion_3_5 run success" >>"${log_dir}/infer_res.log"
+else
+    echo "infer text_to_image_generation-stable_diffusion_3_5 run fail" >>"${log_dir}/infer_res.log"
+fi
+echo "*******infer text_to_image_generation-stable_diffusion_3_5 end***********"
+
+
+
 echo "*****************pip list********************"
 pip list | grep paddle
 
