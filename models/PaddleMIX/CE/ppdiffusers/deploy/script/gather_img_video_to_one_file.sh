@@ -32,3 +32,16 @@ find . -type d \( -name "results-paddle" -o -name "results-paddle-fp16" -o -name
     cp -r "$dir" "$TARGET_DIR/$PARENT_DIR/"
 done
 
+cd ${work_path}/ipadapter
+
+find . -type d \( -name "results-paddle" -o -name "results-paddle-fp16" -o -name "results-paddle_tensorrt" -o -name "results-paddle_tensorrt-fp16" \) | while read dir; do
+    # 提取父目录路径作为子目录名
+    PARENT_DIR=$(basename "$(dirname "$dir")")
+
+    # 创建目标嵌套目录
+    mkdir -p "$gather_file_path/ipadapter/$PARENT_DIR"
+
+
+    # 复制：保留原文件夹，复制到目标目录
+    cp -r "$dir" "$TARGET_DIR/$PARENT_DIR/"
+done
