@@ -32,7 +32,7 @@ find . -type d \( -name "results-paddle" -o -name "results-paddle-fp16" -o -name
     # 复制：保留原文件夹，复制到目标目录
     echo "Copying $dir to $gather_file_path/$PARENT_DIR"
     set -x
-    cp -rL "$dir" "$TARGET_DIR/$PARENT_DIR/"
+    cp -rL "$dir" "$gather_file_path/$PARENT_DIR/"
     set +x
 done
 
@@ -47,5 +47,5 @@ find . -type d \( -name "results-paddle" -o -name "results-paddle-fp16" -o -name
 
 
     # 复制：保留原文件夹，复制到目标目录
-    cp -rL "$dir" "$TARGET_DIR/ipadapter/$PARENT_DIR/"
+    cp -rL "$dir" "$gather_file_path/ipadapter/$PARENT_DIR/"
 done
