@@ -16,21 +16,21 @@ echo "Copying files to ${work_path}"
 /bin/cp -rf ./* ${work_path}/
 exit_code=0
 
-# cd ${work_path}
+cd ${work_path}
 
-# for subdir in */; do
-#   if [ -d "$subdir" ]; then
-#     echo "Testing $subdir"
-#     cd "$subdir"
-#     echo "Copying test scripts to $subdir"
-#     cp -f ../test_*.sh .
-#     bash test_paddle.sh
-#     exit_code=$((exit_code + $?))
-#     bash test_paddle_tensorrt.sh
-#     exit_code=$((exit_code + $?))
-#     cd ..
-#   fi
-# done
+for subdir in */; do
+  if [ -d "$subdir" ]; then
+    echo "Testing $subdir"
+    cd "$subdir"
+    echo "Copying test scripts to $subdir"
+    cp -f ../test_*.sh .
+    bash test_paddle.sh
+    exit_code=$((exit_code + $?))
+    bash test_paddle_tensorrt.sh
+    exit_code=$((exit_code + $?))
+    cd ..
+  fi
+done
 
 cd ${work_path}/ipadapter
 for subdir in */; do
