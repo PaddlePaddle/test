@@ -18,6 +18,7 @@ echo "Copying filles to ${work_path}"
 
 exit_code=0
 
+cd ${work_path}
 # 遍历所有子目录
 find . -type d \( -name "results-paddle" -o -name "results-paddle-fp16" -o -name "results-paddle_tensorrt" -o -name "results-paddle_tensorrt-fp16" \) | while read dir; do
     # 提取父目录路径作为子目录名
