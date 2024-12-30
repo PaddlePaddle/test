@@ -6,11 +6,14 @@
 eval 方法
 """
 import os
+import traceback
 import numpy as np
 import torch
 from engine.torch_xtools import reset
 from generator.builder_layer import BuildLayer
 from generator.builder_data import BuildData
+
+from strategy.ordered_dict import OrderedDictProcess
 
 
 class TorchLayerEval(object):
@@ -19,7 +22,7 @@ class TorchLayerEval(object):
     """
 
     # def __init__(self, testing, layerfile, device_id):
-    def __init__(self, testing, layerfile):
+    def __init__(self, testing, layerfile, device_place_id, upstream_net, orderdict_usage="None"):
         """
         初始化
         """
@@ -27,28 +30,44 @@ class TorchLayerEval(object):
         reset(self.seed)
 
         self.device = os.environ.get("PLT_SET_DEVICE")
-        torch.device(str(self.device))
+        torch.device(f"cuda:{device_place_id}")
 
         self.testing = testing
+        self.upstream_net = upstream_net
+        self.orderdict_usage = orderdict_usage
+        self.return_net_instance = self.testing.get("return_net_instance", "False")
         self.model_dtype = self.testing.get("model_dtype")
-
         # torch.set_default_dtype(self.model_dtype) # torch不支持字符串dtype, 测试框架暂时没兼容
 
         self.layerfile = layerfile
-        self.data = BuildData(layerfile=self.layerfile).get_single_data()
+        # self.data = BuildData(layerfile=self.layerfile).get_single_data()
+
+    def _net_input(self):
+        """get input"""
+        reset(self.seed)
+        data = BuildData(layerfile=self.layerfile).get_single_data(framework="torch")
+        return data
 
     def _net_instant(self):
-        """get net and data"""
+        """get net"""
         reset(self.seed)
-        net = BuildLayer(layerfile=self.layerfile).get_layer()
+        if self.upstream_net:
+            net = self.upstream_net
+        else:
+            net = BuildLayer(layerfile=self.layerfile).get_layer()
+        if self.orderdict_usage != "None":
+            net = OrderedDictProcess(net=net, layerfile=self.layerfile, orderdict_usage=self.orderdict_usage).process()
         return net
 
-    def dy_eval(self):
+    def torch_dy_eval(self):
         """dygraph eval"""
         net = self._net_instant()
-        # net.eval()
-        logit = net(*self.data)
-        return {"logit": logit}
+        net.eval()
+        logit = net(*self._net_input())
+        if self.return_net_instance == "True":
+            return {"res": {"logit": logit}, "net": net}
+        else:
+            return {"res": {"logit": logit}, "net": None}
 
     # def dy2st_eval(self):
     #     """dy2st eval"""

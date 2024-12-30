@@ -7,7 +7,8 @@ layer builder
 
 import os
 
-if os.environ.get("FRAMEWORK") == "paddle":
+# if os.environ.get("FRAMEWORK") == "paddle":
+if "paddle" in os.environ.get("FRAMEWORK"):
     import paddle
     import diy
     import layerApicase
@@ -21,9 +22,10 @@ if os.environ.get("FRAMEWORK") == "paddle":
         import paddlenlp
 
         os.system("cd /root/.paddlenlp && rm -rf models")
-elif os.environ.get("FRAMEWORK") == "torch":
+
+if "torch" in os.environ.get("FRAMEWORK"):
     import torch
-    import layerTorchcase
+    import torch_case
 
 
 class BuildLayer(object):

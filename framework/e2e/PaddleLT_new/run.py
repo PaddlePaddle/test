@@ -89,6 +89,15 @@ class Run(object):
                     f"&& {self.py_cmd} -m pip install emoji && {self.py_cmd} -m pip install ftfy "
                     f"&& {self.py_cmd} -m pip install unidecode "
                 )
+        elif os.environ.get("FRAMEWORK") == "torch":
+            self.logger.get_log().info("开始安转torch release版本")
+            os.system(
+                f"{self.py_cmd} -m pip install torch torchvision torchaudio "
+                "--index-url https://download.pytorch.org/whl/cu118"
+            )
+            import torch
+
+            self.logger.get_log().info(f"Torch框架版本: {torch.__version__}")
 
         # 下载ground truth用于跨硬件测试
         plt_gt_download_url = os.environ.get("PLT_GT_DOWNLOAD_URL")

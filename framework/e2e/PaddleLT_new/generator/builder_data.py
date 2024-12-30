@@ -9,7 +9,7 @@ import os
 import itertools
 import numpy as np
 
-if os.environ.get("FRAMEWORK") == "paddle":
+if "paddle" in os.environ.get("FRAMEWORK"):
     import paddle
     import diy
     import layerApicase
@@ -21,9 +21,10 @@ if os.environ.get("FRAMEWORK") == "paddle":
     elif os.environ.get("USE_PADDLE_MODEL", "None") == "PaddleNLP":
         import layerNLPcase
         import paddlenlp
-elif os.environ.get("FRAMEWORK") == "torch":
+
+if "torch" in os.environ.get("FRAMEWORK"):
     import torch
-    import layerTorchcase
+    import torch_case
 
 import pltools.np_tool as tool
 
@@ -36,7 +37,7 @@ class BuildData(object):
         self.layerfile = layerfile
         self.layer_module = eval(self.layerfile)
 
-    def get_single_data(self):
+    def get_single_data(self, framework="paddle"):
         """get data"""
         if hasattr(self.layer_module, "create_numpy_inputs"):
             # dataname = self.layerfile + ".create_numpy_inputs()"
@@ -46,24 +47,24 @@ class BuildData(object):
                 if isinstance(i, (tuple, list)):  # 为了适配list输入的模型子图
                     tmp = []
                     for j in i:
-                        if os.environ.get("FRAMEWORK") == "paddle":
+                        if framework == "paddle":
                             if j.dtype == np.int64 or j.dtype == np.int32:
                                 tmp.append(paddle.to_tensor(j, stop_gradient=True))
                             else:
                                 tmp.append(paddle.to_tensor(j, stop_gradient=False))
-                        elif os.environ.get("FRAMEWORK") == "torch":
+                        elif framework == "torch":
                             if j.dtype == np.int64 or j.dtype == np.int32:
                                 tmp.append(torch.tensor(j, requires_grad=False))
                             else:
                                 tmp.append(torch.tensor(j, requires_grad=True))
                     data.append(tmp)
                 elif isinstance(i, np.ndarray):
-                    if os.environ.get("FRAMEWORK") == "paddle":
+                    if framework == "paddle":
                         if i.dtype == np.int64 or i.dtype == np.int32:
                             data.append(paddle.to_tensor(i, stop_gradient=True))
                         else:
                             data.append(paddle.to_tensor(i, stop_gradient=False))
-                    elif os.environ.get("FRAMEWORK") == "torch":
+                    elif framework == "torch":
                         if i.dtype == np.int64 or i.dtype == np.int32:
                             data.append(torch.tensor(i, requires_grad=False))
                         else:

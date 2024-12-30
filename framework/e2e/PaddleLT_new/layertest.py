@@ -10,7 +10,7 @@ import glob
 import traceback
 
 # from engine.engine_map import engine_map
-from strategy.compare import base_compare, infer_compare
+from strategy.compare import base_compare, infer_compare, torch_compare
 from pltools.yaml_loader import YamlLoader
 from pltools.logger import Logger
 from pltools.res_save import save_tensor, load_tensor, save_pickle
@@ -59,16 +59,20 @@ class LayerTest(object):
                 # 如果删除过程中发生错误（比如文件不存在或没有权限），则打印错误信息
                 self.logger.get_log().warning(f"Error deleting {filepath}: {e.strerror}")
 
-    def _single_run(self, testing, layerfile, device_place_id=0, upstream_net=None):
+    def _single_run(
+        self, testing, layerfile, device_place_id=0, upstream_net=None, framework="paddle", orderdict_usage="None"
+    ):
         """
         单次执行器测试
         :param testing: 'dy_train', 'dy_eval'...
         :return:
         """
-        if os.environ.get("FRAMEWORK") == "paddle":
-            from engine.paddle_engine_map import paddle_engine_map as engine_map
-        elif os.environ.get("FRAMEWORK") == "torch":
+        if framework == "torch":
             from engine.torch_engine_map import torch_engine_map as engine_map
+
+            layerfile = "torch_case." + layerfile
+        else:
+            from engine.paddle_engine_map import paddle_engine_map as engine_map
 
         engine = testing
         if "layertest_engine_cover" in self.test_config.yml:  # 执行器覆盖配置
@@ -82,6 +86,7 @@ class LayerTest(object):
             layerfile=layerfile,
             device_place_id=device_place_id,
             upstream_net=upstream_net,
+            orderdict_usage=orderdict_usage,
         )
         res = getattr(layer_test, engine)()
         return res
@@ -103,7 +108,12 @@ class LayerTest(object):
                 if self.testings.get(testing).get("use_upstream_net_instance", "False") == "False":
                     net = None
                 res = self._single_run(
-                    testing=testing, layerfile=self.layerfile, device_place_id=self.device_place_id, upstream_net=net
+                    testing=testing,
+                    layerfile=self.layerfile,
+                    device_place_id=self.device_place_id,
+                    upstream_net=net,
+                    framework=self.testings.get(testing).get("framework", "paddle"),
+                    orderdict_usage=self.testings.get(testing).get("orderdict_usage", "None"),
                 )
                 if isinstance(res, dict):
                     res_dict[testing] = res.get("res", None)
@@ -168,10 +178,12 @@ class LayerTest(object):
                 else:
                     precision = comparing.get("precision")
                     if comparing.get("compare_method", "base_compare") == "infer_compare":
-                        compare_methon = infer_compare
+                        compare_method = infer_compare
+                    elif comparing.get("compare_method", "base_compare") == "torch_compare":
+                        compare_method = torch_compare
                     else:
-                        compare_methon = base_compare
-                    compare_res = compare_methon(
+                        compare_method = base_compare
+                    compare_res = compare_method(
                         result=result,
                         expect=expect,
                         res_name=latest,
@@ -245,8 +257,8 @@ class LayerTest(object):
 
 
 if __name__ == "__main__":
-    # layerfile = "layercase/sublayer1000/Clas_cases/Twins_alt_gvt_base/SIR_136.py"
-    # testing = "yaml/dy^dy2stcinn_train_inputspec.yml"
+    # layerfile = "layerApicase/nn_sublayer/Conv2D_0_class.py"
+    # testing = "yaml/dy_eval^torch_dy_eval.yml"
     # single_test = LayerTest(title=layerfile, layerfile=layerfile, testing=testing)
     # single_test._case_run()
     # exit(0)
