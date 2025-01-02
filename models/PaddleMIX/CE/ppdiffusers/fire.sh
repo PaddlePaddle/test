@@ -10,7 +10,7 @@ work_path=$(pwd)
 echo ${work_path}
 
 # cp change_paddlenlp_version.sh ${root_path}/PaddleMIX
-# bash prepare.sh
+bash prepare.sh
 
 cd ${work_path}
 
