@@ -20,11 +20,12 @@ import sys
 import subprocess
 
 import pytest
+import allure
 import numpy as np
 
 from tools.log_analysis import get_last_epoch_loss, get_last_eval_metric_for_darcy
 
-
+@allure.title("功能测试")
 def test_darcy2d_exit_code():
     """
     测试函数：测试 darcy2d.py 脚本的退出码是否为 0 以保证可视化文件的正常保存
@@ -46,7 +47,7 @@ def test_darcy2d_exit_code():
     # 断言退出码为 0
     assert exit_code == 0
 
-
+@allure.title("训练精度测试")
 def test_darcy2d_loss():
     """
     测试函数：测试 darcy2d.py 脚本的损失值
@@ -62,7 +63,7 @@ def test_darcy2d_loss():
     # 断言最后一轮迭代的损失值与基准
     assert np.allclose(float(last_loss), base_loss, rtol=1e-6)
 
-
+@allure.title("评估精度测试")
 def test_darcy2d_metric():
     """
     测试函数：测试 darcy2d.py 脚本的评估值
@@ -78,6 +79,7 @@ def test_darcy2d_metric():
     # 断言最后一轮迭代的评估值与基准
     assert np.allclose(float(last_metric), base_metric, rtol=1e-6)
 
+@allure.title("导出功能测试")
 def test_darcy2d_export():
     """
     测试函数：测试 darcy2d.py 脚本的export功能
@@ -95,6 +97,7 @@ def test_darcy2d_export():
     # 断言退出码为 0
     assert exit_code == 0
 
+@allure.title("推理功能测试")
 def test_darcy2d_infer():
     """
     测试函数：测试 darcy2d.py 脚本的infer功能
@@ -114,5 +117,5 @@ def test_darcy2d_infer():
 
 if __name__ == "__main__":
     # 使用 pytest 模块运行测试函数
-    code = pytest.main([sys.argv[0]])
+    code = pytest.main(["--alluredir=./allure", sys.argv[0]])
     sys.exit(code)

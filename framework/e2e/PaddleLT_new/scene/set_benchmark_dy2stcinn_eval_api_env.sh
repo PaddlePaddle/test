@@ -23,6 +23,7 @@ export PLT_BM_REPEAT="${PLT_BM_REPEAT:-1000}"  # 性能测试重复轮次
 export TIMEIT_NUM="${TIMEIT_NUM:-1}"  # timeit number数
 export PLT_BM_STATIS="${PLT_BM_STATIS:-trimmean}"  # 统计策略trimmean, mean, best, best_top_k
 export PLT_BM_ERROR_CHECK="${PLT_BM_ERROR_CHECK:-True}"  # True: 执行性能测试前先执行一次精度测试
+export PLT_BM_PLOT="${PLT_BM_PLOT:-False}"  # True: 执行性能测试后生成性能图表
 
 #研发指定环境变量
 export FLAGS_pir_apply_shape_optimization_pass=0

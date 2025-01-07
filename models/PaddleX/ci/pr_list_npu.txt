@@ -1,0 +1,13 @@
+# For PaddleDetection
+config_path:paddlex/configs/object_detection/RT-DETR-L.yaml
+# For PaddleClas
+config_path:paddlex/configs/image_classification/ResNet18.yaml
+config_path:paddlex/configs/image_classification/PP-LCNet_x0_25.yaml
+config_path:paddlex/configs/image_classification/MobileNetV3_small_x0_35.yaml
+config_path:paddlex/configs/image_classification/PP-HGNetV2-B0.yaml
+config_path:paddlex/configs/image_classification/CLIP_vit_base_patch16_224.yaml
+config_path:paddlex/configs/image_classification/SwinTransformer_tiny_patch4_window7_224.yaml
+# For PaddleSeg
+config_path:paddlex/configs/semantic_segmentation/OCRNet_HRNet-W48.yaml
+# For PaddleTS
+config_path:paddlex/configs/ts_forecast/DLinear.yaml

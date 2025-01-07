@@ -1,0 +1,49 @@
+train:
+  -
+    name: single
+    cmd: python examples/allen_cahn/allen_cahn_piratenet.py
+    params:
+      - TRAIN.epochs=1 
+    result:
+      loss:
+        base: 0.00931
+        threshold: 1
+        evaluation: "-"
+eval:
+  -
+    name: single
+    cmd: python examples/allen_cahn/allen_cahn_piratenet.py
+    params:
+      - mode=eval
+      - EVAL.pretrained_model_path=https://paddle-org.bj.bcebos.com/paddlescience/models/AllenCahn/allen_cahn_piratenet_pretrained.pdparams
+    result:
+      u_validator/loss:
+        base: 0.10718
+        threshold: 1
+        evaluation: "-"
+      u_validator/L2Rel.u:
+        base: 0.46115
+        threshold: 1
+        evaluation: "-"
+export: 
+  -
+    name: single
+    cmd: python examples/allen_cahn/allen_cahn_piratenet.py
+    params:
+      - mode=export
+    result:
+      exit_code:
+        base: 0
+        threshold: 0
+        evaluation: "="
+infer:
+  -
+    name: single
+    cmd: python examples/allen_cahn/allen_cahn_piratenet.py
+    params:
+      - mode=infer
+    result:
+      exit_code:
+        base: 0
+        threshold: 0
+        evaluation: "="

@@ -1,0 +1,29 @@
+testings:
+  jit_save_cinn_static_inputspec:
+    model_dtype: "float32"
+
+  # paddle_infer_gpu:
+
+  # paddle_infer_mkldnn:
+
+  # paddle_infer_ort:
+
+# compare:
+#   -
+#     baseline: 'dy_eval'
+#     latest: 'paddle_infer_gpu'
+#     precision:
+#       delta: 0.00001
+#       rtol: 0.000001
+#   -
+#     baseline: 'paddle_infer_gpu'
+#     latest: 'paddle_infer_mkldnn'
+#     precision:
+#       delta: 0.00001
+#       rtol: 0.000001
+#   -
+#     baseline: 'paddle_infer_gpu'
+#     latest: 'paddle_infer_ort'
+#     precision:
+#       delta: 0.00001
+#       rtol: 0.000001

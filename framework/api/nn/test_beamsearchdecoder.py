@@ -591,6 +591,8 @@ def test_beamsearchdecoder8():
         # print(e)
         if "invalid literal for int()" in e.args[0]:
             pass
+        elif "must be double" in e.args[0] and paddle.framework.in_pir_mode():
+            pass
         else:
             raise Exception
     paddle.disable_static()

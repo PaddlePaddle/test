@@ -1,0 +1,18 @@
+case:
+  linux:
+    base: ./base/allen_cahn_base.yaml
+    train:
+      -
+        name: single
+    eval:
+      -
+        name: single
+    predict: skipped
+    export:
+      -
+        name: single
+    infer:
+      -
+        name: single
+
+function: paddlelas_imagenet_parse

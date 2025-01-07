@@ -15,7 +15,10 @@ class LayerCase(paddle.nn.Layer):
         """
         forward
         """
-        out = paddle.dist(x, y,  p=-inf, )
+
+        paddle.seed(33)
+        np.random.seed(33)
+        out = paddle.dist(x, y,  p=float("-inf"), )
         return out
 
 

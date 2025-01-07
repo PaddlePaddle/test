@@ -15,6 +15,9 @@ class LayerCase(paddle.nn.Layer):
         """
         forward
         """
+
+        paddle.seed(33)
+        np.random.seed(33)
         out = paddle.gather(x,  index=paddle.to_tensor([2, 0, 1], dtype='int32', stop_gradient=False), )
         return out
 
@@ -30,7 +33,7 @@ def create_tensor_inputs():
     """
     paddle tensor
     """
-    inputs = (paddle.to_tensor(-1 + (1 - -1) * np.random.random([2, 3, 4, 4]).astype('float32'), dtype='float32', stop_gradient=False), )
+    inputs = (paddle.to_tensor(-1 + (1 - -1) * np.random.random([3, 3, 4, 4]).astype('float32'), dtype='float32', stop_gradient=False), )
     return inputs
 
 
@@ -38,6 +41,6 @@ def create_numpy_inputs():
     """
     numpy array
     """
-    inputs = (-1 + (1 - -1) * np.random.random([2, 3, 4, 4]).astype('float32'), )
+    inputs = (-1 + (1 - -1) * np.random.random([3, 3, 4, 4]).astype('float32'), )
     return inputs
 

@@ -17,11 +17,11 @@ eval:
       - mode=eval
       - EVAL.pretrained_model_path=https://paddle-org.bj.bcebos.com/paddlescience/models/deeponet/deeponet_pretrained.pdparams
     result:
-      loss(G_eval):
+      G_eval/loss:
         base: 0.00003
         threshold: 1
         evaluation: "-"
-      L2Rel.G(G_eval):
+      G_eval/L2Rel.G:
         base: 0.01799
         threshold: 1
         evaluation: "-"

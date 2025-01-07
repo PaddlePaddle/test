@@ -15,6 +15,9 @@ class LayerCase(paddle.nn.Layer):
         """
         forward
         """
+
+        paddle.seed(33)
+        np.random.seed(33)
         out = paddle.nn.functional.bilinear(x1, x2,  weight=paddle.to_tensor(-1 + (1 - -1) * np.random.random([10, 5, 4]).astype('float32'), dtype='float32', stop_gradient=False), bias=paddle.to_tensor(-1 + (1 - -1) * np.random.random([1, 10]).astype('float32'), dtype='float32', stop_gradient=False), )
         return out
 

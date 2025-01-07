@@ -15,6 +15,9 @@ class LayerCase(paddle.nn.Layer):
         """
         forward
         """
+
+        paddle.seed(33)
+        np.random.seed(33)
         out = paddle.assign(x,  output=paddle.to_tensor(np.random.randint(-2, 1, [2, 3, 4, 4]).astype('int32'), dtype='int32', stop_gradient=False), )
         return out
 

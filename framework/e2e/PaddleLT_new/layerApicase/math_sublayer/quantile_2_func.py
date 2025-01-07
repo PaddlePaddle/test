@@ -15,6 +15,9 @@ class LayerCase(paddle.nn.Layer):
         """
         forward
         """
+
+        paddle.seed(33)
+        np.random.seed(33)
         out = paddle.quantile(x,  q=[0.25, 0.5, 0.75], axis=3, keepdim=False, )
         return out
 

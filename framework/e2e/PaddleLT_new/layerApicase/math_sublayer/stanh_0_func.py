@@ -15,6 +15,9 @@ class LayerCase(paddle.nn.Layer):
         """
         forward
         """
+
+        paddle.seed(33)
+        np.random.seed(33)
         out = paddle.stanh(x,  scale_a=0.67, scale_b=1.72, )
         return out
 

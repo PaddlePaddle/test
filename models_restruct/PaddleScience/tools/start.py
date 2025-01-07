@@ -69,23 +69,33 @@ class PaddleScience_Start(object):
             urllib.request.urlretrieve(url, file_name)
             os.system("tar -zxvf " + file_name + " -C PaddleScience/")
             logger.info("download datasets done!!!!")
-            try:
-                subprocess.check_call(["python", "-m", "pip", "install", "scikit-image"])
-                logger.info("Install scikit-image success!")
-            except subprocess.CalledProcessError as e:
-                logger.error("Install scikit-image failed. Error code: {}. Output: {}".format(e.returncode, e.output))
+        try:
+            subprocess.check_call(["python", "-m", "pip", "install", "scikit-image"])
+            logger.info("Install scikit-image success!")
+        except subprocess.CalledProcessError as e:
+            logger.error("Install scikit-image failed. Error code: {}. Output: {}".format(e.returncode, e.output))
 
-            try:
-                subprocess.check_call(["python", "-m", "pip", "install", "pgl"])
-                logger.info("Install pgl success!")
-            except subprocess.CalledProcessError as e:
-                logger.error("Install pgl failed. Error code: {}. Output: {}".format(e.returncode, e.output))
+        try:
+            subprocess.check_call(["python", "-m", "pip", "install", "pgl"])
+            logger.info("Install pgl success!")
+        except subprocess.CalledProcessError as e:
+            logger.error("Install pgl failed. Error code: {}. Output: {}".format(e.returncode, e.output))
 
-            try:
-                subprocess.check_call(["python", "-m", "pip", "install", "hdf5storage"])
-                logger.info("Install hdf5storage success!")
-            except subprocess.CalledProcessError as e:
-                logger.error("Install hdf5storage failed. Error code: {}. Output: {}".format(e.returncode, e.output))
+        try:
+            subprocess.check_call(["python", "-m", "pip", "install", "hdf5storage"])
+            logger.info("Install hdf5storage success!")
+        except subprocess.CalledProcessError as e:
+            logger.error("Install hdf5storage failed. Error code: {}. Output: {}".format(e.returncode, e.output))
+        try:
+            subprocess.check_call(["python", "-m", "pip", "install", "numpy==1.23.1"])
+            logger.info("Install numpy success!")
+        except subprocess.CalledProcessError as e:
+            logger.error("Install numpy failed. Error code: {}. Output: {}".format(e.returncode, e.output))
+        try:
+            subprocess.check_call(["python", "-m", "pip", "install", "h5py==3.10"])
+            logger.info("Install h5py success!")
+        except subprocess.CalledProcessError as e:
+            logger.error("Install h5py failed. Error code: {}. Output: {}".format(e.returncode, e.output))
 
     def build_prepare(self):
         """

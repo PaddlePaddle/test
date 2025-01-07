@@ -1,0 +1,37 @@
+testings:
+  torch_dy_train:
+    framework: "torch"
+    orderdict_usage: "save"
+    device_place_id: "1"
+    model_dtype: "float32"
+    Loss:
+      loss_name: "diy.loss.diy_loss.torch_mean_loss"
+    optimizer:
+      optimizer_name: "diy.optimizer.diy_opt.torch_opt"
+      params:
+        opt_api: "torch.optim.SGD"
+        learning_rate: 0.00001
+    step: 1
+
+  dy_train:
+    framework: "paddle"
+    orderdict_usage: "load"
+    device_place_id: "0"
+    model_dtype: "float32"
+    Loss:
+      loss_name: "diy.loss.diy_loss.mean_loss"
+    optimizer:
+      optimizer_name: "diy.optimizer.diy_opt.naive_opt"
+      params:
+        opt_api: "paddle.optimizer.SGD"
+        learning_rate: 0.00001
+    step: 1
+
+compare:
+  -
+    baseline: 'torch_dy_train'
+    latest: 'dy_train'
+    compare_method: "torch_compare"
+    precision:
+      delta: 0.00001
+      rtol: 0.000001

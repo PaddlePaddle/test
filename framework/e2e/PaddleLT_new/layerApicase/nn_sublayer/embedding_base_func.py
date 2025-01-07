@@ -15,6 +15,9 @@ class LayerCase(paddle.nn.Layer):
         """
         forward
         """
+
+        paddle.seed(33)
+        np.random.seed(33)
         out = paddle.nn.functional.embedding(x,  weight=paddle.to_tensor(-1 + (1 - -1) * np.random.random([10, 3]).astype('float32'), dtype='float32', stop_gradient=False), padding_idx=-1, sparse=True, )
         return out
 

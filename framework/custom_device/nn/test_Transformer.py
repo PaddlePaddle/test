@@ -17,7 +17,14 @@ source_length, target_length = 20, 30  # 3, 3
 num_encoder_layers, num_decoder_layers = 2, 2
 np.random.seed(123)
 paddle.seed(123)
-paddle.framework.random._manual_program_seed(123)
+if paddle.framework.use_pir_api():
+    with paddle.pir_utils.OldIrGuard():
+        # Note: dygraph use self.main_program.global_block().create_parameter(),
+        # it's need manual seed to old Program
+        paddle.framework.random._manual_program_seed(123)
+    paddle.framework.random._manual_program_seed(123)
+else:
+    paddle.framework.random._manual_program_seed(123)
 
 
 @pytest.mark.api_nn_Transformer_parameters
@@ -53,7 +60,14 @@ def test2():
     """
     np.random.seed(123)
     paddle.seed(123)
-    paddle.framework.random._manual_program_seed(123)
+    if paddle.framework.use_pir_api():
+        with paddle.pir_utils.OldIrGuard():
+            # Note: dygraph use self.main_program.global_block().create_parameter(),
+            # it's need manual seed to old Program
+            paddle.framework.random._manual_program_seed(123)
+        paddle.framework.random._manual_program_seed(123)
+    else:
+        paddle.framework.random._manual_program_seed(123)
     paddle.disable_static()
     # src: [batch_size, tgt_len, d_model]
     enc_input = paddle.rand((2, 4, 128))

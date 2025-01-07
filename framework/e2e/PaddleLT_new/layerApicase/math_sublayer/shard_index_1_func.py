@@ -15,6 +15,9 @@ class LayerCase(paddle.nn.Layer):
         """
         forward
         """
+
+        paddle.seed(33)
+        np.random.seed(33)
         out = paddle.shard_index(input,  index_num=20, nshards=2, shard_id=1, )
         return out
 

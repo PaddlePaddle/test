@@ -1,13 +1,13 @@
 [[ -n $1 ]] && export CUDA_VISIBLE_DEVICES=$1
 export FLAGS_call_stack_level=2
 # V100 total:691.19s
+# ./test_ppyolov2_mkldnn.py \
 cases="./test_fast_rcnn_mkldnn.py \
        ./test_fast_rcnn_gpu.py \
        ./test_fast_rcnn_trt_fp32.py \
        ./test_ppyolo_mkldnn.py \
        ./test_ppyolo_gpu.py \
        ./test_ppyolo_trt_fp32.py \
-       ./test_ppyolov2_mkldnn.py \
        ./test_ppyolov2_gpu.py \
        ./test_yolov3_gpu.py \
        ./test_yolov3_mkldnn.py \

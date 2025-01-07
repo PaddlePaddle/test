@@ -46,12 +46,12 @@ class LayerCase(paddle.nn.Layer):
         var_13 = var_9.matmul(var_12)
         var_14 = var_13.__mul__(0.125)
         var_15 = paddle.nn.functional.activation.softmax(var_14, axis=-1)
-        var_16 = paddle.nn.functional.common.dropout(var_15, p=0.0, axis=None, training=True, mode='upscale_in_train', name=None)
+        var_16 = paddle.nn.functional.common.dropout(var_15, p=0.0, axis=None, training=self.training, mode='upscale_in_train', name=None)
         var_17 = var_16.matmul(var_11)
         var_18 = var_17.transpose((0, 2, 1, 3,))
         var_19 = var_18.reshape((-1, var_3, var_4,))
         var_20 = paddle.nn.functional.common.linear(x=var_19, weight=self.parameter_4, bias=self.parameter_2, name=None)
-        var_21 = paddle.nn.functional.common.dropout(var_20, p=0.0, axis=None, training=True, mode='upscale_in_train', name=None)
+        var_21 = paddle.nn.functional.common.dropout(var_20, p=0.0, axis=None, training=self.training, mode='upscale_in_train', name=None)
         return var_21
 
 

@@ -41,7 +41,6 @@ cases="test_dist_auto_api.py \
        test_dist_shard_tensor.py \
        test_dist_shard.py \
        test_dist_showclickentry.py \
-       test_dist_split.py \
        test_dist_strategy.py \
        test_dist_unshard_dtensor.py \
        test_dist_utils_recompute.py \

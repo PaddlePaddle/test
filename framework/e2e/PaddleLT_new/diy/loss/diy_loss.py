@@ -4,7 +4,13 @@
 """
 diy loss list
 """
-import paddle
+import os
+
+if "paddle" in os.environ.get("FRAMEWORK"):
+    import paddle
+
+if "torch" in os.environ.get("FRAMEWORK"):
+    import torch
 
 
 def naive_loss_list(logit, loss_list):
@@ -35,3 +41,23 @@ def mean_loss(logit):
         return loss
     else:
         raise Exception("something wrong with mean_loss!!")
+
+
+def torch_mean_loss(logit):
+    """torch mean loss"""
+    if isinstance(logit, (list, tuple)):
+        tmp = 0.0
+        count = 0
+        for l in logit:
+            if isinstance(l, torch.Tensor) and l.numel() > 0:
+                mean = torch.mean(l)
+                tmp += mean
+                count += 1
+        # loss = tmp / len(logit)
+        loss = tmp / count
+        return loss
+    elif isinstance(logit, torch.Tensor):
+        loss = torch.mean(logit)
+        return loss
+    else:
+        raise Exception("something wrong with torch_mean_loss!!")

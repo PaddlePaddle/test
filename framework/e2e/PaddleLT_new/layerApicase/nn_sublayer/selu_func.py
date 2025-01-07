@@ -15,6 +15,9 @@ class LayerCase(paddle.nn.Layer):
         """
         forward
         """
+
+        paddle.seed(33)
+        np.random.seed(33)
         out = paddle.nn.functional.selu(x,  scale=1.0507, alpha=1.6732, )
         return out
 

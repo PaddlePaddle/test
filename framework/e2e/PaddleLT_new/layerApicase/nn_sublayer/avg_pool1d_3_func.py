@@ -15,6 +15,9 @@ class LayerCase(paddle.nn.Layer):
         """
         forward
         """
+
+        paddle.seed(33)
+        np.random.seed(33)
         out = paddle.nn.functional.avg_pool1d(x,  kernel_size=2, stride=1, padding=0, exclusive=True, )
         return out
 

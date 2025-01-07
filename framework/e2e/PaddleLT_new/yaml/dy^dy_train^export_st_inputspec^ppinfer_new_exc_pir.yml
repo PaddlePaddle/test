@@ -1,0 +1,33 @@
+testings:
+  dy_train:
+    model_dtype: "float32"
+    Loss:
+      loss_name: "diy.loss.diy_loss.mean_loss"
+    optimizer:
+      optimizer_name: "diy.optimizer.diy_opt.naive_opt"
+      params:
+        opt_api: "paddle.optimizer.SGD"
+        learning_rate: 0.00001
+    step: 8
+    return_net_instance: "True"  # 测试engine会返回模型实例
+
+  dy_eval:
+    use_upstream_net_instance: "True"  # 获取上游模型实例而不是重新构建模型实例
+    model_dtype: "float32"
+    return_net_instance: "True"  # 测试engine会返回模型实例
+
+  jit_save_static_inputspec:
+    use_upstream_net_instance: "True"  # 获取上游模型实例而不是重新构建模型实例
+    model_dtype: "float32"
+
+  paddle_infer_new_exc_pir:
+    jit_save_type: "jit_save_static_inputspec"
+
+compare:
+  -
+    baseline: 'dy_eval'
+    latest: 'paddle_infer_new_exc_pir'
+    # compare_method: "infer_compare"
+    precision:
+      delta: 0.00001
+      rtol: 0.000001

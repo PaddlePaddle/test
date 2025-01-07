@@ -13,6 +13,21 @@ import paddle
 from paddle import to_tensor
 
 
+class TestWithoutPIR:
+    """A context manager to test the static graph without pir mode."""
+
+    def __init__(self, obj) -> None:
+        self.obj = obj
+        self.flag = obj.support_pir
+
+    def __enter__(self):
+        self.obj.change(False)
+        return self
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        self.obj.change(self.flag)
+
+
 class APIBase(object):
     """
     API test base object
@@ -32,6 +47,8 @@ class APIBase(object):
     def __init__(self, func):
         self.seed = 33
         np.random.seed(self.seed)
+        # pir mode supportion
+        self.support_pir = True
         # debug mode
         self.debug = False
         # if debug mode=True choose whether test dygrpah or static
@@ -70,6 +87,12 @@ class APIBase(object):
             logging.basicConfig(level=logging.DEBUG, format="%(asctime)s - %(levelname)s - %(message)s")
         else:
             logging.basicConfig(level=logging.ERROR, format="%(asctime)s - %(levelname)s - %(message)s")
+
+    def change(self, support_pir: bool) -> None:
+        """
+        Change support_pir to control whether test with pir mode.
+        """
+        self.support_pir = support_pir
 
     def hook(self):
         """
@@ -152,7 +175,7 @@ class APIBase(object):
                         logging.info("[dygraph grad]")
                         logging.info(dygraph_backward_res)
                     paddle.enable_static()
-                if self.static:
+                if self.static and self.support_pir:
                     # start run paddle static
                     logging.info("[start] run " + self.__class__.__name__ + " static")
                     if self.enable_backward:
@@ -171,7 +194,7 @@ class APIBase(object):
                     grad = self.compute_grad(res, data, **kwargs)
                     logging.info("[numeric grad]")
                     logging.info(grad)
-                    if self.static and self.dygraph:
+                    if self.static and self.support_pir and self.dygraph:
                         compare_grad(
                             static_backward_res, dygraph_backward_res, mode="both", no_grad_var=self.no_grad_var
                         )
@@ -184,7 +207,7 @@ class APIBase(object):
                             rtol=self.rtol,
                             no_grad_var=self.no_grad_var,
                         )
-                    if self.static:
+                    if self.static and self.support_pir:
                         compare_grad(
                             static_backward_res,
                             grad,
@@ -222,7 +245,7 @@ class APIBase(object):
                         dygraph_backward_res = self._dygraph_backward(dygraph_forward_res)
 
                 # (2) start run paddle static
-                if self.static:
+                if self.static and self.support_pir:
                     paddle.enable_static()
                     logging.info("[start] run " + self.__class__.__name__ + " static")
                     # ① calculate forward and backward result
@@ -238,7 +261,7 @@ class APIBase(object):
                     # ① calculate numerical gradient
                     grad = self.compute_grad(res, data, **kwargs)
                     # ② compare  gradient
-                    if self.static and self.dygraph:
+                    if self.static and self.support_pir and self.dygraph:
                         compare_grad(
                             static_backward_res, dygraph_backward_res, mode="both", no_grad_var=self.no_grad_var
                         )
@@ -251,7 +274,7 @@ class APIBase(object):
                             rtol=self.rtol,
                             no_grad_var=self.no_grad_var,
                         )
-                    if self.static:
+                    if self.static and self.support_pir:
                         compare_grad(
                             static_backward_res,
                             grad,
@@ -295,7 +318,7 @@ class APIBase(object):
                     logging.info("[dygraph grad]")
                     logging.info(dygraph_backward_res)
                 paddle.enable_static()
-            if self.static:
+            if self.static and self.support_pir:
                 # start run paddle static
                 logging.info("[start] run " + self.__class__.__name__ + " static")
                 if self.enable_backward:
@@ -314,7 +337,7 @@ class APIBase(object):
                 grad = self.compute_grad(res, data, **kwargs)
                 logging.info("[numeric grad]")
                 logging.info(grad)
-                if self.static and self.dygraph:
+                if self.static and self.support_pir and self.dygraph:
                     compare_grad(static_backward_res, dygraph_backward_res, mode="both", no_grad_var=self.no_grad_var)
                 if self.dygraph:
                     compare_grad(
@@ -325,7 +348,7 @@ class APIBase(object):
                         rtol=self.rtol,
                         no_grad_var=self.no_grad_var,
                     )
-                if self.static:
+                if self.static and self.support_pir:
                     compare_grad(
                         static_backward_res,
                         grad,
@@ -358,7 +381,7 @@ class APIBase(object):
                     dygraph_backward_res = self._dygraph_backward(dygraph_forward_res)
 
             # (2) start run paddle static
-            if self.static:
+            if self.static and self.support_pir:
                 paddle.enable_static()
                 logging.info("[start] run " + self.__class__.__name__ + " static")
                 # ① calculate forward and backward result
@@ -374,7 +397,7 @@ class APIBase(object):
                 # ① calculate numerical gradient
                 grad = self.compute_grad(res, data, **kwargs)
                 # ② compare gradient
-                if self.dygraph and self.static:
+                if self.dygraph and self.static and self.support_pir:
                     compare_grad(static_backward_res, dygraph_backward_res, mode="both", no_grad_var=self.no_grad_var)
                 if self.dygraph:
                     compare_grad(
@@ -385,7 +408,7 @@ class APIBase(object):
                         rtol=self.rtol,
                         no_grad_var=self.no_grad_var,
                     )
-                if self.static:
+                if self.static and self.support_pir:
                     compare_grad(
                         static_backward_res,
                         grad,
@@ -642,7 +665,11 @@ class APIBase(object):
                         # print(list(grad_var.values()))
                         # print([output] + list(grad_var.values()))
                         res = exe.run(
-                            main_program, feed=kwargs, fetch_list=[output] + list(grad_var.values()), return_numpy=True
+                            main_program,
+                            feed=kwargs,
+                            fetch_list=[output]
+                            + [value for (key, value) in grad_var.items() if key not in self.no_grad_var],
+                            return_numpy=True,
                         )
                         # combine grad
                         grad = dict(zip(xyz, res[1:]))

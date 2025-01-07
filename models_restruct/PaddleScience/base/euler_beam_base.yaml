@@ -29,11 +29,11 @@ eval:
       - mode=eval
       - EVAL.pretrained_model_path=https://paddle-org.bj.bcebos.com/paddlescience/models/euler_beam/euler_beam_pretrained.pdparams
     result:
-      loss(L2Rel_Metric):
+      L2Rel_Metric/loss:
         base: 0.00001
         threshold: 1
         evaluation: "-"
-      L2Rel.u(L2Rel_Metric):
+      L2Rel_Metric/L2Rel.u:
         base: 0.00058
         threshold: 1
         evaluation: "-"

@@ -1,7 +1,7 @@
-examples^ldc^ldc2d_unsteady_Re10.yaml
-examples^ldc^ldc2d_steady_Re10.yaml
-examples^darcy^darcy2d.yaml
 examples^laplace^laplace2d.yaml
+examples^darcy^darcy2d.yaml
 examples^fsi^viv.yaml
 examples^cylinder^2d_unsteady^cylinder2d_unsteady_Re100.yaml
 examples^euler_beam^euler_beam.yaml
+examples^ldc^ldc2d_unsteady_Re10.yaml
+examples^ldc^ldc2d_steady_Re10.yaml

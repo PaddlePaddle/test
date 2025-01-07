@@ -631,7 +631,11 @@ class APIBase(object):
                         # print(list(grad_var.values()))
                         # print([output] + list(grad_var.values()))
                         res = exe.run(
-                            main_program, feed=kwargs, fetch_list=[output] + list(grad_var.values()), return_numpy=True
+                            main_program,
+                            feed=kwargs,
+                            fetch_list=[output]
+                            + [value for (key, value) in grad_var.items() if key not in self.no_grad_var],
+                            return_numpy=True,
                         )
                         # combine grad
                         grad = dict(zip(xyz, res[1:]))

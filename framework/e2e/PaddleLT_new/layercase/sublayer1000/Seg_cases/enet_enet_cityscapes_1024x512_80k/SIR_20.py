@@ -12,7 +12,8 @@ class LayerCase(paddle.nn.Layer):
         var_0,    # (shape: [1, 64, 128, 256], dtype: paddle.float32, stop_gradient: False)
         var_1,    # (shape: [1, 64, 128, 256], dtype: paddle.float32, stop_gradient: False)
     ):
-        var_2 = paddle.nn.functional.common.dropout2d(var_0, p=0.01, training=True, data_format='NCHW', name=None)
+        paddle.seed(33)
+        var_2 = paddle.nn.functional.common.dropout2d(var_0, p=0.01, training=self.training, data_format='NCHW', name=None)
         var_3 = var_1.__add__(var_2)
         return var_3
 
@@ -54,7 +55,7 @@ class TestLayer(unittest.TestCase):
                 net = paddle.jit.to_static(net, build_strategy=build_strategy, full_graph=True)
             else:
                 net = paddle.jit.to_static(net, full_graph=True)
-        paddle.seed(123)
+        paddle.seed(33)
         outs = net(*self.inputs)
         return outs
     def test_ast_prim_cinn(self):

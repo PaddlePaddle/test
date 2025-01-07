@@ -13,9 +13,9 @@ import paddle
 from engine.paddle_xtools import reset
 from generator.builder_layer import BuildLayer
 from generator.builder_data import BuildData
-from tools.res_save import save_pickle
-from tools.statistics import trimmean, mean, best, best_top_k, perf_by_step
-from tools.logger import Logger
+from pltools.res_save import save_pickle
+from pltools.statistics import trimmean, mean, best, best_top_k, perf_by_step
+from pltools.logger import Logger
 
 
 class LayerEvalBM(object):
@@ -24,7 +24,7 @@ class LayerEvalBM(object):
     """
 
     # def __init__(self, testing, layerfile, device_id):
-    def __init__(self, testing, layerfile, device_place_id):
+    def __init__(self, testing, layerfile, device_place_id, upstream_net, orderdict_usage="None"):
         """
         初始化
         """
@@ -43,6 +43,8 @@ class LayerEvalBM(object):
         self.statis_round = 6
 
         self.testing = testing
+        self.upstream_net = upstream_net
+        # self.return_net_instance = self.testing.get("return_net_instance", "False")
         self.model_dtype = self.testing.get("model_dtype")
         paddle.set_default_dtype(self.model_dtype)
 
@@ -53,7 +55,10 @@ class LayerEvalBM(object):
     def _net_instant(self):
         """get net and data"""
         reset(self.seed)
-        net = BuildLayer(layerfile=self.layerfile).get_layer()
+        if self.upstream_net:
+            net = self.upstream_net
+        else:
+            net = BuildLayer(layerfile=self.layerfile).get_layer()
         return net
 
     def _set_cinn_flags(self):
@@ -93,13 +98,14 @@ class LayerEvalBM(object):
             total_time = end_time - start_time
             total_time_list.append(total_time)
 
-        save_pickle(data=total_time_list, filename="dy_eval_perf_" + self.layerfile)
-        # 画图
-        perf_by_step(
-            data_list=total_time_list,
-            step_scale=[0.1, 0.5, 1],
-            filename="dy_eval_perf_" + self.layerfile + "_by_step",
-        )
+        if os.environ.get("PLT_BM_PLOT") == "True":
+            save_pickle(data=total_time_list, filename="dy_eval_perf_" + self.layerfile)
+            # 画图
+            perf_by_step(
+                data_list=total_time_list,
+                step_scale=[0.1, 0.5, 1],
+                filename="dy_eval_perf_" + self.layerfile + "_by_step",
+            )
 
         time_res = eval(self.perf_statis)(data_list=total_time_list)
         time_res = round(time_res * self.statis_times, self.statis_round)
@@ -129,20 +135,21 @@ class LayerEvalBM(object):
             total_time = end_time - start_time
             total_time_list.append(total_time)
 
-        save_pickle(data=total_time_list, filename="dy2st_eval_perf_" + self.layerfile)
-        # 画图
-        perf_by_step(
-            data_list=total_time_list,
-            step_scale=[0.1, 0.5, 1],
-            filename="dy2st_eval_perf_" + self.layerfile + "_by_step",
-        )
+        if os.environ.get("PLT_BM_PLOT") == "True":
+            save_pickle(data=total_time_list, filename="dy_eval_perf_" + self.layerfile)
+            # 画图
+            perf_by_step(
+                data_list=total_time_list,
+                step_scale=[0.1, 0.5, 1],
+                filename="dy_eval_perf_" + self.layerfile + "_by_step",
+            )
 
         time_res = eval(self.perf_statis)(data_list=total_time_list)
         time_res = round(time_res * self.statis_times, self.statis_round)
 
         return time_res
 
-    def _dy2st_eval_cinn_perf(self):
+    def _dy2st_eval_cinn_perf(self, perf_repeat=10):
         net = self._net_instant()
 
         build_strategy = paddle.static.BuildStrategy()
@@ -159,7 +166,7 @@ class LayerEvalBM(object):
         # 预热
         timeit.timeit(lambda: _perf(self.data), number=10)
         # timeit.timeit(lambda: _perf(self.data), number=int(self.perf_repeat * self.timeit_num * 0.2))
-        for i in range(self.perf_repeat):
+        for i in range(perf_repeat):
             start_time = time.time()
             for _ in range(self.timeit_num):
                 _perf(self.data)
@@ -168,13 +175,14 @@ class LayerEvalBM(object):
             total_time = end_time - start_time
             total_time_list.append(total_time)
 
-        save_pickle(data=total_time_list, filename="dy2st_eval_cinn_perf_" + self.layerfile + "_total_time_list")
-        # 画图
-        perf_by_step(
-            data_list=total_time_list,
-            step_scale=[0.1, 0.5, 1],
-            filename="dy2st_eval_cinn_perf_" + self.layerfile + "_by_step",
-        )
+        if os.environ.get("PLT_BM_PLOT") == "True":
+            save_pickle(data=total_time_list, filename="dy_eval_perf_" + self.layerfile)
+            # 画图
+            perf_by_step(
+                data_list=total_time_list,
+                step_scale=[0.1, 0.5, 1],
+                filename="dy_eval_perf_" + self.layerfile + "_by_step",
+            )
 
         time_res = eval(self.perf_statis)(data_list=total_time_list)
         time_res = round(time_res * self.statis_times, self.statis_round)
@@ -184,5 +192,11 @@ class LayerEvalBM(object):
     def dy2st_eval_cinn_perf(self):
         """dy2st eval"""
         with paddle.decomposition.decomp.prim_guard():
-            result = self._dy2st_eval_cinn_perf()
+            result = self._dy2st_eval_cinn_perf(perf_repeat=self.perf_repeat)
+        return result
+
+    def dy2st_eval_cinn_perf_pre(self):
+        """dy2st eval"""
+        with paddle.decomposition.decomp.prim_guard():
+            result = self._dy2st_eval_cinn_perf(perf_repeat=10)
         return result

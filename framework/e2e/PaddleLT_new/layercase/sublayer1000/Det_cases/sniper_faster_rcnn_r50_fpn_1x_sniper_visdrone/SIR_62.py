@@ -25,6 +25,9 @@ class LayerCase(paddle.nn.Layer):
         var_11 = paddle.tensor.search.where(var_9, var_10, var_8)
         var_12 = var_2.flatten()
         var_13 = var_11.flatten()
+        # bool/int tensors has no grad
+        var_12.stop_gradient = True
+        var_13.stop_gradient = True
         return var_12, var_13
 
 

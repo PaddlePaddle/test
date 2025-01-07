@@ -23,7 +23,14 @@ class Test(unittest.TestCase):
         """
         paddle.set_device("cpu")
         paddle.seed(2020)
-        paddle.framework.random._manual_program_seed(2020)
+        if paddle.framework.use_pir_api():
+            with paddle.pir_utils.OldIrGuard():
+                # Note: dygraph use self.main_program.global_block().create_parameter(),
+                # it's need manual seed to old Program
+                paddle.framework.random._manual_program_seed(2020)
+            paddle.framework.random._manual_program_seed(2020)
+        else:
+            paddle.framework.random._manual_program_seed(2020)
 
         ffn_fc1_act = "relu"
         # 1.generate basic params
@@ -48,9 +55,7 @@ class Test(unittest.TestCase):
             d_model, n_head, dim_feedforward, dropout, ffn_fc1_act, attn_dropout, act_dropout
         )
 
-        encoder_output = encoder_layer(
-            paddle.to_tensor(src), paddle.to_tensor(src_mask)
-        )  # paddle.to_tensor(src_mask))
+        encoder_output = encoder_layer(paddle.to_tensor(src), paddle.to_tensor(src_mask))  # paddle.to_tensor(src_mask))
         # 4.numpy:
         # paddle self attention
         self_attn = MultiHeadAttention(d_model, n_head, dropout=attn_dropout)
@@ -81,7 +86,6 @@ class Test(unittest.TestCase):
         enc_output = encoder_layer(enc_input, attn_mask)  # [2, 4, 8]
         assert enc_output.shape == [2, 4, 8]
         assert enc_output[0].shape == [4, 8]
-
 
 
 if __name__ == "__main__":

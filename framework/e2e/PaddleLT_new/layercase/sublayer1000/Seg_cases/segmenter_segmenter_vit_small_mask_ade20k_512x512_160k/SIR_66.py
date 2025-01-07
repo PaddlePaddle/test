@@ -31,6 +31,7 @@ class LayerCase(paddle.nn.Layer):
         self,
         var_0,    # (shape: [1, 1174, 384], dtype: paddle.float32, stop_gradient: False)
     ):
+        paddle.seed(33)
         var_1 = paddle.nn.functional.norm.layer_norm(var_0, normalized_shape=[384], weight=self.parameter_1, bias=self.parameter_2, epsilon=1e-05)
         var_2 = var_1.shape
         var_3 = var_2.__getitem__(1)
@@ -46,12 +47,12 @@ class LayerCase(paddle.nn.Layer):
         var_13 = var_9.matmul(var_12)
         var_14 = var_13.__mul__(0.125)
         var_15 = paddle.nn.functional.activation.softmax(var_14, axis=-1)
-        var_16 = paddle.nn.functional.common.dropout(var_15, p=0.0, axis=None, training=True, mode='upscale_in_train', name=None)
+        var_16 = paddle.nn.functional.common.dropout(var_15, p=0.0, axis=None, training=self.training, mode='upscale_in_train', name=None)
         var_17 = var_16.matmul(var_11)
         var_18 = var_17.transpose((0, 2, 1, 3,))
         var_19 = var_18.reshape((-1, var_3, var_4,))
         var_20 = paddle.nn.functional.common.linear(x=var_19, weight=self.parameter_4, bias=self.parameter_0, name=None)
-        var_21 = paddle.nn.functional.common.dropout(var_20, p=0.0, axis=None, training=True, mode='upscale_in_train', name=None)
+        var_21 = paddle.nn.functional.common.dropout(var_20, p=0.0, axis=None, training=self.training, mode='upscale_in_train', name=None)
         return var_21
 
 
@@ -89,7 +90,7 @@ class TestLayer(unittest.TestCase):
                 net = paddle.jit.to_static(net, build_strategy=build_strategy, full_graph=True)
             else:
                 net = paddle.jit.to_static(net, full_graph=True)
-        paddle.seed(123)
+        paddle.seed(33)
         outs = net(*self.inputs)
         return outs
     def test_ast_prim_cinn(self):

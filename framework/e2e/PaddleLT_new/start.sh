@@ -1,15 +1,19 @@
 #!/usr/bin/env bash
 
-# 最外层执行脚本
+# 最外层执行脚本, 不可用于CI
 test_scene=$1
 source ./PTSTools/tools/set_env/set_env.sh ${PTS_ENV_VARS}  # 设定PTS环境变量
 source ./set_docker_env.sh # 设定docker环境相关参数
 
-docker_name="PaddleLayerTest_${AGILE_PIPELINE_BUILD_NUMBER}"
+export docker_name=${DOCKER_NAME:-PaddleLayerTest_${AGILE_PIPELINE_BUILD_NUMBER}}
+docker container ls -a --filter "name=${docker_name}" --format "{{.ID}}" | xargs -r docker rm -f
+
+mkdir root_tmp
 
 nvidia-docker run --rm -i --name ${docker_name} --privileged --shm-size=128g --net=host \
   -w /workspace \
   -v $PWD:/workspace \
+  -v root_tmp:/root \
   -e "AK=${AK}" -e "SK=${SK}" \
   -e "http_proxy=${http_proxy}" \
   -e "https_proxy=${https_proxy}" \

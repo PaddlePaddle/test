@@ -253,7 +253,7 @@ export models_name=${models_name:-models_restruct}  #后面复制使用，和模
 #### 二分定位使用
 export binary_search_flag=${binary_search_flag:-False}  #True表示在使用二分定位, main中一些跳出方法不生效
 # 使用大模型分析模型日志
-export is_analysis_logs=${is_analysis_logs:-True}
+# export is_analysis_logs=${is_analysis_logs:-True}
 export analysis_case=${analysis_case:-None}
 export use_data_cfs=${use_data_cfs:-False}  #False表示不用cfs挂载
 export plot=${plot:-False}  #False表示不自动绘图
@@ -306,7 +306,7 @@ echo "@@@mode: ${mode}"
 echo "@@@docker_flag: ${docker_flag}"
 echo "@@@timeout: ${timeout}"
 echo "@@@binary_search_flag: ${binary_search_flag}"
-echo "@@@is_analysis_logs: ${is_analysis_logs}"
+# echo "@@@is_analysis_logs: ${is_analysis_logs}"
 echo "@@@analysis_case: ${analysis_case}"
 echo "@@@use_data_cfs: ${use_data_cfs}"
 echo "@@@plot: ${plot}"
@@ -416,7 +416,7 @@ if [[ "${docker_flag}" == "" ]]; then
     }
     trap 'docker_del' SIGTERM
     ## 使用修改之前的set_cuda_back
-    NV_GPU=${set_cuda_back} nvidia-docker run -i   --rm \
+    NV_GPU=${set_cuda_back} nvidia-docker run -i \
         --name=${docker_name} --net=host --cap-add=SYS_ADMIN \
         --shm-size=128G \
         -v $(pwd):/workspace \
@@ -446,7 +446,6 @@ if [[ "${docker_flag}" == "" ]]; then
         -e mode=${mode} \
         -e use_build=${use_build} \
         -e binary_search_flag=${binary_search_flag} \
-        -e is_analysis_logs=${is_analysis_logs} \
         -e analysis_case=${analysis_case} \
         -e use_data_cfs=${use_data_cfs} \
         -e plot=${plot} \
@@ -598,14 +597,16 @@ if [[ "${docker_flag}" == "" ]]; then
         nvidia-smi;
         python -c "import sys; print(sys.version_info[:])";
         git --version;
-        python -m pip install --user -U pip  -i https://mirror.baidu.com/pypi/simple #升级pip
-        python -m pip install --user -U -r requirements.txt  -i https://mirror.baidu.com/pypi/simple #预先安装依赖包
-        python -m pip install --ignore-installed six -i https://mirror.baidu.com/pypi/simple
+        python -m pip install --user -U pip  -i https://pypi.tuna.tsinghua.edu.cn/simple #升级pip
+        python -m pip install --user -U -r requirements.txt  -i https://pypi.tuna.tsinghua.edu.cn/simple #预先安装依赖包
+        python -m pip install --ignore-installed six -i https://pypi.tuna.tsinghua.edu.cn/simple
         python -m pip uninstall -y opencv-python
         python -m pip config list
-        python main.py --models_list=${models_list:-None} --models_file=${models_file:-None} --system=${system:-linux} --step=${step:-train} --reponame=${reponame:-PaddleClas} --mode=${mode:-function} --use_build=${use_build:-yes} --branch=${branch:-develop} --get_repo=${get_repo:-wget} --paddle_whl=${paddle_whl:-None} --dataset_org=${dataset_org:-None} --dataset_target=${dataset_target:-None} --set_cuda=${set_cuda:-0,1} --timeout=${timeout:-3600} --binary_search_flag=${binary_search_flag:-False} --is_analysis_logs=${is_analysis_logs:-False} --use_data_cfs=${use_data_cfs:-False} --plot=${plot:-False} --c_plus_plus_predict=${c_plus_plus_predict:-False} --paddle_inference=${paddle_inference:-None} --TENSORRT_DIR=${TENSORRT_DIR:-None} --PaddleX=${PaddleX:-None}
+        python main.py --models_list=${models_list:-None} --models_file=${models_file:-None} --system=${system:-linux} --step=${step:-train} --reponame=${reponame:-PaddleClas} --mode=${mode:-function} --use_build=${use_build:-yes} --branch=${branch:-develop} --get_repo=${get_repo:-wget} --paddle_whl=${paddle_whl:-None} --dataset_org=${dataset_org:-None} --dataset_target=${dataset_target:-None} --set_cuda=${set_cuda:-0,1} --timeout=${timeout:-3600} --binary_search_flag=${binary_search_flag:-False} --use_data_cfs=${use_data_cfs:-False} --plot=${plot:-False} --c_plus_plus_predict=${c_plus_plus_predict:-False} --paddle_inference=${paddle_inference:-None} --TENSORRT_DIR=${TENSORRT_DIR:-None} --PaddleX=${PaddleX:-None}
     ' &
     wait $!
+    docker start ce_${AGILE_PIPELINE_NAME}_${AGILE_JOB_BUILD_ID}
+    docker attach ce_${AGILE_PIPELINE_NAME}_${AGILE_JOB_BUILD_ID}
     exit $?
 else
     ldconfig;
@@ -729,5 +730,5 @@ else
     python -m pip install --ignore-installed six -i https://mirror.baidu.com/pypi/simple
     python -m pip uninstall -y opencv-python
     python -m pip config list
-    python main.py --models_list=${models_list:-None} --models_file=${models_file:-None} --system=${system:-linux} --step=${step:-train} --reponame=${reponame:-PaddleClas} --mode=${mode:-function} --use_build=${use_build:-yes} --branch=${branch:-develop} --get_repo=${get_repo:-wget} --paddle_whl=${paddle_whl:-None} --dataset_org=${dataset_org:-None} --dataset_target=${dataset_target:-None} --set_cuda=${set_cuda:-0,1} --timeout=${timeout:-3600} --binary_search_flag=${binary_search_flag:-False} --is_analysis_logs=${is_analysis_logs:-False} --use_data_cfs=${use_data_cfs:-False} --plot=${plot:-False} --c_plus_plus_predict=${c_plus_plus_predict:-False} --paddle_inference=${paddle_inference:-None} --TENSORRT_DIR=${TENSORRT_DIR:-None} --PaddleX=${PaddleX:-None}
+    python main.py --models_list=${models_list:-None} --models_file=${models_file:-None} --system=${system:-linux} --step=${step:-train} --reponame=${reponame:-PaddleClas} --mode=${mode:-function} --use_build=${use_build:-yes} --branch=${branch:-develop} --get_repo=${get_repo:-wget} --paddle_whl=${paddle_whl:-None} --dataset_org=${dataset_org:-None} --dataset_target=${dataset_target:-None} --set_cuda=${set_cuda:-0,1} --timeout=${timeout:-3600} --binary_search_flag=${binary_search_flag:-False} --use_data_cfs=${use_data_cfs:-False} --plot=${plot:-False} --c_plus_plus_predict=${c_plus_plus_predict:-False} --paddle_inference=${paddle_inference:-None} --TENSORRT_DIR=${TENSORRT_DIR:-None} --PaddleX=${PaddleX:-None}
 fi

@@ -1,0 +1,21 @@
+testings:
+  torch_dy_eval:
+    framework: "torch"
+    orderdict_usage: "save"
+    device_place_id: "1"
+    model_dtype: "float32"
+
+  dy_eval:
+    framework: "paddle"
+    orderdict_usage: "load"
+    device_place_id: "0"
+    model_dtype: "float32"
+
+compare:
+  -
+    baseline: 'torch_dy_eval'
+    latest: 'dy_eval'
+    compare_method: "torch_compare"
+    precision:
+      delta: 0.00001
+      rtol: 0.000001

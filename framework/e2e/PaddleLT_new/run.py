@@ -6,6 +6,7 @@
 测试执行器
 """
 import os
+import shutil
 import subprocess
 from subprocess import TimeoutExpired
 import multiprocessing
@@ -16,14 +17,15 @@ import pandas as pd
 import layertest
 from db.layer_db import LayerBenchmarkDB
 from strategy.compare import perf_compare_dict, perf_compare_kernel_dict
-from tools.case_select import CaseSelect
-from tools.logger import Logger
-from tools.yaml_loader import YamlLoader
-from tools.json_loader import JSONLoader
-from tools.res_save import xlsx_save, download_sth, create_tar_gz, extract_tar_gz, load_pickle
-from tools.upload_bos import UploadBos
-from tools.statistics import split_list
-from tools.alarm import Alarm
+from pltools.case_select import CaseSelect
+from pltools.logger import Logger
+from pltools.yaml_loader import YamlLoader
+from pltools.json_loader import JSONLoader
+from pltools.res_save import xlsx_save, download_sth, create_tar_gz, extract_tar_gz, load_pickle, save_txt
+from pltools.nv_tool import get_nv_memory
+from pltools.upload_bos import UploadBos
+from pltools.statistics import split_list, sublayer_perf_gsb_gen, kernel_perf_gsb_gen, sublayer_perf_ratio_gen
+from pltools.alarm import Alarm
 
 
 class Run(object):
@@ -62,10 +64,40 @@ class Run(object):
         self.AGILE_PIPELINE_BUILD_ID = os.environ.get("AGILE_PIPELINE_BUILD_ID", 0)
         self.now_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
+        self.storage = "apibm_config.yml"
+
         if os.environ.get("FRAMEWORK") == "paddle":
             import paddle
 
             self.logger.get_log().info(f"Paddle框架commit: {paddle.__git_commit__}, 版本: {paddle.__version__}")
+            os.environ["paddle_commit"] = paddle.__git_commit__
+            if os.environ.get("USE_PADDLE_MODEL", "None") == "PaddleOCR":
+                os.system(
+                    "wget -q https://xly-devops.bj.bcebos.com/PaddleTest/PaddleOCR/PaddleOCR.tar.gz --no-proxy "
+                    "&& tar -xzf PaddleOCR.tar.gz && rm -rf PaddleOCR.tar.gz "
+                    "&& cd PaddleOCR && git rev-parse HEAD && git branch "
+                    f"&& {self.py_cmd} -m pip install -r requirements.txt && {self.py_cmd} setup.py install "
+                    # f"&& {self.py_cmd} -m pip install paddlenlp "
+                )
+            elif os.environ.get("USE_PADDLE_MODEL", "None") == "PaddleNLP":
+                os.system(
+                    "wget -q https://xly-devops.bj.bcebos.com/PaddleTest/PaddleNLP/PaddleNLP-develop.tar.gz --no-proxy "
+                    "&& tar -xzf PaddleNLP-develop.tar.gz && rm -rf PaddleNLP-develop.tar.gz "
+                    "&& cd PaddleNLP-develop && git rev-parse HEAD && git branch "
+                    f"&& {self.py_cmd} -m pip install -r requirements.txt && {self.py_cmd} setup.py install "
+                    f"&& {self.py_cmd} -m pip install yacs && {self.py_cmd} -m pip install sacremoses "
+                    f"&& {self.py_cmd} -m pip install emoji && {self.py_cmd} -m pip install ftfy "
+                    f"&& {self.py_cmd} -m pip install unidecode "
+                )
+        elif os.environ.get("FRAMEWORK") == "torch":
+            self.logger.get_log().info("开始安转torch release版本")
+            os.system(
+                f"{self.py_cmd} -m pip install torch torchvision torchaudio "
+                "--index-url https://download.pytorch.org/whl/cu118"
+            )
+            import torch
+
+            self.logger.get_log().info(f"Torch框架版本: {torch.__version__}")
 
         # 下载ground truth用于跨硬件测试
         plt_gt_download_url = os.environ.get("PLT_GT_DOWNLOAD_URL")
@@ -110,7 +142,7 @@ class Run(object):
         """Database interaction"""
         # 数据库交互
         if os.environ.get("PLT_BM_DB") == "insert":  # 存入数据, 作为基线或对比
-            layer_db = LayerBenchmarkDB(storage="apibm_config.yml")
+            layer_db = LayerBenchmarkDB(storage=self.storage)
             if os.environ.get("PLT_BM_MODE") == "baseline":
                 layer_db.baseline_insert(data_dict=sublayer_dict, error_list=error_list)
 
@@ -133,13 +165,13 @@ class Run(object):
                     "baseline mode, latest_as_baseline mode or latest mode"
                 )
         elif os.environ.get("PLT_BM_DB") == "select":  # 不存数据, 仅对比并生成表格
-            layer_db = LayerBenchmarkDB(storage="apibm_config.yml")
+            layer_db = LayerBenchmarkDB(storage=self.storage)
             baseline_dict, baseline_layer_type = layer_db.get_baseline_dict()
 
             return baseline_dict, baseline_layer_type
         elif os.environ.get("PLT_BM_DB") == "non-db":  # 不加载数据库，仅生成表格
 
-            return {}, "none"
+            return "none", "none"
         else:
             Exception("unknown benchmark datebase mode, only support insert, select or non-db")
 
@@ -168,21 +200,35 @@ class Run(object):
         if os.path.exists(excel_file):
             UploadBos().upload_to_bos(bos_path="paddle-qa/{}".format(bos_path), file_path=excel_file)
             self.logger.get_log().info("表格下载链接: https://paddle-qa.bj.bcebos.com/{}/{}".format(bos_path, excel_file))
-        os.system("tar -czf plot.tar *.png")
-        UploadBos().upload_to_bos(bos_path="paddle-qa/{}".format(bos_path), file_path="plot.tar")
-        self.logger.get_log().info("plot下载链接: https://paddle-qa.bj.bcebos.com/{}/{}".format(bos_path, "plot.tar"))
-        os.system("tar -czf pickle.tar *.pickle")
-        UploadBos().upload_to_bos(bos_path="paddle-qa/{}".format(bos_path), file_path="pickle.tar")
-        self.logger.get_log().info("pickle下载链接: https://paddle-qa.bj.bcebos.com/{}/{}".format(bos_path, "pickle.tar"))
+
+        if os.path.exists("gsb_dict.txt"):
+            UploadBos().upload_to_bos(bos_path="paddle-qa/{}".format(bos_path), file_path="gsb_dict.txt")
+            self.logger.get_log().info(
+                "GSB.txt下载链接: https://paddle-qa.bj.bcebos.com/{}/{}".format(bos_path, "gsb_dict.txt")
+            )
+
+        if os.environ.get("PLT_BM_PLOT") == "True":
+            os.system("tar -czf plot.tar *.png")
+            UploadBos().upload_to_bos(bos_path="paddle-qa/{}".format(bos_path), file_path="plot.tar")
+            self.logger.get_log().info("plot下载链接: https://paddle-qa.bj.bcebos.com/{}/{}".format(bos_path, "plot.tar"))
+            os.system("tar -czf pickle.tar *.pickle")
+            UploadBos().upload_to_bos(bos_path="paddle-qa/{}".format(bos_path), file_path="pickle.tar")
+            self.logger.get_log().info(
+                "pickle下载链接: https://paddle-qa.bj.bcebos.com/{}/{}".format(bos_path, "pickle.tar")
+            )
 
         if os.environ.get("PLT_BM_EMAIL") == "True":
-            alarm = Alarm(storage="apibm_config.yml")
+            desc = os.environ.get("TESTING").split("/")[-1].split(".")[0]
+            alarm = Alarm(storage=self.storage)
             alarm.email_send(
                 alarm.receiver,
-                f"Paddle {self.layer_type}子图性能数据",
+                f"Paddle {self.layer_type}子图性能数据{desc}",
                 f"表格下载链接: https://paddle-qa.bj.bcebos.com/{bos_path}/{excel_file}\n"
-                f"plot下载链接: https://paddle-qa.bj.bcebos.com/{bos_path}/plot.tar\n"
-                f"pickle下载链接: https://paddle-qa.bj.bcebos.com/{bos_path}/pickle.tar",
+                f"\n"
+                f"GSB.txt下载链接: https://paddle-qa.bj.bcebos.com/{bos_path}/gsb_dict.txt\n"
+                f"\n"
+                # f"plot下载链接: https://paddle-qa.bj.bcebos.com/{bos_path}/plot.tar\n"
+                # f"pickle下载链接: https://paddle-qa.bj.bcebos.com/{bos_path}/pickle.tar",
             )
 
     def _single_pytest_run(self, py_file, testing, device_place_id=0):
@@ -361,17 +407,30 @@ class Run(object):
 
     def _test_run(self, py_list):
         """run some test"""
+        sublayer_dict = {}
         error_list = []
         error_count = 0
         for py_file in py_list:
+            if os.environ.get("PLT_GET_NV_MEMORY") == "True":
+                self.logger.get_log().info(get_nv_memory(int(os.environ.get("PLT_DEVICE_ID"))))
             _py_file, _exit_code = self._single_pytest_run(py_file=py_file, testing=self.testing)
             if _exit_code is not None:
                 error_list.append(_py_file)
                 error_count += 1
+                prec_dict = {self.testing: "fail"}
+            else:
+                prec_dict = {self.testing: "pass"}
+
+            title = py_file.replace(".py", "").replace("/", "^").replace(".", "^")
+            sublayer_dict[title] = prec_dict
 
         if not os.environ.get("PLT_GT_UPLOAD_URL") == "None":
             self._gt_upload()
+
         self._exit_code_txt(error_count=error_count, error_list=error_list)
+
+        if os.environ.get("PLT_BM_DB") != "non-db":
+            baseline_dict, baseline_layer_type = self._db_interact(sublayer_dict=sublayer_dict, error_list=error_list)
 
     def _multiprocess_perf_test_run(self):
         """
@@ -450,7 +509,9 @@ class Run(object):
         compare_list = YamlLoader(yml=self.testing).yml.get("compare")
         for py_file in self.py_list:
             if os.environ.get("PLT_BM_ERROR_CHECK") == "True":  # 先跑功能看是否能通过
-                _py_file, _exit_code = self._single_pytest_run(py_file=py_file, testing="yaml/dy2stcinn_eval.yml")
+                _py_file, _exit_code = self._single_pytest_run(
+                    py_file=py_file, testing="yaml/pre-dy2stcinn_train_bm.yml"
+                )
                 if _exit_code is not None:
                     error_list.append(_py_file)
                     error_count += 1
@@ -485,8 +546,11 @@ class Run(object):
 
     def _perf_unit_test_run(self):
         """run some test"""
-        if not os.path.exists("./nv_report"):
-            os.makedirs(name="./nv_report")
+        if os.path.exists("./nv_report"):
+            shutil.rmtree("./nv_report")
+            self.logger.get_log().info("已删除./nv_report路径以及其内容")
+        os.makedirs(name="./nv_report")
+
         sublayer_dict = {}
         error_count = 0
         error_list = []
@@ -562,7 +626,7 @@ class Run(object):
                     kernel_count = df["Instances"].sum()
 
                     perf_dict[plt_exc + "-" + "kernel_time"] = kernel_time
-                    perf_dict[plt_exc + "-" + "kernel_count"] = kernel_count
+                    perf_dict[plt_exc + "-" + "kernel_count"] = int(kernel_count)  # int64无法json化, 所以先转为通用int
                     self.logger.get_log().info("kernel time and count: ")
                     self.logger.get_log().info(f"kernel time is {kernel_time}")
                     self.logger.get_log().info(f"kernel count is {kernel_count}")
@@ -604,6 +668,7 @@ class Run(object):
                     baseline_layer_type=baseline_layer_type,
                     latest_layer_type=self.layer_type,
                 )
+                gsb_dict = kernel_perf_gsb_gen(compare_dict=compare_dict, compare_list=compare_list)
             else:
                 compare_dict = perf_compare_dict(
                     compare_list=compare_list,
@@ -613,6 +678,11 @@ class Run(object):
                     baseline_layer_type=baseline_layer_type,
                     latest_layer_type=self.layer_type,
                 )
+                gsb_dict = sublayer_perf_gsb_gen(compare_dict=compare_dict, compare_list=compare_list)
+                ratio_dict = sublayer_perf_ratio_gen(compare_dict=compare_dict, compare_list=compare_list)
+                for key, value in gsb_dict.items():
+                    gsb_dict[key] = {**gsb_dict[key], **ratio_dict[key]}
+            save_txt(data=gsb_dict, filename="gsb_dict")
             xlsx_save(
                 sublayer_dict=compare_dict,
                 excel_file=os.environ.get("TESTING").replace("yaml/", "").replace(".yml", "") + ".xlsx",

@@ -9,6 +9,7 @@ import unittest
 import numpy as np
 import pytest
 import paddle
+from paddle.base.framework import in_pir_mode
 from paddle.nn import MultiHeadAttention, TransformerDecoderLayer, TransformerDecoder
 from util import *
 
@@ -85,8 +86,12 @@ class Test(unittest.TestCase):
         decoder_layer = TransformerDecoderLayer(8, 2, 16)
         decoder = TransformerDecoder(decoder_layer, 2)
         output = decoder(dec_input, enc_output, self_attn_mask, cross_attn_mask)  # [2, 4, 8]
-        assert output[0].shape == (4, 8)
-        assert output.shape == (2, 4, 8)
+        if in_pir_mode():
+            assert output[0].shape == [4, 8]
+            assert output.shape == [2, 4, 8]
+        else:
+            assert output[0].shape == (4, 8)
+            assert output.shape == (2, 4, 8)
 
 
 if __name__ == "__main__":

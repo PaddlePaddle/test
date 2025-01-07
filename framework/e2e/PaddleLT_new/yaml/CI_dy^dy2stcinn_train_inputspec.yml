@@ -1,0 +1,97 @@
+testings:
+  dy_train:
+    model_dtype: "float32"
+    Loss:
+      loss_name: "diy.loss.diy_loss.mean_loss"
+    optimizer:
+      optimizer_name: "diy.optimizer.diy_opt.naive_opt"
+      params:
+        opt_api: "paddle.optimizer.SGD"
+        learning_rate: 0.00001
+    step: 1
+
+  dy2st_train_cinn_inputspec:
+    model_dtype: "float32"
+    Loss:
+      loss_name: "diy.loss.diy_loss.mean_loss"
+    optimizer:
+      optimizer_name: "diy.optimizer.diy_opt.naive_opt"
+      params:
+        opt_api: "paddle.optimizer.SGD"
+        learning_rate: 0.00001
+    step: 1
+
+compare:
+  -
+    baseline: 'dy_train'
+    latest: 'dy2st_train_cinn_inputspec'
+    precision:
+      delta: 0.00001
+      rtol: 0.000001
+
+layertest_engine_cover:
+  dy2st_train_cinn_inputspec:
+    layercase.sublayer1000.Clas_cases.SwinTransformer_SwinTransformer_small_patch4_window7_224.SIR_136: 'dy2st_train_cinn'
+    layercase.sublayer1000.Clas_cases.SwinTransformer_SwinTransformer_small_patch4_window7_224.SIR_76: 'dy2st_train_cinn'
+    layercase.sublayer1000.Det_cases.gfl_gfl_r50_fpn_1x_coco.SIR_141: 'dy2st_train_cinn'
+    layercase.sublayer1000.Ocr_cases.rec_rec_svtrnet.SIR_15: 'dy2st_train_cinn'
+    layercase.sublayer1000.Det_cases.picodet_legacy_model_picodet_l_320_coco.SIR_342: 'dy2st_train_cinn'
+    layercase.sublayer1000.Det_cases.picodet_legacy_model_picodet_m_416_coco.SIR_349: 'dy2st_train_cinn'
+    layercase.sublayer1000.Det_cases.picodet_legacy_model_picodet_s_416_coco.SIR_286: 'dy2st_train_cinn'
+    layercase.sublayer1000.Det_cases.picodet_legacy_model_picodet_s_416_coco.SIR_296: 'dy2st_train_cinn'
+    layercase.sublayer1000.Det_cases.yolox_yolox_crn_s_300e_coco.SIR_6: 'dy2st_train_cinn'
+    layercase.sublayer1000.Clas_cases.LeViT_LeViT_128.SIR_74: 'dy2st_train_cinn'
+    layercase.sublayer1000.Clas_cases.LeViT_LeViT_128.SIR_63: 'dy2st_train_cinn'
+#     layercase.sublayer1000.Det_cases.yolox_yolox_crn_s_300e_coco.SIR_6: 'dy2st_train_cinn'
+#     layercase.sublayer1000.Clas_cases.LeViT_LeViT_128.SIR_74: 'dy2st_train_cinn'
+#     layercase.sublayer1000.Clas_cases.LeViT_LeViT_128.SIR_63: 'dy2st_train_cinn'
+#     layercase.sublayer1000.Clas_cases.GhostNet_GhostNet_x0_5.SIR_101: 'dy2st_train_cinn'
+#     layercase.sublayer1000.Clas_cases.GhostNet_GhostNet_x0_5.SIR_21: 'dy2st_train_cinn'
+#     layercase.sublayer1000.Clas_cases.GhostNet_GhostNet_x0_5.SIR_25: 'dy2st_train_cinn'
+#     layercase.sublayer1000.Clas_cases.GhostNet_GhostNet_x0_5.SIR_29: 'dy2st_train_cinn'
+#     layercase.sublayer1000.Clas_cases.GhostNet_GhostNet_x0_5.SIR_33: 'dy2st_train_cinn'
+#     layercase.sublayer1000.Clas_cases.GhostNet_GhostNet_x0_5.SIR_35: 'dy2st_train_cinn'
+#     layercase.sublayer1000.Clas_cases.GhostNet_GhostNet_x0_5.SIR_40: 'dy2st_train_cinn'
+#     layercase.sublayer1000.Clas_cases.GhostNet_GhostNet_x0_5.SIR_45: 'dy2st_train_cinn'
+#     layercase.sublayer1000.Clas_cases.GhostNet_GhostNet_x0_5.SIR_49: 'dy2st_train_cinn'
+#     layercase.sublayer1000.Clas_cases.GhostNet_GhostNet_x0_5.SIR_51: 'dy2st_train_cinn'
+#     layercase.sublayer1000.Clas_cases.GhostNet_GhostNet_x0_5.SIR_55: 'dy2st_train_cinn'
+#     layercase.sublayer1000.Clas_cases.GhostNet_GhostNet_x0_5.SIR_57: 'dy2st_train_cinn'
+#     layercase.sublayer1000.Clas_cases.GhostNet_GhostNet_x0_5.SIR_61: 'dy2st_train_cinn'
+#     layercase.sublayer1000.Clas_cases.GhostNet_GhostNet_x0_5.SIR_65: 'dy2st_train_cinn'
+#     layercase.sublayer1000.Clas_cases.GhostNet_GhostNet_x0_5.SIR_69: 'dy2st_train_cinn'
+#     layercase.sublayer1000.Clas_cases.GhostNet_GhostNet_x0_5.SIR_71: 'dy2st_train_cinn'
+#     layercase.sublayer1000.Clas_cases.GhostNet_GhostNet_x0_5.SIR_75: 'dy2st_train_cinn'
+#     layercase.sublayer1000.Clas_cases.GhostNet_GhostNet_x0_5.SIR_77: 'dy2st_train_cinn'
+#     layercase.sublayer1000.Clas_cases.GhostNet_GhostNet_x0_5.SIR_81: 'dy2st_train_cinn'
+#     layercase.sublayer1000.Clas_cases.GhostNet_GhostNet_x0_5.SIR_85: 'dy2st_train_cinn'
+#     layercase.sublayer1000.Clas_cases.GhostNet_GhostNet_x0_5.SIR_89: 'dy2st_train_cinn'
+#     layercase.sublayer1000.Clas_cases.GhostNet_GhostNet_x0_5.SIR_91: 'dy2st_train_cinn'
+#     layercase.sublayer1000.Clas_cases.GhostNet_GhostNet_x0_5.SIR_95: 'dy2st_train_cinn'
+#     layercase.sublayer1000.Clas_cases.GhostNet_GhostNet_x0_5.SIR_97: 'dy2st_train_cinn'
+#     layercase.sublayer1000.Clas_cases.SwinTransformer_SwinTransformer_small_patch4_window7_224.SIR_136: 'dy2st_train_cinn'
+#     layercase.sublayer1000.Clas_cases.SwinTransformer_SwinTransformer_small_patch4_window7_224.SIR_76: 'dy2st_train_cinn'
+#     layercase.sublayer1000.Det_cases.gfl_gfl_r50_fpn_1x_coco.SIR_141: 'dy2st_train_cinn'
+#     layercase.sublayer1000.Det_cases.picodet_legacy_model_picodet_l_320_coco.SIR_342: 'dy2st_train_cinn'
+#     layercase.sublayer1000.Det_cases.picodet_legacy_model_picodet_m_416_coco.SIR_349: 'dy2st_train_cinn'
+#     layercase.sublayer1000.Det_cases.picodet_legacy_model_picodet_s_416_coco.SIR_286: 'dy2st_train_cinn'
+#     layercase.sublayer1000.Det_cases.picodet_legacy_model_picodet_s_416_coco.SIR_296: 'dy2st_train_cinn'
+#     layercase.sublayer1000.Det_cases.ssd_ssdlite_ghostnet_320_coco.SIR_26: 'dy2st_train_cinn'
+#     layercase.sublayer1000.Det_cases.ssd_ssdlite_ghostnet_320_coco.SIR_45: 'dy2st_train_cinn'
+#     layercase.sublayer1000.Det_cases.ssd_ssdlite_ghostnet_320_coco.SIR_80: 'dy2st_train_cinn'
+#     layercase.sublayer1000.Det_cases.ssd_ssdlite_ghostnet_320_coco.SIR_85: 'dy2st_train_cinn'
+#     layercase.sublayer1000.Det_cases.ssd_ssdlite_ghostnet_320_coco.SIR_88: 'dy2st_train_cinn'
+#     layercase.sublayer1000.Det_cases.ssd_ssdlite_ghostnet_320_coco.SIR_95: 'dy2st_train_cinn'
+#     layercase.sublayer1000.Ocr_cases.rec_rec_svtrnet.SIR_15: 'dy2st_train_cinn'
+#     layercase.sublayer1000.Seg_cases.dmnet_dmnet_resnet101_os8_cityscapes_1024x512_80k.SIR_32: 'dy2st_train_cinn'
+#     layercase.sublayer1000.Seg_cases.dmnet_dmnet_resnet101_os8_cityscapes_1024x512_80k.SIR_37: 'dy2st_train_cinn'
+#     layercase.sublayer1000.Seg_cases.dmnet_dmnet_resnet101_os8_cityscapes_1024x512_80k.SIR_41: 'dy2st_train_cinn'
+#     layercase.sublayer1000.Seg_cases.dmnet_dmnet_resnet101_os8_cityscapes_1024x512_80k.SIR_45: 'dy2st_train_cinn'
+#     layercase.sublayer1000.Seg_cases.mobileseg_mobileseg_ghostnet_cityscapes_1024x512_80k.SIR_24: 'dy2st_train_cinn'
+#     layercase.sublayer1000.Seg_cases.mobileseg_mobileseg_ghostnet_cityscapes_1024x512_80k.SIR_29: 'dy2st_train_cinn'
+#     layercase.sublayer1000.Seg_cases.mobileseg_mobileseg_ghostnet_cityscapes_1024x512_80k.SIR_38: 'dy2st_train_cinn'
+#     layercase.sublayer1000.Seg_cases.mobileseg_mobileseg_ghostnet_cityscapes_1024x512_80k.SIR_43: 'dy2st_train_cinn'
+#     layercase.sublayer1000.Seg_cases.mobileseg_mobileseg_ghostnet_cityscapes_1024x512_80k.SIR_46: 'dy2st_train_cinn'
+#     layercase.sublayer1000.Seg_cases.mobileseg_mobileseg_ghostnet_cityscapes_1024x512_80k.SIR_53: 'dy2st_train_cinn'
+#     layercase.sublayer1000.Seg_cases.ocrnet_ocrnet_hrnetw18_voc12aug_512x512_40k.SIR_36: 'dy2st_train_cinn'
+#     layercase.sublayer1000.Seg_cases.ocrnet_ocrnet_hrnetw48_cityscapes_1024x512_40k.SIR_36: 'dy2st_train_cinn'

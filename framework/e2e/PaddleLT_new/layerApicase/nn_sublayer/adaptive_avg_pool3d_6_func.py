@@ -15,6 +15,9 @@ class LayerCase(paddle.nn.Layer):
         """
         forward
         """
+
+        paddle.seed(33)
+        np.random.seed(33)
         out = paddle.nn.functional.adaptive_avg_pool3d(x,  output_size=(3, 3, 3), data_format='NCDHW', )
         return out
 

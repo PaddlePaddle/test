@@ -19,7 +19,7 @@ class LayerCase(paddle.nn.Layer):
         self,
         var_0,    # (shape: [1, 128, 64, 64], dtype: paddle.float32, stop_gradient: False)
     ):
-        var_1 = paddle.nn.functional.common.dropout2d(var_0, p=0.1, training=True, data_format='NCHW', name=None)
+        var_1 = paddle.nn.functional.common.dropout2d(var_0, p=0.1, training=self.training, data_format='NCHW', name=None)
         var_2 = paddle.nn.functional.conv._conv_nd(var_1, self.parameter_0, bias=self.parameter_1, stride=[1, 1], padding=[0, 0], padding_algorithm='EXPLICIT', dilation=[1, 1], groups=1, data_format='NCHW', channel_dim=1, op_type='conv2d', use_cudnn=True)
         return var_2
 

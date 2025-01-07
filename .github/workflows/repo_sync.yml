@@ -1,0 +1,85 @@
+name: Paddle kits repos sync
+run-name: Paddle kits repos sync Runs on ${{ github.event_name }}
+on:
+  workflow_dispatch:
+  repository_dispatch:
+    types:
+      - custom-event
+  schedule:
+    - cron: "0 16 * * *"
+
+jobs:
+  paddleqa-checkout:
+    if: ${{ !github.event.repository.fork }}
+    environment: CodeSync
+    runs-on: ubuntu-latest
+    name: Repo Checkout and Upload
+    strategy:
+      matrix:
+        # 定义不同的参数组合
+        include:
+          - repository: "PaddlePaddle/PaddleClas"
+            ref: "develop"
+            submodules: "false"
+            fetch_depth: 1
+            path: "PaddleClas"
+          - repository: "PaddlePaddle/PaddleOCR"
+            ref: "main"
+            submodules: "false"
+            fetch_depth: 1
+            path: "PaddleOCR"
+          - repository: "PaddlePaddle/PaddleDetection"
+            ref: "develop"
+            submodules: "false"
+            fetch_depth: 1
+            path: "PaddleDetection"
+          - repository: "PaddlePaddle/PaddleSeg"
+            ref: "develop"
+            submodules: "false"
+            fetch_depth: 1
+            path: "PaddleSeg"
+          - repository: "PaddlePaddle/PaddleTS"
+            ref: "release_v1.1"
+            submodules: "false"
+            fetch_depth: 1
+            path: "PaddleTS"
+          - repository: "PaddlePaddle/PaddleNLP"
+            ref: "release/2.9"
+            submodules: "false"
+            fetch_depth: 1
+            path: "PaddleNLP"
+          - repository: "PaddlePaddle/PaddleVideo"
+            ref: "develop"
+            submodules: "false"
+            fetch_depth: 1
+            path: "PaddleVideo"
+    steps:
+      - name: PaddleTest Checkout
+        uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            tools
+      - name: Code Checkout
+        id: checkout
+        uses: XieYunshen/PaddleQACheckout@v1.0.0
+        with:
+          repository: ${{ matrix.repository }}
+          ref: ${{ matrix.ref }}
+          submodules: ${{ matrix.submodules }}
+          fetch_depth: ${{ matrix.fetch_depth }}
+          path: ${{ matrix.path }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - name: Upload Code
+        env:
+          AK: ${{ secrets.BOS_AK }}
+          SK: ${{ secrets.BOS_SK }}
+        run: |
+          tree -L 3
+          REPO_NAME=${{ matrix.repository }}
+          REPO_NAME=${REPO_NAME##*/}
+          file_name=$REPO_NAME.tar
+          tar -cf $REPO_NAME.tar ${{ matrix.path }}
+          python -m pip install bce-python-sdk==0.8.74
+          python tools/bos_upload.py ${file_name} paddle-model-ecology/paddlex/PaddleX3.0/repos

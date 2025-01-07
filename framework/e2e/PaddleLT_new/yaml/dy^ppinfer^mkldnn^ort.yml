@@ -6,10 +6,13 @@ testings:
     model_dtype: "float32"
 
   paddle_infer_gpu:
+    jit_save_type: "jit_save"
 
   paddle_infer_mkldnn:
+    jit_save_type: "jit_save"
 
   paddle_infer_ort:
+    jit_save_type: "jit_save"
 
 compare:
   -

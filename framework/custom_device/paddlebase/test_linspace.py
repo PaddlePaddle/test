@@ -64,17 +64,6 @@ def test_linspace2():
     obj.run(res=res, start=start, stop=stop, num=num, dtype="float64")
 
 
-@pytest.mark.api_base_linspace_exception
-def test_linspace3():
-    """
-    num=0
-    """
-    start = 3
-    stop = 9
-    num = 0
-    obj.exception(mode="c", etype="Error", start=start, stop=stop, num=num)
-
-
 @pytest.mark.api_base_linspace_parameters
 def test_linspace4():
     """

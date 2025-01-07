@@ -9,16 +9,24 @@ import os
 import itertools
 import numpy as np
 
-if os.environ.get("FRAMEWORK") == "paddle":
+if "paddle" in os.environ.get("FRAMEWORK"):
     import paddle
     import diy
     import layerApicase
     import layercase
-elif os.environ.get("FRAMEWORK") == "torch":
-    import torch
-    import layerTorchcase
 
-import tools.np_tool as tool
+    if os.environ.get("USE_PADDLE_MODEL", "None") == "PaddleOCR":
+        import layerOCRcase
+        import PaddleOCR
+    elif os.environ.get("USE_PADDLE_MODEL", "None") == "PaddleNLP":
+        import layerNLPcase
+        import paddlenlp
+
+if "torch" in os.environ.get("FRAMEWORK"):
+    import torch
+    import torch_case
+
+import pltools.np_tool as tool
 
 
 class BuildData(object):
@@ -29,26 +37,50 @@ class BuildData(object):
         self.layerfile = layerfile
         self.layer_module = eval(self.layerfile)
 
-    def get_single_data(self):
+    def get_single_data(self, framework="paddle"):
         """get data"""
         if hasattr(self.layer_module, "create_numpy_inputs"):
             # dataname = self.layerfile + ".create_numpy_inputs()"
             data = []
             # for i in eval(dataname):
             for i in getattr(self.layer_module, "create_numpy_inputs")():
-                if os.environ.get("FRAMEWORK") == "paddle":
-                    if i.dtype == np.int64 or i.dtype == np.int32:
-                        data.append(paddle.to_tensor(i, stop_gradient=True))
-                    else:
-                        data.append(paddle.to_tensor(i, stop_gradient=False))
-                elif os.environ.get("FRAMEWORK") == "torch":
-                    if i.dtype == np.int64 or i.dtype == np.int32:
-                        data.append(torch.tensor(i, requires_grad=False))
-                    else:
-                        data.append(torch.tensor(i, requires_grad=True))
+                if isinstance(i, (tuple, list)):  # 为了适配list输入的模型子图
+                    tmp = []
+                    for j in i:
+                        if framework == "paddle":
+                            if j.dtype == np.int64 or j.dtype == np.int32:
+                                tmp.append(paddle.to_tensor(j, stop_gradient=True))
+                            else:
+                                tmp.append(paddle.to_tensor(j, stop_gradient=False))
+                        elif framework == "torch":
+                            if j.dtype == np.int64 or j.dtype == np.int32:
+                                # tmp.append(torch.tensor(j, requires_grad=False, device=torch.device('cuda:0')))
+                                tmp.append(torch.tensor(j, requires_grad=False))
+                            else:
+                                # tmp.append(torch.tensor(j, requires_grad=True, device=torch.device('cuda:0')))
+                                tmp.append(torch.tensor(j, requires_grad=True))
+                    data.append(tmp)
+                elif isinstance(i, np.ndarray):
+                    if framework == "paddle":
+                        if i.dtype == np.int64 or i.dtype == np.int32:
+                            data.append(paddle.to_tensor(i, stop_gradient=True))
+                        else:
+                            data.append(paddle.to_tensor(i, stop_gradient=False))
+                    elif framework == "torch":
+                        if i.dtype == np.int64 or i.dtype == np.int32:
+                            # data.append(torch.tensor(i, requires_grad=False, device=torch.device('cuda:0')))
+                            data.append(torch.tensor(i, requires_grad=False))
+                        else:
+                            # data.append(torch.tensor(i, requires_grad=True, device=torch.device('cuda:0')))
+                            data.append(torch.tensor(i, requires_grad=True))
+                elif isinstance(i, float):
+                    data.append(paddle.to_tensor(i, stop_gradient=False))
+                elif isinstance(i, int):
+                    data.append(paddle.to_tensor(i, stop_gradient=True))
+                else:
+                    data.append(i)
         else:
             data = self.get_single_tensor()
-
         return data
 
     def get_single_tensor(self):

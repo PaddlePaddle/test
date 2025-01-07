@@ -1,7 +1,7 @@
 """
 test mean
 """
-from apibase import APIBase
+from apibase import APIBase, TestWithoutPIR
 
 import paddle
 import pytest
@@ -184,4 +184,5 @@ def test_mean13():
     x = np.array([[[2.0, 3.0, 4.0]], [[4.0, 3.0, 4.0]]]).astype("float32")
     axis = np.array([0, 1])
     res = np.mean(x, axis=(0, 1))
-    obj.run(res=res, x=x, axis=axis)
+    with TestWithoutPIR(obj):
+        obj.run(res=res, x=x, axis=axis)

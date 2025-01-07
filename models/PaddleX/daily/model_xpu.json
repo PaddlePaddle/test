@@ -1,0 +1,20 @@
+{
+    "ResNet18": "image_classification",
+    "ResNet34": "image_classification",
+    "ResNet50": "image_classification",
+    "ResNet101": "image_classification",
+    "ResNet152": "image_classification",
+    "PP-LCNet_x0_25": "image_classification",
+    "PP-LCNet_x0_35": "image_classification",
+    "PP-LCNet_x0_5": "image_classification",
+    "PP-LCNet_x0_75": "image_classification",
+    "PP-LCNet_x1_0": "image_classification",
+    "PP-LCNet_x1_5": "image_classification",
+    "PP-LCNet_x2_0": "image_classification",
+    "PP-LCNet_x2_5": "image_classification",
+    "PP-HGNet_small": "image_classification",
+    "PicoDet_layout_1x": "structure_analysis",
+    "DLinear": "ts_forecast",
+    "RLinear": "ts_forecast",
+    "NLinear": "ts_forecast"
+}

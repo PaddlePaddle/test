@@ -6,6 +6,7 @@ test Transformer
 
 import pytest
 import paddle
+from paddle.base.framework import in_pir_mode
 from paddle.nn import Transformer
 from util import *
 
@@ -17,7 +18,14 @@ source_length, target_length = 20, 30  # 3, 3
 num_encoder_layers, num_decoder_layers = 2, 2
 np.random.seed(123)
 paddle.seed(123)
-paddle.framework.random._manual_program_seed(123)
+if paddle.framework.use_pir_api():
+    with paddle.pir_utils.OldIrGuard():
+        # Note: dygraph use self.main_program.global_block().create_parameter(),
+        # it's need manual seed to old Program
+        paddle.framework.random._manual_program_seed(123)
+    paddle.framework.random._manual_program_seed(123)
+else:
+    paddle.framework.random._manual_program_seed(123)
 
 
 @pytest.mark.api_nn_Transformer_parameters
@@ -53,7 +61,14 @@ def test2():
     """
     np.random.seed(123)
     paddle.seed(123)
-    paddle.framework.random._manual_program_seed(123)
+    if paddle.framework.use_pir_api():
+        with paddle.pir_utils.OldIrGuard():
+            # Note: dygraph use self.main_program.global_block().create_parameter(),
+            # it's need manual seed to old Program
+            paddle.framework.random._manual_program_seed(123)
+        paddle.framework.random._manual_program_seed(123)
+    else:
+        paddle.framework.random._manual_program_seed(123)
     paddle.disable_static()
     # src: [batch_size, tgt_len, d_model]
     enc_input = paddle.rand((2, 4, 128))
@@ -87,12 +102,20 @@ def test2():
     cross_attn_mask = paddle.rand((2, 2, 6, 4))
     transformer = Transformer(128, 2, 4, 4, 512, 0.5, "relu", 0.0, 0.0, False)
     output = transformer(enc_input, dec_input, enc_self_attn_mask, dec_self_attn_mask, cross_attn_mask)  # [2, 6, 128]
-    assert output[0].shape == (6, 128)
-    assert output.shape == (2, 6, 128)
+    if in_pir_mode():
+        assert output[0].shape == [6, 128]
+        assert output.shape == [2, 6, 128]
+    else:
+        assert output[0].shape == (6, 128)
+        assert output.shape == (2, 6, 128)
     transformer = Transformer(128, 2, 4, 4, 512, 1.0, "relu", 0.0, 0.0, False)
     output = transformer(enc_input, dec_input, enc_self_attn_mask, dec_self_attn_mask, cross_attn_mask)  # [2, 6, 128]
-    assert output[0].shape == (6, 128)
-    assert output.shape == (2, 6, 128)
+    if in_pir_mode():
+        assert output[0].shape == [6, 128]
+        assert output.shape == [2, 6, 128]
+    else:
+        assert output[0].shape == (6, 128)
+        assert output.shape == (2, 6, 128)
 
 
 if __name__ == "__main__":

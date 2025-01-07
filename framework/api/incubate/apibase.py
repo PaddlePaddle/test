@@ -540,7 +540,7 @@ class APIBase(object):
         return numeric_grad
 
     def _get_sigle_grad(self, t, idx, k, n=None):
-        assert isinstance(t, paddle.static.Variable), "The first argument t must be Tensor."
+        assert isinstance(t, paddle.Tensor), "The first argument t must be Tensor."
         assert isinstance(idx, int), "The second argument idx must be an int number."
 
         dtype = t.dtype
@@ -689,7 +689,7 @@ class APIBase(object):
                         logging.info(xyz)
                         for k in xyz:
                             if isinstance(params[k], (list, tuple)) and isinstance(
-                                params[k][0], paddle.static.Variable
+                                params[k][0], (paddle.static.Variable, paddle.pir.Value)
                             ):
                                 grad_tmp = []
                                 for i in range(len(params[k])):

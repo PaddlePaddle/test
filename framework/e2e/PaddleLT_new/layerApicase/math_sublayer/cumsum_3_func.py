@@ -15,6 +15,9 @@ class LayerCase(paddle.nn.Layer):
         """
         forward
         """
+
+        paddle.seed(33)
+        np.random.seed(33)
         out = paddle.cumsum(x,  axis=paddle.to_tensor([3], dtype='int32', stop_gradient=False), )
         return out
 

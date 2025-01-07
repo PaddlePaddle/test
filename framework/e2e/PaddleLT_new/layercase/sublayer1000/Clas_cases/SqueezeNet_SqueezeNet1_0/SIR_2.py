@@ -219,6 +219,7 @@ class LayerCase(paddle.nn.Layer):
         self,
         var_0,    # (shape: [22, 3, 224, 224], dtype: paddle.float32, stop_gradient: True)
     ):
+        paddle.seed(33)
         var_1 = paddle.nn.functional.conv._conv_nd(var_0, self.parameter_1, bias=self.parameter_42, stride=[2, 2], padding=[0, 0], padding_algorithm='EXPLICIT', dilation=[1, 1], groups=1, data_format='NCHW', channel_dim=1, op_type='conv2d', use_cudnn=True)
         var_2 = paddle.nn.functional.activation.relu(var_1)
         var_3 = paddle.nn.functional.pooling.max_pool2d(var_2, kernel_size=3, stride=2, padding=0, return_mask=False, ceil_mode=False, data_format='NCHW', name=None)
@@ -322,7 +323,7 @@ class TestLayer(unittest.TestCase):
                 net = paddle.jit.to_static(net, build_strategy=build_strategy, full_graph=True)
             else:
                 net = paddle.jit.to_static(net, full_graph=True)
-        paddle.seed(123)
+        paddle.seed(33)
         outs = net(*self.inputs)
         return outs
     def test_ast_prim_cinn(self):

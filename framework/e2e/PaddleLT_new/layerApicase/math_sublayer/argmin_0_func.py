@@ -15,6 +15,9 @@ class LayerCase(paddle.nn.Layer):
         """
         forward
         """
+
+        paddle.seed(33)
+        np.random.seed(33)
         out = paddle.argmin(x,  axis=0, dtype='int32', keepdim=False, )
         return out
 

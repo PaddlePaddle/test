@@ -20,7 +20,7 @@ class LayerCase(paddle.nn.Layer):
         var_0,    # (shape: [43, 1280, 7, 7], dtype: paddle.float32, stop_gradient: False)
     ):
         var_1 = paddle.nn.functional.pooling.adaptive_avg_pool2d(var_0, output_size=1, data_format='NCHW', name=None)
-        var_2 = paddle.nn.functional.common.dropout(var_1, p=0.2, axis=None, training=True, mode='upscale_in_train', name=None)
+        var_2 = paddle.nn.functional.common.dropout(var_1, p=0.2, axis=None, training=self.training, mode='upscale_in_train', name=None)
         var_3 = paddle.tensor.manipulation.squeeze(var_2, axis=[2, 3])
         var_4 = paddle.nn.functional.common.linear(x=var_3, weight=self.parameter_1, bias=self.parameter_0, name=None)
         return var_4

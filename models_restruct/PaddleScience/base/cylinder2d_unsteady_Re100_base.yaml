@@ -17,19 +17,19 @@ eval:
       - mode=eval
       - EVAL.pretrained_model_path=https://paddle-org.bj.bcebos.com/paddlescience/models/cylinder2d_unsteady_Re100/cylinder2d_unsteady_Re100_pretrained.pdparams
     result:
-      loss(Residual):
+      Residual/loss:
         base: 0.00398
         threshold: 1
         evaluation: "-"
-      MSE.continuity(Residual):
+      Residual/MSE.continuity:
         base: 0.00126
         threshold: 1
         evaluation: "-"
-      MSE.momentum_x(Residual):
+      Residual/MSE.momentum_x:
         base: 0.00151
         threshold: 1
         evaluation: "-"
-      MSE.momentum_y(Residual):
+      Residual/MSE.momentum_y:
         base: 0.00120
         threshold: 1
         evaluation: "-"
@@ -40,15 +40,15 @@ eval:
       - mode=eval
       - EVAL.pretrained_model_path=https://paddle-org.bj.bcebos.com/paddlescience/models/cylinder2d_unsteady_Re100/cylinder2d_unsteady_Re100_pretrained.pdparams
     result:
-      MSE.continuity(Residual):
+      Residual/MSE.continuity:
         base: 0.00126
         threshold: 1
         evaluation: "-"
-      MSE.momentum_x(Residual):
+      Residual/MSE.momentum_x:
         base: 0.00151
         threshold: 1
         evaluation: "-"
-      MSE.momentum_y(Residual):
+      Residual/MSE.momentum_y:
         base: 0.00120
         threshold: 1
         evaluation: "-"

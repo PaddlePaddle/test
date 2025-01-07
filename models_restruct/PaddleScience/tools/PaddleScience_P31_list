@@ -1,2 +1,2 @@
-examples^nlsmb.yaml
-example^bubble^bubble.yaml
+examples^aneurysm^aneurysm_flow.yaml
+examples^biharmonic2d^biharmonic2d.yaml

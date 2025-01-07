@@ -1,0 +1,17 @@
+testings:
+  dy_eval:
+    model_dtype: "float32"
+
+  jit_save:
+    model_dtype: "float32"
+
+  paddle_infer_gpu:
+    jit_save_type: "jit_save"
+
+compare:
+  -
+    baseline: 'dy_eval'
+    latest: 'paddle_infer_gpu'
+    precision:
+      delta: 0.00001
+      rtol: 0.000001

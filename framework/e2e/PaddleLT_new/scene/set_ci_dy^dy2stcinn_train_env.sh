@@ -7,6 +7,7 @@ export CASE_DIR=sublayer1000
 export TESTING=yaml/CI_dy^dy2stcinn_train.yml # 设定测试项目配置yaml
 export TESTING_MODE=precision_multi_gpu # 设定测试模型为精度
 export PLT_SET_DEVICE=gpu
+export PLT_GET_NV_MEMORY=False
 export PLT_DEVICE_ID="${PLT_DEVICE_ID:-0,1}"
 export CUDA_VISIBLE_DEVICES="${PLT_DEVICE_ID:-0,1}"
 export FRAMEWORK=paddle
@@ -19,6 +20,8 @@ export PLT_SAVE_SPEC=False  # 是否保存InputSpec搜索遍历结果
 export PLT_SAVE_GT=False  # 是否保存精度ground truth, 也就是plt_gt
 export PLT_GT_UPLOAD_URL=None  # plt_gt的上传路径, paddle-qa/PaddleLT/PaddleLTGroundTruth/latest
 export PLT_GT_DOWNLOAD_URL=None  # plt_gt的下载url, https://paddle-qa.bj.bcebos.com/PaddleLT/PaddleLTGroundTruth/latest/gpu
+
+export PLT_BM_DB=non-db
 
 export FLAGS_prim_forward_blacklist=pd_op.dropout
 export FLAGS_enable_pir_api=1

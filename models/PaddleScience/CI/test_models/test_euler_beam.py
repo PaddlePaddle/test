@@ -20,11 +20,12 @@ import sys
 import subprocess
 
 import pytest
+import allure
 import numpy as np
 
 from tools.log_analysis import get_last_epoch_loss, get_last_eval_metric
 
-
+@allure.title("功能测试")
 def test_euler_beam_exit_code():
     """
     测试函数：测试 euler_beam.py 脚本的退出码是否为 0 以保证可视化文件的正常保存
@@ -46,14 +47,16 @@ def test_euler_beam_exit_code():
     # 断言退出码为 0
     assert exit_code == 0
 
-
+@allure.title("训练精度测试")
 def test_euler_beam_loss():
     """
     测试函数：测试 euler_beam.py 脚本的损失值
     """
     epoch_num = 1000  # 迭代次数
     output_dir = "./output/euler_beam"  # 输出目录
-    base_loss = 0.00181  # 基准损失值
+    # base_loss = 0.00181  # 基准损失值
+    # CI机器改为T4,因此更改base值
+    base_loss = 0.00188
 
     # 获取训练过程的日志文件并计算最后一轮迭代的损失值
     log_file = os.path.join(output_dir, "train.log")
@@ -62,7 +65,7 @@ def test_euler_beam_loss():
     # 断言最后一轮迭代的损失值与基准
     assert np.allclose(float(last_loss), base_loss, rtol=1e-6) or float(last_loss) - base_loss < 3e-5
 
-
+@allure.title("评估精度测试")
 def test_euler_beam_metric():
     """
     测试函数：测试 euler_beam.py 脚本的评估值
@@ -78,6 +81,7 @@ def test_euler_beam_metric():
     # 断言最后一轮迭代的评估值与基准
     assert np.allclose(float(last_metric), base_metric, rtol=1e-6) or float(last_metric) - base_metric < 3e-5
 
+@allure.title("导出功能测试")
 def test_euler_beam_export():
     """
     测试函数：测试 euler_beam.py 脚本的export功能
@@ -95,6 +99,7 @@ def test_euler_beam_export():
     # 断言退出码为 0
     assert exit_code == 0
 
+@allure.title("推理功能测试")
 def test_euler_beam_infer():
     """
     测试函数：测试 euler_beam.py 脚本的infer功能
@@ -114,5 +119,5 @@ def test_euler_beam_infer():
 
 if __name__ == "__main__":
     # 使用 pytest 模块运行测试函数
-    code = pytest.main([sys.argv[0]])
+    code = pytest.main(["--alluredir=./allure", sys.argv[0]])
     sys.exit(code)

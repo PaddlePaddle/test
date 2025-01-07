@@ -15,6 +15,9 @@ class LayerCase(paddle.nn.Layer):
         """
         forward
         """
+
+        paddle.seed(33)
+        np.random.seed(33)
         out = paddle.linspace( start=paddle.to_tensor([4.0], dtype='float32', stop_gradient=False), stop=paddle.to_tensor([9.3], dtype='float32', stop_gradient=False), num=5, )
         return out
 

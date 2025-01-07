@@ -23,7 +23,14 @@ class Test(unittest.TestCase):
         test_transformer_decoder_layer
         """
         paddle.seed(2020)
-        paddle.framework.random._manual_program_seed(2020)
+        if paddle.framework.use_pir_api():
+            with paddle.pir_utils.OldIrGuard():
+                # Note: dygraph use self.main_program.global_block().create_parameter(),
+                # it's need manual seed to old Program
+                paddle.framework.random._manual_program_seed(2020)
+            paddle.framework.random._manual_program_seed(2020)
+        else:
+            paddle.framework.random._manual_program_seed(2020)
         activation = "relu"
         normalize_before = False
         batch_size, d_model, n_head, dim_feedforward, dropout = generate_basic_params(mode="decoder_layer")[:5]

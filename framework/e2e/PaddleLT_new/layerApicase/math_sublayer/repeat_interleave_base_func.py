@@ -15,6 +15,9 @@ class LayerCase(paddle.nn.Layer):
         """
         forward
         """
+
+        paddle.seed(33)
+        np.random.seed(33)
         out = paddle.repeat_interleave(x,  repeats=paddle.to_tensor([2, 3, 1], dtype='int32', stop_gradient=False), axis=1, )
         return out
 

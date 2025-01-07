@@ -38,13 +38,13 @@ class LayerCase(paddle.nn.Layer):
         var_2,    # (shape: [1, 2048, 64, 128], dtype: paddle.float32, stop_gradient: False)
     ):
         var_3 = var_0.__add__(var_1)
-        var_4 = paddle.nn.functional.common.dropout2d(var_3, p=0.1, training=True, data_format='NCHW', name=None)
+        var_4 = paddle.nn.functional.common.dropout2d(var_3, p=0.1, training=self.training, data_format='NCHW', name=None)
         var_5 = paddle.nn.functional.conv._conv_nd(var_4, self.parameter_0, bias=self.parameter_1, stride=[1, 1], padding=[0, 0], padding_algorithm='EXPLICIT', dilation=[1, 1], groups=1, data_format='NCHW', channel_dim=1, op_type='conv2d', use_cudnn=True)
-        var_6 = paddle.nn.functional.common.dropout2d(var_1, p=0.1, training=True, data_format='NCHW', name=None)
+        var_6 = paddle.nn.functional.common.dropout2d(var_1, p=0.1, training=self.training, data_format='NCHW', name=None)
         var_7 = paddle.nn.functional.conv._conv_nd(var_6, self.parameter_4, bias=self.parameter_5, stride=[1, 1], padding=[0, 0], padding_algorithm='EXPLICIT', dilation=[1, 1], groups=1, data_format='NCHW', channel_dim=1, op_type='conv2d', use_cudnn=True)
-        var_8 = paddle.nn.functional.common.dropout2d(var_0, p=0.1, training=True, data_format='NCHW', name=None)
+        var_8 = paddle.nn.functional.common.dropout2d(var_0, p=0.1, training=self.training, data_format='NCHW', name=None)
         var_9 = paddle.nn.functional.conv._conv_nd(var_8, self.parameter_4, bias=self.parameter_5, stride=[1, 1], padding=[0, 0], padding_algorithm='EXPLICIT', dilation=[1, 1], groups=1, data_format='NCHW', channel_dim=1, op_type='conv2d', use_cudnn=True)
-        var_10 = paddle.nn.functional.common.dropout2d(var_2, p=0.1, training=True, data_format='NCHW', name=None)
+        var_10 = paddle.nn.functional.common.dropout2d(var_2, p=0.1, training=self.training, data_format='NCHW', name=None)
         var_11 = paddle.nn.functional.conv._conv_nd(var_10, self.parameter_3, bias=self.parameter_2, stride=[1, 1], padding=[0, 0], padding_algorithm='EXPLICIT', dilation=[1, 1], groups=1, data_format='NCHW', channel_dim=1, op_type='conv2d', use_cudnn=True)
         return var_5, var_7, var_9, var_11
 

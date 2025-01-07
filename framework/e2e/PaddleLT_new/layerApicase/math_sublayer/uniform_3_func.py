@@ -15,6 +15,9 @@ class LayerCase(paddle.nn.Layer):
         """
         forward
         """
+
+        paddle.seed(33)
+        np.random.seed(33)
         out = paddle.uniform( shape=[2, 3, 4, 4], min=paddle.to_tensor([1.0], dtype='float32', stop_gradient=False), max=paddle.to_tensor([5.0], dtype='float32', stop_gradient=False), )
         return out
 

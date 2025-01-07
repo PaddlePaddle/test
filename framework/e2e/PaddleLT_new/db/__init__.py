@@ -8,3 +8,4 @@ init
 import db.db
 import db.layer_db
 import db.snapshot
+import db.info_map

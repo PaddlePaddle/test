@@ -19,7 +19,8 @@ class LayerCase(paddle.nn.Layer):
         self,
         var_0,    # (shape: [1, 512, 64, 128], dtype: paddle.float32, stop_gradient: False)
     ):
-        var_1 = paddle.nn.functional.common.dropout2d(var_0, p=0.1, training=True, data_format='NCHW', name=None)
+        paddle.seed(33)
+        var_1 = paddle.nn.functional.common.dropout2d(var_0, p=0.1, training=self.training, data_format='NCHW', name=None)
         var_2 = paddle.nn.functional.conv._conv_nd(var_1, self.parameter_1, bias=self.parameter_0, stride=[1, 1], padding=[0, 0], padding_algorithm='EXPLICIT', dilation=[1, 1], groups=1, data_format='NCHW', channel_dim=1, op_type='conv2d', use_cudnn=True)
         return var_2
 
@@ -58,7 +59,7 @@ class TestLayer(unittest.TestCase):
                 net = paddle.jit.to_static(net, build_strategy=build_strategy, full_graph=True)
             else:
                 net = paddle.jit.to_static(net, full_graph=True)
-        paddle.seed(123)
+        paddle.seed(33)
         outs = net(*self.inputs)
         return outs
     def test_ast_prim_cinn(self):

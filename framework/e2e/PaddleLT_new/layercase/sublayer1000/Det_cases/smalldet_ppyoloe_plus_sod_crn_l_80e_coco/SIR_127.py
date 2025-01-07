@@ -44,14 +44,15 @@ class LayerCase(paddle.nn.Layer):
         var_0,    # (shape: [1, 169, 1024], dtype: paddle.float32, stop_gradient: False)
         var_1,    # (shape: [1, 169, 1024], dtype: paddle.float32, stop_gradient: False)
     ):
-        var_2 = paddle.nn.functional.common.dropout(var_0, p=0.1, axis=None, training=True, mode='upscale_in_train', name=None)
+        paddle.seed(33)
+        var_2 = paddle.nn.functional.common.dropout(var_0, p=0.1, axis=None, training=self.training, mode='upscale_in_train', name=None)
         var_3 = var_1.__add__(var_2)
         var_4 = paddle.nn.functional.norm.layer_norm(var_3, normalized_shape=[1024], weight=self.parameter_5, bias=self.parameter_3, epsilon=1e-05)
         var_5 = paddle.nn.functional.common.linear(x=var_4, weight=self.parameter_7, bias=self.parameter_0, name=None)
         var_6 = paddle.nn.functional.activation.gelu(var_5)
-        var_7 = paddle.nn.functional.common.dropout(var_6, p=0.1, axis=None, training=True, mode='upscale_in_train', name=None)
+        var_7 = paddle.nn.functional.common.dropout(var_6, p=0.1, axis=None, training=self.training, mode='upscale_in_train', name=None)
         var_8 = paddle.nn.functional.common.linear(x=var_7, weight=self.parameter_6, bias=self.parameter_1, name=None)
-        var_9 = paddle.nn.functional.common.dropout(var_8, p=0.1, axis=None, training=True, mode='upscale_in_train', name=None)
+        var_9 = paddle.nn.functional.common.dropout(var_8, p=0.1, axis=None, training=self.training, mode='upscale_in_train', name=None)
         var_10 = var_4.__add__(var_9)
         var_11 = paddle.nn.functional.norm.layer_norm(var_10, normalized_shape=[1024], weight=self.parameter_2, bias=self.parameter_4, epsilon=1e-05)
         return var_11
@@ -94,7 +95,7 @@ class TestLayer(unittest.TestCase):
                 net = paddle.jit.to_static(net, build_strategy=build_strategy, full_graph=True)
             else:
                 net = paddle.jit.to_static(net, full_graph=True)
-        paddle.seed(123)
+        paddle.seed(33)
         outs = net(*self.inputs)
         return outs
     def test_ast_prim_cinn(self):

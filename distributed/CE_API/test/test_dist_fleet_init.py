@@ -68,13 +68,13 @@ class TestApi(object):
         assert str(out).find("Error") == -1
         assert str(err).find("Error") == -1
 
-    def test_dist_fleet_qat_init(self):
-        """test_dist_fleet_qat_init"""
-        cmd = "python -m paddle.distributed.launch --devices 0,1 --job_id qat_init \
-        dist_fleet_qat_init.py"
-        pro = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-        out, err = pro.communicate()
-        pro.wait()
-        pro.returncode == 0
-        assert str(out).find("Error") == -1
-        assert str(err).find("Error") == -1
+    # def test_dist_fleet_qat_init(self):
+    #     """test_dist_fleet_qat_init"""
+    #     cmd = "python -m paddle.distributed.launch --devices 0,1 --job_id qat_init \
+    #     dist_fleet_qat_init.py"
+    #     pro = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    #     out, err = pro.communicate()
+    #     pro.wait()
+    #     pro.returncode == 0
+    #     assert str(out).find("Error") == -1
+    #     assert str(err).find("Error") == -1

@@ -15,6 +15,9 @@ class LayerCase(paddle.nn.Layer):
         """
         forward
         """
+
+        paddle.seed(33)
+        np.random.seed(33)
         out = paddle.nn.functional.local_response_norm(x,  size=5, alpha=0.0001, beta=0.75, k=1.0, data_format='NCHW', )
         return out
 

@@ -137,7 +137,6 @@ def test_dist_fleet_DistributedStrategy3():
     strategy = fleet.DistributedStrategy()
 
     build_strategy = paddle.static.BuildStrategy()
-    build_strategy.enable_sequential_execution = True
     build_strategy.fuse_elewise_add_act_ops = True
     build_strategy.fuse_bn_act_ops = True
     build_strategy.enable_auto_fusion = True
@@ -153,7 +152,6 @@ def test_dist_fleet_DistributedStrategy3():
     new_strategy.load_from_prototxt("origin_dist_strategy.prototxt")
 
     time.sleep(30)
-    assert new_strategy.build_strategy.enable_sequential_execution == build_strategy.enable_sequential_execution
     assert new_strategy.build_strategy.fuse_broadcast_ops == build_strategy.fuse_broadcast_ops
     assert new_strategy.build_strategy.enable_inplace == build_strategy.enable_inplace
     assert new_strategy.build_strategy.cache_runtime_context is False

@@ -15,6 +15,9 @@ class LayerCase(paddle.nn.Layer):
         """
         forward
         """
+
+        paddle.seed(33)
+        np.random.seed(33)
         out = paddle.crop(x,  shape=[2, 1, -1, 2], offsets=[0, 0, 1, 1], )
         return out
 

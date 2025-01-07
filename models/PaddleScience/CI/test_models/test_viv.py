@@ -20,11 +20,12 @@ import sys
 import subprocess
 
 import pytest
+import allure
 import numpy as np
 
 from tools.log_analysis import get_last_epoch_loss, get_last_eval_metric
 
-
+@allure.title("功能测试")
 def test_viv_exit_code():
     """
     测试函数：测试 viv.py 脚本的退出码是否为 0 以保证可视化文件的正常保存
@@ -47,7 +48,7 @@ def test_viv_exit_code():
     # 断言退出码为 0
     assert exit_code == 0
 
-
+@allure.title("训练精度测试")
 def test_viv_loss():
     """
     测试函数：测试 viv.py 脚本的损失值
@@ -63,7 +64,7 @@ def test_viv_loss():
     # 断言最后一轮迭代的损失值与基准
     assert np.allclose(float(last_loss), base_loss, rtol=1e-6)
 
-
+@allure.title("评估精度测试")
 def test_viv_metric():
     """
     测试函数：测试 viv.py 脚本的评估值
@@ -79,6 +80,7 @@ def test_viv_metric():
     # 断言最后一轮迭代的评估值与基准
     assert np.allclose(float(last_metric), base_metric, rtol=1e-6)
 
+@allure.title("导出功能测试")
 def test_viv_export():
     """
     测试函数：测试 viv.py 脚本的导出结果
@@ -93,6 +95,7 @@ def test_viv_export():
     # 断言退出码为 0
     assert exit_code == 0
 
+@allure.title("推理功能测试")
 def test_viv_infer():
     """
     测试函数：测试 viv.py 脚本的推理结果
@@ -107,5 +110,5 @@ def test_viv_infer():
 if __name__ == "__main__":
     os.system("cp ../../examples/fsi/VIV_Training_Neta100.mat ./")
     # 使用 pytest 模块运行测试函数
-    code = pytest.main([sys.argv[0]])
+    code = pytest.main(["--alluredir=./allure", sys.argv[0]])
     sys.exit(code)

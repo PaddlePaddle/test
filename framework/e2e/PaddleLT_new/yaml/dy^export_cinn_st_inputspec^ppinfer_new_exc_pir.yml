@@ -1,0 +1,17 @@
+testings:
+  dy_eval:
+    model_dtype: "float32"
+
+  jit_save_cinn_static_inputspec:
+    model_dtype: "float32"
+
+  paddle_infer_new_exc_pir:
+    jit_save_type: "jit_save_cinn_static_inputspec"
+
+compare:
+  -
+    baseline: 'dy_eval'
+    latest: 'paddle_infer_new_exc_pir'
+    precision:
+      delta: 0.00001
+      rtol: 0.000001

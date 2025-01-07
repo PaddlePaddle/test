@@ -42,6 +42,9 @@ class PaddleScience_Case_Start(object):
             # logger.info("set org FLAGS_prim_all as {}".format(os.getenv("FLAGS_prim_all")))
             os.environ["ENABLE_FALL_BACK"] = "False"
             os.environ["FLAGS_use_cinn"] = "0"
+            os.environ["FLAGS_prim_all"] = "True"
+            os.environ["FLAGS_prim_vjp_skip_default_ops"] = "False"
+            os.environ["FLAGS_enable_pir_api"] = "True"
             logger.info("set org FLAGS_use_cinn as {}".format(os.getenv("FLAGS_use_cinn")))
             if "cinn" in self.case_name:
                 os.environ["FLAGS_use_cinn"] = "1"

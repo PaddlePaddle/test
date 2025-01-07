@@ -15,6 +15,9 @@ class LayerCase(paddle.nn.Layer):
         """
         forward
         """
+
+        paddle.seed(33)
+        np.random.seed(33)
         out = paddle.addmm(input, x, y,  alpha=-3.3, beta=-0.7, )
         return out
 

@@ -37,8 +37,9 @@ def run_example_code():
     exe = paddle.static.Executor(place)
     # 1. Define the train program
     data = paddle.static.data(name="X", shape=[None, 1, 28, 28], dtype="float32")
-    conv2d = paddle.static.nn.conv2d(input=data, num_filters=6, filter_size=3)
-    bn = paddle.static.nn.batch_norm(input=conv2d, act="relu")
+    Conv = paddle.nn.Conv2D(in_channels=1, out_channels=6, kernel_size=3)
+    conv2d = Conv(data)
+    bn = paddle.nn.BatchNorm2D(6)(conv2d)
     pool = F.max_pool2d(bn, kernel_size=2, stride=2)
     hidden = paddle.static.nn.fc(pool, size=10)
     loss = paddle.mean(hidden)

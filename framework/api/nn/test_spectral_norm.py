@@ -96,8 +96,9 @@ def test_spectralnorm0():
         spectral_norm._parameters["weight_v"].set_value(paddle.to_tensor(weight_v))
         spectral_norm_out = spectral_norm(x)
 
-        static_res = cal_specal_norm_static(x_data, place, w0=weight_u, w1=weight_v)
-        assert np.allclose(static_res, spectral_norm_out.numpy())
+        if not paddle.framework.use_pir_api():
+            static_res = cal_specal_norm_static(x_data, place, w0=weight_u, w1=weight_v)
+            assert np.allclose(static_res, spectral_norm_out.numpy())
         assert np.allclose(spectral_norm_out.numpy(), expect, atol=1e-4)
 
 
@@ -120,8 +121,10 @@ def test_spectralnorm1():
         spectral_norm._parameters["weight_v"].set_value(paddle.to_tensor(weight_v))
         spectral_norm_out = spectral_norm(x)
 
-        static_res = cal_specal_norm_static(x_data, place, w0=weight_u, w1=weight_v)
-        assert np.allclose(static_res, spectral_norm_out.numpy())
+        if not paddle.framework.use_pir_api():
+            # Don't test feed the parameter in pir.
+            static_res = cal_specal_norm_static(x_data, place, w0=weight_u, w1=weight_v)
+            assert np.allclose(static_res, spectral_norm_out.numpy())
         assert np.allclose(spectral_norm_out.numpy(), expect, atol=1e-4)
 
 
@@ -144,8 +147,9 @@ def test_spectralnorm2():
         spectral_norm._parameters["weight_v"].set_value(paddle.to_tensor(weight_v))
         spectral_norm_out = spectral_norm(x)
 
-        static_res = cal_specal_norm_static(x_data, place, w0=weight_u, w1=weight_v)
-        assert np.allclose(static_res, spectral_norm_out.numpy())
+        if not paddle.framework.use_pir_api():
+            static_res = cal_specal_norm_static(x_data, place, w0=weight_u, w1=weight_v)
+            assert np.allclose(static_res, spectral_norm_out.numpy())
         assert np.allclose(spectral_norm_out.numpy(), expect, atol=1e-4)
 
 
@@ -168,8 +172,9 @@ def test_spectralnorm3():
         spectral_norm._parameters["weight_v"].set_value(paddle.to_tensor(weight_v))
         spectral_norm_out = spectral_norm(x)
 
-        static_res = cal_specal_norm_static(x_data, place, w0=weight_u, w1=weight_v)
-        assert np.allclose(static_res, spectral_norm_out.numpy())
+        if not paddle.framework.use_pir_api():
+            static_res = cal_specal_norm_static(x_data, place, w0=weight_u, w1=weight_v)
+            assert np.allclose(static_res, spectral_norm_out.numpy())
         assert np.allclose(spectral_norm_out.numpy(), expect, atol=1e-4)
 
 
@@ -192,8 +197,9 @@ def test_spectralnorm4():
         spectral_norm._parameters["weight_v"].set_value(paddle.to_tensor(weight_v))
         spectral_norm_out = spectral_norm(x)
 
-        static_res = cal_specal_norm_static(x_data, place, w0=weight_u, w1=weight_v)
-        assert np.allclose(static_res, spectral_norm_out.numpy())
+        if not paddle.framework.use_pir_api():
+            static_res = cal_specal_norm_static(x_data, place, w0=weight_u, w1=weight_v)
+            assert np.allclose(static_res, spectral_norm_out.numpy())
         assert np.allclose(spectral_norm_out.numpy(), expect, atol=1e-4)
 
 
@@ -216,8 +222,9 @@ def test_spectralnorm5():
         spectral_norm._parameters["weight_v"].set_value(paddle.to_tensor(weight_v))
         spectral_norm_out = spectral_norm(x)
 
-        static_res = cal_specal_norm_static(x_data, place, w0=weight_u, w1=weight_v, dim=1)
-        assert np.allclose(static_res, spectral_norm_out.numpy())
+        if not paddle.framework.use_pir_api():
+            static_res = cal_specal_norm_static(x_data, place, w0=weight_u, w1=weight_v, dim=1)
+            assert np.allclose(static_res, spectral_norm_out.numpy())
         assert np.allclose(spectral_norm_out.numpy(), expect, atol=1e-4)
 
 
@@ -241,8 +248,9 @@ def test_spectralnorm6():
         spectral_norm._parameters["weight_v"].set_value(paddle.to_tensor(weight_v))
         spectral_norm_out = spectral_norm(x)
 
-        static_res = cal_specal_norm_static(x_data, place, w0=weight_u, w1=weight_v, dim=1, power_iters=10)
-        assert np.allclose(static_res, spectral_norm_out.numpy())
+        if not paddle.framework.use_pir_api():
+            static_res = cal_specal_norm_static(x_data, place, w0=weight_u, w1=weight_v, dim=1, power_iters=10)
+            assert np.allclose(static_res, spectral_norm_out.numpy())
         assert np.allclose(spectral_norm_out.numpy(), expect, atol=1e-4)
 
 
@@ -267,8 +275,9 @@ def test_spectralnorm7():
         spectral_norm._parameters["weight_v"].set_value(paddle.to_tensor(weight_v))
         spectral_norm_out = spectral_norm(x)
 
-        static_res = cal_specal_norm_static(
-            x_data, place, w0=weight_u, w1=weight_v, dim=1, power_iters=10, dtype="float64"
-        )
-        assert np.allclose(static_res, spectral_norm_out.numpy())
+        if not paddle.framework.use_pir_api():
+            static_res = cal_specal_norm_static(
+                x_data, place, w0=weight_u, w1=weight_v, dim=1, power_iters=10, dtype="float64"
+            )
+            assert np.allclose(static_res, spectral_norm_out.numpy())
         assert np.allclose(spectral_norm_out.numpy(), expect, atol=1e-4)

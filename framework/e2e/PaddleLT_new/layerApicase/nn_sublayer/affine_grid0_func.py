@@ -15,6 +15,9 @@ class LayerCase(paddle.nn.Layer):
         """
         forward
         """
+
+        paddle.seed(33)
+        np.random.seed(33)
         out = paddle.nn.functional.affine_grid( theta=paddle.to_tensor(-1 + (2 - -1) * np.random.random([1, 2, 3]).astype('float32'), dtype='float32', stop_gradient=False), out_shape=paddle.to_tensor([1, 2, 3, 3], dtype='int32', stop_gradient=False), align_corners=True, )
         return out
 

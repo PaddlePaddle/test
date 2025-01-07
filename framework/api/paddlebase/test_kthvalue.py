@@ -120,8 +120,9 @@ def test_kthvalue3():
     axis = 2
     keepdims = True
     x = np.arange(1, 25).reshape(3, 2, 4).astype(np.float32)
-    # res = np.array([[[4. ], [8. ]],
-    #                  [[12.], [16.]],
-    #                  [[20.], [24.]]])
-    res = np.array([[4.0, 8.0], [12.0, 16.0], [20.0, 24.0]])
+    if paddle.framework.use_pir_api():
+        res = np.array([[[4.0], [8.0]], [[12.0], [16.0]], [[20.0], [24.0]]])
+    else:
+        # It's a bug for old static program, reslut is same with `keepdims = False` setting.
+        res = np.array([[4.0, 8.0], [12.0, 16.0], [20.0, 24.0]])
     obj1.run(res=res, x=x, k=k, axis=axis, keepdim=keepdims)

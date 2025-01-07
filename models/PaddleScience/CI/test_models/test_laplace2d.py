@@ -20,11 +20,12 @@ import sys
 import subprocess
 
 import pytest
+import allure
 import numpy as np
 
 from tools.log_analysis import get_last_epoch_loss, get_last_eval_metric
 
-
+@allure.title("功能测试")
 def test_laplace2d_exit_code():
     """
     测试函数：测试 laplace2d.py 脚本的退出码是否为0 以保证可视化文件的正常保存
@@ -45,7 +46,7 @@ def test_laplace2d_exit_code():
     # 断言退出码为 0
     assert exit_code == 0
 
-
+@allure.title("训练精度测试")
 def test_laplace2d_loss():
     """
     test loss
@@ -61,7 +62,7 @@ def test_laplace2d_loss():
     # 断言最后一轮迭代的损失值与基准
     assert np.allclose(float(last_loss), base_loss, rtol=1e-6)
 
-
+@allure.title("评估精度测试")
 def test_laplace2d_metric():
     """
     测试函数：测试 laplace2d.py 评估指值
@@ -77,12 +78,12 @@ def test_laplace2d_metric():
     # 断言最后一轮迭代的评估值与基准
     assert np.allclose(float(last_metric), base_metric, rtol=1e-6)
 
+@allure.title("导出功能测试")
 def test_laplace2d_export():
     """
     测试函数：测试 laplace2d.py 脚本的export功能
     """
     py_version = os.getenv("py_version", "3.8")  # Python 版本号，从环境变量中获取，默认值为3.8
-
     # 执行命令行命令
     command = f"python{py_version} ../../examples/laplace/laplace2d.py \
           mode=export"
@@ -94,6 +95,7 @@ def test_laplace2d_export():
     # 断言退出码为 0
     assert exit_code == 0
 
+@allure.title("推理功能测试")
 def test_laplace2d_infer():
     """
     测试函数：测试 laplace2d.py 脚本的infer功能
@@ -113,5 +115,5 @@ def test_laplace2d_infer():
 
 if __name__ == "__main__":
     # 使用 pytest 模块运行测试函数
-    code = pytest.main([sys.argv[0]])
+    code = pytest.main(["--alluredir=./allure", sys.argv[0]])
     sys.exit(code)

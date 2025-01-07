@@ -219,6 +219,7 @@ class LayerCase(paddle.nn.Layer):
         self,
         var_0,    # (shape: [11, 3, 224, 224], dtype: paddle.float32, stop_gradient: True)
     ):
+        paddle.seed(33)
         var_1 = paddle.nn.functional.conv._conv_nd(var_0, self.parameter_34, bias=self.parameter_2, stride=[2, 2], padding=[0, 0], padding_algorithm='EXPLICIT', dilation=[1, 1], groups=1, data_format='NCHW', channel_dim=1, op_type='conv2d', use_cudnn=True)
         var_2 = paddle.nn.functional.activation.relu(var_1)
         var_3 = paddle.nn.functional.pooling.max_pool2d(var_2, kernel_size=3, stride=2, padding=0, return_mask=False, ceil_mode=False, data_format='NCHW', name=None)
@@ -280,7 +281,7 @@ class LayerCase(paddle.nn.Layer):
         var_59 = paddle.nn.functional.conv._conv_nd(var_56, self.parameter_39, bias=self.parameter_1, stride=[1, 1], padding=[1, 1], padding_algorithm='EXPLICIT', dilation=[1, 1], groups=1, data_format='NCHW', channel_dim=1, op_type='conv2d', use_cudnn=True)
         var_60 = paddle.nn.functional.activation.relu(var_59)
         var_61 = paddle.tensor.manipulation.concat([var_58, var_60], axis=1)
-        var_62 = paddle.nn.functional.common.dropout(var_61, p=0.5, axis=None, training=True, mode='downscale_in_infer', name=None)
+        var_62 = paddle.nn.functional.common.dropout(var_61, p=0.5, axis=None, training=self.training, mode='downscale_in_infer', name=None)
         var_63 = paddle.nn.functional.conv._conv_nd(var_62, self.parameter_15, bias=self.parameter_17, stride=[1, 1], padding=[0, 0], padding_algorithm='EXPLICIT', dilation=[1, 1], groups=1, data_format='NCHW', channel_dim=1, op_type='conv2d', use_cudnn=True)
         var_64 = paddle.nn.functional.activation.relu(var_63)
         var_65 = paddle.nn.functional.pooling.adaptive_avg_pool2d(var_64, output_size=1, data_format='NCHW', name=None)
@@ -322,7 +323,7 @@ class TestLayer(unittest.TestCase):
                 net = paddle.jit.to_static(net, build_strategy=build_strategy, full_graph=True)
             else:
                 net = paddle.jit.to_static(net, full_graph=True)
-        paddle.seed(123)
+        paddle.seed(33)
         outs = net(*self.inputs)
         return outs
     def test_ast_prim_cinn(self):

@@ -17,11 +17,11 @@ eval:
       - mode=eval
       - EVAL.pretrained_model_path=https://paddle-org.bj.bcebos.com/paddlescience/models/volterra_ide/volterra_ide_pretrained.pdparams
     result:
-      loss(L2Rel_Validator):
+      L2Rel_Validator/loss:
         base: 0.00023
         threshold: 1
         evaluation: "-"
-      L2Rel.u(L2Rel_Validator):
+      L2Rel_Validator/L2Rel.u:
         base: 0.00023
         threshold: 1
         evaluation: "-"

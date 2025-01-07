@@ -35,7 +35,7 @@ class LayerCase(paddle.nn.Layer):
         var_6 = var_5.reshape([-1, 96, 160, 240])
         var_7 = var_6.flatten(2)
         var_8 = var_7.transpose([0, 2, 1])
-        var_9 = paddle.nn.functional.common.dropout(var_8, p=0.0, axis=None, training=True, mode='upscale_in_train', name=None)
+        var_9 = paddle.nn.functional.common.dropout(var_8, p=0.0, axis=None, training=self.training, mode='upscale_in_train', name=None)
         return var_9
 
 

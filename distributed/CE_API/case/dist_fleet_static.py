@@ -62,6 +62,6 @@ exe.run(paddle.static.default_startup_program())
 step = 5
 train_info = []
 for i in range(step):
-    cost_val = exe.run(program=paddle.static.default_main_program(), feed=gen_data(), fetch_list=[cost.name])
+    cost_val = exe.run(program=paddle.static.default_main_program(), feed=gen_data(), fetch_list=[cost])
     train_info.append(cost_val[0])
 print(train_info)

@@ -1,0 +1,6 @@
+# For PaddleClas
+config_path:paddlex/configs/image_classification/ResNet18.yaml
+config_path:paddlex/configs/image_classification/PP-LCNet_x0_25.yaml
+config_path:paddlex/configs/image_classification/MobileNetV3_small_x0_35.yaml
+# For PaddleTS
+config_path:paddlex/configs/ts_forecast/DLinear.yaml

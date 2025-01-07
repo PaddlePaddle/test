@@ -15,6 +15,9 @@ class LayerCase(paddle.nn.Layer):
         """
         forward
         """
+
+        paddle.seed(33)
+        np.random.seed(33)
         out = paddle.unique_consecutive(x,  return_inverse=False, return_counts=False, axis=-2, )
         return out
 

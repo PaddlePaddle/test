@@ -5,7 +5,7 @@ error_num=$?
 echo "===== api bug num =====" >>  result.txt
 echo ${error_num} >>  result.txt
 
-bash run_doctest.sh 
+python${py_version} run_doctest.py
 exit_code0=$?
 echo "===== doctest bug num =====" >>  result.txt
 echo ${exit_code0} >>  result.txt

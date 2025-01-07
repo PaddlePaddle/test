@@ -44,14 +44,14 @@ class LayerCase(paddle.nn.Layer):
         var_0,    # (shape: [1, 361, 1024], dtype: paddle.float32, stop_gradient: False)
         var_1,    # (shape: [1, 361, 1024], dtype: paddle.float32, stop_gradient: False)
     ):
-        var_2 = paddle.nn.functional.common.dropout(var_0, p=0.1, axis=None, training=True, mode='upscale_in_train', name=None)
+        var_2 = paddle.nn.functional.common.dropout(var_0, p=0.1, axis=None, training=self.training, mode='upscale_in_train', name=None)
         var_3 = var_1.__add__(var_2)
         var_4 = paddle.nn.functional.norm.layer_norm(var_3, normalized_shape=[1024], weight=self.parameter_6, bias=self.parameter_7, epsilon=1e-05)
         var_5 = paddle.nn.functional.common.linear(x=var_4, weight=self.parameter_4, bias=self.parameter_5, name=None)
         var_6 = paddle.nn.functional.activation.gelu(var_5)
-        var_7 = paddle.nn.functional.common.dropout(var_6, p=0.1, axis=None, training=True, mode='upscale_in_train', name=None)
+        var_7 = paddle.nn.functional.common.dropout(var_6, p=0.1, axis=None, training=self.training, mode='upscale_in_train', name=None)
         var_8 = paddle.nn.functional.common.linear(x=var_7, weight=self.parameter_1, bias=self.parameter_0, name=None)
-        var_9 = paddle.nn.functional.common.dropout(var_8, p=0.1, axis=None, training=True, mode='upscale_in_train', name=None)
+        var_9 = paddle.nn.functional.common.dropout(var_8, p=0.1, axis=None, training=self.training, mode='upscale_in_train', name=None)
         var_10 = var_4.__add__(var_9)
         var_11 = paddle.nn.functional.norm.layer_norm(var_10, normalized_shape=[1024], weight=self.parameter_2, bias=self.parameter_3, epsilon=1e-05)
         return var_11

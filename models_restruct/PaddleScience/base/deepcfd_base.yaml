@@ -17,19 +17,19 @@ eval:
       - mode=eval
       - EVAL.pretrained_model_path=https://paddle-org.bj.bcebos.com/paddlescience/models/deepcfd/deepcfd_pretrained.pdparams
     result:
-      MSE.Total_MSE(mse_validator):
+      mse_validator/MSE.Total_MSE:
         base: 1.92947
         threshold: 1
         evaluation: "-"
-      MSE.Ux_MSE(mse_validator):
+      mse_validator/MSE.Ux_MSE:
         base: 0.70684
         threshold: 1
         evaluation: "-"
-      MSE.Uy_MSE(mse_validator):
+      mse_validator/MSE.Uy_MSE:
         base: 0.21337
         threshold: 1
         evaluation: "-"
-      MSE.p_MSE(mse_validator):
+      mse_validator/MSE.p_MSE:
         base: 1.00926
         threshold: 1
         evaluation: "-"
