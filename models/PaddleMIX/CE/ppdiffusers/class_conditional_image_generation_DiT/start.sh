@@ -19,6 +19,7 @@ exit_code=0
 
 # 下载依赖和数据
 # bash prepare_new.sh
+bash prepare.sh
 
 echo "*******class_conditional_image_generation/DiT train begin***********"
 (sh 0_run_train_dit_trainer.sh) 2>&1 | tee ${log_dir}/class_conditional_image_generation_DiT_train.log
