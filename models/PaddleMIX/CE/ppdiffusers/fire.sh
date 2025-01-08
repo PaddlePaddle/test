@@ -31,6 +31,10 @@ for subdir in */; do
       continue
     fi
     
+    if [ "$subdir" == "deleted/" ]; then
+      continue
+    fi
+    
     # 32g显存跑不了
     # if [ "$subdir" == "kandinsky2_2_text_to_image/" ]; then
     #   continue
