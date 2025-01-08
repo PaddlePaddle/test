@@ -3,7 +3,7 @@
 cur_path=$(pwd)
 echo ${cur_path}
 
-work_path=${root_path}/PaddleMIX/ppdiffusers/examples/video_tokenizer/magvit2/
+work_path=${root_path}/PaddleMIX/ppdiffusers/examples/visual_tokenizer/magvit2/
 echo ${work_path}
 
 log_dir=${root_path}/log

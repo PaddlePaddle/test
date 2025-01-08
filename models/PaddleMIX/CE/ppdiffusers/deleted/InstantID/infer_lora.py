@@ -9,7 +9,7 @@ os.environ["USE_PEFT_BACKEND"] = "True"
 from ppdiffusers import LCMScheduler
 
 lora_state_dict = './checkpoints/pytorch_lora_weights.safetensors'
-
+base_model_path = 'wangqixun/YamerMIX_v8'
 pipe.scheduler=LCMScheduler.from_pretrained(base_model_path,
                     subfolder="scheduler",
                     from_hf_hub=True,
