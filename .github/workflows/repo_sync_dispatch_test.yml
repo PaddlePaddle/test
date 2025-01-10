@@ -46,7 +46,7 @@ jobs:
           tar -cf $REPO_NAME.tar ${{ github.event.client_payload.path }}
           python -m pip install bce-python-sdk==0.8.74
           # 获取远端的最新提交时间
-          latest_commit_time_remote=$(curl -s https://paddle-qa.bj.bcebos.com/CodeSync/${{ github.event.client_payload.repository }}/${{ github.event.client_payload.ref }}/latest_commit_time)
+          latest_commit_time_remote=$(curl -s https://paddle-qa.bj.bcebos.com/CodeSync/${{ github.event.client_payload.repository }}/${{ github.event.client_payload.ref }}/latest_commit_time) || latest_commit_time_remote=""
           # 判断 latest_commit_time_remote 是否晚于 current_commit_time 时间
           if [ -n "$latest_commit_time_remote" ] && [ "$latest_commit_time_remote" -lt "$current_commit_time" ]; then
             echo "Executing upload as latest commit time ($latest_commit_time_remote) is earlier than current commit time ($current_commit_time)."
