@@ -3,7 +3,7 @@ case:
     train:
       -
         name: glue
-        path: examples/benchmark/glue
+        path: slm/examples/benchmark/glue
         cmd: python -u run_glue.py
         params:
           - --model_type bert
@@ -24,7 +24,7 @@ case:
             evaluation: "="
       -
         name: intermediate_distill
-        path: model_zoo/tinybert/
+        path: slm/model_zoo/tinybert/
         cmd:  python task_distill.py
         params:
           - --model_type tinybert
@@ -50,7 +50,7 @@ case:
           evaluation: "="
       -
         name: distill_ped
-        path: model_zoo/tinybert/
+        path: slm/model_zoo/tinybert/
         cmd:  python task_distill.py
         params:
           - --model_type tinybert
