@@ -13,10 +13,13 @@ import os
 import json
 import time
 import shutil
+import logging
 import tarfile
 import argparse
 from pathlib import Path
 import requests
+import colorlog
+from prettytable import PrettyTable
 from markdown import markdown
 from bs4 import BeautifulSoup
 from tqdm import tqdm
@@ -28,19 +31,26 @@ from requests.adapters import HTTPAdapter
 def parse_args():
     """Parse the arguments"""
     parser = argparse.ArgumentParser()
+    # For check urls in doc
     parser.add_argument("--check_url", action="store_true", default=False)
+    parser.add_argument("--check_env", action="store_true", default=False)
     parser.add_argument("-d", "--dir", default="./docs", type=str, help="The directory to search for Markdown files.")
     parser.add_argument(
         "-m", "--mode", default="all", choices=["all", "internal", "external"], help="The type of links to check."
     )
+    # For save ci result for json
+    parser.add_argument("--save_result", action="store_true", default=False)
+    parser.add_argument("--successed_cmd", type=str, default="")
+    parser.add_argument("--failed_cmd", type=str, default="")
+    # For download dataset
     parser.add_argument("--download_dataset", action="store_true", default=False)
     parser.add_argument("--module_name", type=str, default=False)
     parser.add_argument("--config_path", type=str, default=False)
     parser.add_argument("--dataset_url", type=str, default=False)
+    # For check paddlex output
     parser.add_argument("--check", action="store_true", default=False)
     parser.add_argument("--output", type=str, default=False)
     parser.add_argument("--check_weights_items", type=str, default=False)
-
     parser.add_argument("--check_train_result_json", action="store_true", default=False)
     parser.add_argument("--check_train_config_content", action="store_true", default=False)
     parser.add_argument("--check_dataset_result", action="store_true", default=False)
@@ -95,35 +105,36 @@ class PostTrainingChecker:
     """Post training checker class"""
 
     def __init__(self, args):
-        self.check_results = []
-        self.check_flag = []
+        self.check_flag = True
 
-    def check_train_json_content(
-        self, output_dir, module_name, check_weights_items, train_result_json, check_train_json_message
-    ):
+    def update_fail_flag(self, msg):
+        """Update check flag"""
+        print(msg)
+        self.check_flag = False
+
+    def check_train_json_content(self, output_dir, module_name, check_weights_items, train_result_json):
         """Check train result json content"""
-        pass_flag = True
         if not os.path.exists(train_result_json):
-            check_train_json_message.append(f"检查失败：{train_result_json} 不存在.")
-            pass_flag = False
+            msg = f"train_result.json文件不存在,检查路径为：{train_result_json}"
+            self.update_fail_flag(msg)
 
         try:
             with open(train_result_json, "r") as file:
                 json_data = json.load(file)
         except json.JSONDecodeError:
-            check_train_json_message.append(f"打开 {train_result_json} 文件失败.")
-            pass_flag = False
+            msg = f"无法解析 {train_result_json} 文件的内容."
+            self.update_fail_flag(msg)
+
+        print("*" * 20, "开始检查train_result.json,文件内容如下：", "*" * 20)
+        print(json_data)
+        print("*" * 60)
 
         if not json_data.get("done_flag", False):
-            check_train_json_message.append("检查失败：训练未完成")
-            pass_flag = False
-            err_type = json_data.get("err_type", None)
-            err_msg = json_data.get("err_msg", None)
-            if err_type and err_msg:
-                check_train_json_message.append(f"报错类型：{err_type}")
-                check_train_json_message.append(f"报错信息：{err_msg}")
-            else:
-                check_train_json_message.append("检查失败：未正确返回报错信息")
+            msg = "train_result.json文件中done_flag字段值为false,\
+                说明训练没有成功,如果dict中有'err_type'和'err_msg'字段,\
+                则可以通过查看err_type和err_msg来判断具体原因。\
+                如果不是这种情况，建议检查训练是否被异常终止，或代码退出时未正确写入done_flag"
+            self.update_fail_flag(msg)
         else:
             if "ts" in module_name:
                 inspection_item = [
@@ -136,28 +147,48 @@ class PostTrainingChecker:
                     if file_key == "score":
                         score = last_data.get(file_key)
                         if score == "":
-                            check_train_json_message.append(f"检查失败：{file_key} 不存在")
-                            pass_flag = False
+                            msg = "train_result.json文件中score字段结果为空"
+                            self.update_fail_flag(msg)
                     else:
-                        file_path = os.path.join(output_dir, last_data.get(file_key))
+                        try:
+                            file_path = os.path.join(output_dir, last_data.get(file_key))
+                        except:
+                            file_path = ""
+                            self.update_fail_flag(msg)
                         if last_data.get(file_key) == "" or not os.path.exists(file_path):
-                            check_train_json_message.append(f"检查失败：在best中，{file_key} 对应的文件 {file_path} 不存在或为空")
-                            pass_flag = False
+                            msg = f"检查失败：在训练结果中，{file_key} 对应的文件 {last_data.get(file_key)} 不存在或为空,\
+                                对于该模型CI强制检查的key包括：{inspection_item}"
+                            self.update_fail_flag(msg)
             else:
                 config_path = json_data.get("config")
                 visualdl_log_path = json_data.get("visualdl_log")
                 label_dict_path = json_data.get("label_dict")
-                if not os.path.exists(os.path.join(output_dir, config_path)):
-                    check_train_json_message.append(f"检查失败：配置文件 {config_path} 不存在")
-                    pass_flag = False
+                try:
+                    file_path = os.path.join(output_dir, config_path)
+                except:
+                    file_path = ""
+                if not os.path.exists(file_path):
+                    msg = f"根据json中的config字段信息，未找到配置文件，请确认配置文件是否存在，配置文件路径为：{os.path.join(output_dir, config_path)}"
+                    self.update_fail_flag(msg)
                 if not ("text" in module_name or "table" in module_name or "formula" in module_name):
-                    if not os.path.exists(os.path.join(output_dir, visualdl_log_path)):
-                        check_train_json_message.append(f"检查失败：VisualDL日志文件 {visualdl_log_path} 不存在")
-                        pass_flag = False
-
-                if not os.path.exists(os.path.join(output_dir, label_dict_path)):
-                    check_train_json_message.append(f"检查失败：标签映射文件 {label_dict_path} 不存在")
-                    pass_flag = False
+                    try:
+                        file_path = os.path.join(output_dir, visualdl_log_path)
+                    except:
+                        file_path = ""
+                    if not os.path.exists(file_path):
+                        msg = f"根据json中的visualdl_log字段信息，\
+                            未找到VisualDL日志文件，请确认VisualDL日志文件是否存在，\
+                            VisualDL日志文件路径为:{output_dir}中的{visualdl_log_path}"
+                        self.update_fail_flag(msg)
+                try:
+                    file_path = os.path.join(output_dir, label_dict_path)
+                except:
+                    file_path = ""
+                if not os.path.exists(file_path):
+                    msg = f"根据json中的label_dict字段信息，未找到标签映射文件，\
+                        请确认标签映射文件是否存在，标签映射文件路径为:\
+                        {output_dir}中的{label_dict_path}"
+                    self.update_fail_flag(msg)
 
                 inspection_item = check_weights_items.split(",")[1:]
                 last_k = check_weights_items.split(",")[0]
@@ -166,72 +197,72 @@ class PostTrainingChecker:
                     last_data = json_data["models"].get(last_key)
 
                     for file_key in inspection_item:
-                        file_path = os.path.join(output_dir, last_data.get(file_key))
+                        try:
+                            file_path = os.path.join(output_dir, last_data.get(file_key))
+                        except:
+                            file_path = ""
                         if last_data.get(file_key) == "" or not os.path.exists(file_path):
-                            check_train_json_message.append(f"检查失败：在 {last_key} 中，{file_key} 对应的文件 {file_path} 不存在或为空")
-                            pass_flag = False
+                            msg = f"检查失败：在第{i}轮的训练结果中，\
+                                {file_key} 对应的文件 {last_data.get(file_key)} 不存在或为空,\
+                                对于该模型CI强制检查的key包括：{inspection_item}"
+                            self.update_fail_flag(msg)
 
                 best_key = "best"
                 best_data = json_data["models"].get(best_key)
                 if best_data.get("score") == "":
-                    check_train_json_message.append(f"检查失败：{best_key} 中，score 不存在或为空")
-                    pass_flag = False
+                    msg = "train_result.json文件中score字段结果为空"
+                    self.update_fail_flag(msg)
                 for file_key in inspection_item:
-                    file_path = os.path.join(output_dir, best_data.get(file_key))
+                    try:
+                        file_path = os.path.join(output_dir, best_data.get(file_key))
+                    except:
+                        file_path = ""
                     if best_data.get(file_key) == "" or not os.path.exists(file_path):
-                        check_train_json_message.append(f"检查失败：在 {best_key} 中，{file_key} 对应的文件 {file_path} 不存在或为空")
-                        pass_flag = False
-        return pass_flag, check_train_json_message
+                        msg = f"检查失败：在最佳权重结果中，{file_key} 对应的文件 {file_path} 不存在或为空,对于该模型CI强制检查的key包括：{inspection_item}"
+                        self.update_fail_flag(msg)
+        return self.check_flag
 
-    def check_dataset_json_content(self, output_dir, module_name, dataset_result_json, check_dataset_json_message):
+    def check_dataset_json_content(self, output_dir, module_name, dataset_result_json):
         """Check dataset result json content"""
-        pass_flag = True
         if not os.path.exists(dataset_result_json):
-            check_dataset_json_message.append(f"{dataset_result_json} 不存在.")
+            msg = f"check_dataset_result.json文件不存在,检查路径为：{dataset_result_json}"
+            self.update_fail_flag(msg)
 
         try:
             with open(dataset_result_json, "r") as file:
                 json_data = json.load(file)
         except json.JSONDecodeError:
-            check_dataset_json_message.append(f"检查失败：打开 {dataset_result_json} 文件失败.")
-            pass_flag = False
+            msg = f"无法解析 {dataset_result_json} 文件的内容."
+            self.update_fail_flag(msg)
+
+        print("*" * 20, "开始检查check_dataset_result.json,文件内容如下：", "*" * 20)
+        print(json_data)
+        print("*" * 60)
 
         if not json_data.get("check_pass", False):
-            check_dataset_json_message.append("检查失败：数据校验未通过")
-            pass_flag = False
-            err_type = json_data.get("err_type", None)
-            err_msg = json_data.get("err_msg", None)
-            if err_type and err_msg:
-                check_dataset_json_message.append(f"报错类型：{err_type}")
-                check_dataset_json_message.append(f"报错信息：{err_msg}")
-            else:
-                check_dataset_json_message.append("检查失败：未正确返回报错信息")
-        # 检查config和visualdl_log字段对应的文件是否存在
-        dataset_path = json_data.get("dataset_path")
-        # if not os.path.exists(os.path.join(output_dir, dataset_path)):
-        if not os.path.exists(dataset_path):
-            check_dataset_json_message.append(f"检查失败：数据集路径 {dataset_path} 不存在")
-            pass_flag = False
+            msg = "检查失败：数据校验未通过,如果dict中有'err_type'和'err_msg'字段,则可以通过查看err_type和err_msg来判断具体原因。如果不是这种情况，建议检查数据集是否符合规范"
+            self.update_fail_flag(msg)
+
         if "ts" in module_name:
             show_type = json_data.get("show_type")
             if show_type not in ["csv"]:
-                check_dataset_json_message.append(f"检查失败：{show_type} 必须为'csv'")
-                pass_flag = False
+                msg = f"对于TS任务，show_type 必须为'csv'，但是检测到的是 {show_type}"
+                self.update_fail_flag(msg)
             for tag in ["train", "val", "test"]:
                 samples_key = f"{tag}_table"
                 samples_list = json_data["attributes"].get(samples_key)
                 if tag == "test" and not samples_list:
                     continue
                 if len(samples_list) == 0:
-                    check_dataset_json_message.append(f"检查失败：在 {samples_key} 中，值为空")
-                    pass_flag = False
+                    msg = f"检查失败：在csv表格中，{samples_key} 列为空"
+                    self.update_fail_flag(msg)
         else:
             show_type = json_data.get("show_type")
             if show_type not in ["image", "txt", "csv", "video"]:
-                check_dataset_json_message.append(f"检查失败：{show_type} 必须为'image', 'txt', 'csv','video'其中一个")
-                pass_flag = False
+                msg = f"对于非TS任务，show_type 必须为'image', 'txt', 'csv','video'其中一个，但是检测到的是 {show_type}"
+                self.update_fail_flag(msg)
 
-            if module_name == "general_recognition":
+            if module_name in ["general_recognition", "image_feature"]:
                 tag_list = ["train", "gallery", "query"]
             else:
                 tag_list = ["train", "val"]
@@ -239,57 +270,59 @@ class PostTrainingChecker:
             for tag in tag_list:
                 samples_key = f"{tag}_sample_paths"
                 samples_path = json_data["attributes"].get(samples_key)
+                if samples_path is None:
+                    msg = f"检查失败：未能获取到{samples_key}字段"
+                    self.update_fail_flag(msg)
+                    continue
                 for sample_path in samples_path:
                     sample_path = os.path.abspath(os.path.join(output_dir, sample_path))
                     if not samples_path or not os.path.exists(sample_path):
-                        check_dataset_json_message.append(f"检查失败：在 {samples_key} 中，{sample_path} 对应的文件不存在或为空")
-                        pass_flag = False
+                        msg = f"检查失败：{samples_key}字段对应的文件不存在或为空，文件路径为：{sample_path}"
+                        self.update_fail_flag(msg)
             if not (
                 "text" in module_name
                 or "table" in module_name
                 or "formula" in module_name
-                or module_name == "general_recognition"
-                or module_name == "face_feature"
+                or module_name in ["image_feature", "face_feature", "general_recognition"]
             ):
                 try:
                     num_class = int(json_data["attributes"].get("num_classes"))
                 except ValueError:
-                    check_dataset_json_message.append(f"检查失败：{num_class} 为空或不为整数")
-                    pass_flag = False
-            if "table" not in module_name:
+                    msg = f"检查失败：{num_class} 为空或不为整数"
+                    self.update_fail_flag(msg)
+            if "table" not in module_name and module_name != "image_feature" and module_name != "face_feature":
                 analyse_path = json_data["analysis"].get("histogram")
                 if not analyse_path or not os.path.exists(os.path.join(output_dir, analyse_path)):
-                    check_dataset_json_message.append(f"检查失败：{analyse_path} 数据分析文件不存在或为空")
-                    pass_flag = False
+                    msg = f"检查失败：{analyse_path} 数据分析文件不存在或为空"
+                    self.update_fail_flag(msg)
 
-        return pass_flag, check_dataset_json_message
+        return self.check_flag
 
-    def check_eval_json_content(self, module_name, eval_result_json, check_eval_json_message):
+    def check_eval_json_content(self, module_name, eval_result_json):
         """Check eval result json content"""
-        pass_flag = True
         if not os.path.exists(eval_result_json):
-            check_eval_json_message.append(f"检查失败：{eval_result_json} 不存在.")
-            pass_flag = False
+            msg = "eval_result.json文件不存在"
+            self.update_fail_flag(msg)
 
         try:
             with open(eval_result_json, "r") as file:
                 json_data = json.load(file)
         except json.JSONDecodeError:
-            check_eval_json_message.append(f"打开 {eval_result_json} 文件失败.")
-            pass_flag = False
+            msg = f"无法解析 {eval_result_json} 文件的内容."
+            self.update_fail_flag(msg)
+
+        print("*" * 20, "开始检查eval_result.json,文件内容如下：", "*" * 20)
+        print(json_data)
+        print("*" * 60)
 
         if not json_data.get("done_flag", False):
-            check_eval_json_message.append("检查失败：评估未完成")
-            pass_flag = False
-            err_type = json_data.get("err_type", None)
-            err_msg = json_data.get("err_msg", None)
-            if err_type and err_msg:
-                check_eval_json_message.append(f"报错类型：{err_type}")
-                check_eval_json_message.append(f"报错信息：{err_msg}")
-            else:
-                check_eval_json_message.append("检查失败：未正确返回报错信息")
+            msg = "eval_result.json文件中done_flag字段值为false,\
+                如果dict中有'err_type'和'err_msg'字段,\
+                则可以通过查看err_type和err_msg来判断具体原因。\
+                如果不是这种情况，建议检查评估产出是否正确"
+            self.update_fail_flag(msg)
 
-        return pass_flag, check_eval_json_message
+        return self.check_flag
 
     def check_split_dataset(self, output_dir, args_dict, check_splitdata_message):
         """Check the split of a dataset"""
@@ -357,26 +390,17 @@ class PostTrainingChecker:
         """Run all checks on the specified arguments"""
         output_dir = args.output
         module_name = args.module_name
+        print("=" * 20, "开始执行产出结果检查", "=" * 20)
         if args.check_dataset_result:
             # 检查 check_result.json 内容
             dataset_result_json = os.path.join(output_dir, "check_dataset_result.json")
-            check_dataset_json_message = []
-            check_dataset_json_falg, check_dataset_json_message = self.check_dataset_json_content(
-                output_dir, module_name, dataset_result_json, check_dataset_json_message
-            )
-            self.check_results = self.check_results + check_dataset_json_message
-            self.check_flag.append(check_dataset_json_falg)
+            self.check_dataset_json_content(output_dir, module_name, dataset_result_json)
 
         if args.check_train_result_json:
             # 检查 train_result.json 内容
             train_result_json = os.path.join(output_dir, "train_result.json")
             check_weights_items = args.check_weights_items
-            check_train_json_message = []
-            check_train_json_flag, check_train_json_message = self.check_train_json_content(
-                output_dir, module_name, check_weights_items, train_result_json, check_train_json_message
-            )
-            self.check_results = self.check_results + check_train_json_message
-            self.check_flag.append(check_train_json_flag)
+            self.check_train_json_content(output_dir, module_name, check_weights_items, train_result_json)
 
         if args.check_split_dataset:
             # 检查数据划分是否正确
@@ -392,14 +416,13 @@ class PostTrainingChecker:
         if args.check_eval_result_json:
             # 检查 eval_result.json 内容
             eval_result_json = os.path.join(output_dir, "evaluate_result.json")
-            check_eval_json_message = []
-            check_eval_json_flag, check_eval_json_message = self.check_eval_json_content(
-                module_name, eval_result_json, check_eval_json_message
-            )
-            self.check_results = self.check_results + check_eval_json_message
-            self.check_flag.append(check_eval_json_flag)
+            self.check_eval_json_content(module_name, eval_result_json)
 
-        assert False not in self.check_flag, print("校验检查失败，请查看产出", " ".join(str(item) for item in self.check_results))
+        if self.check_flag:
+            print("=" * 20, "产出结果检查通过", "=" * 20)
+        else:
+            print("=" * 20, "产出结果检查失败,请根据以上错误信息进行排查修复", "=" * 20)
+            exit(1)
 
 
 ################################### 检查文档超链接 ###############################################
@@ -507,8 +530,165 @@ def check_documentation_url(args):
         pass
 
 
+def get_option(cmd):
+    "get_option"
+    if "--check" in cmd:
+        cmd_list = cmd.split(" ")
+        check_option = cmd_list[5]
+        model_name = cmd_list[7].split("/")[-1]
+        if check_option == "--check_train_result_json":
+            option = f"{model_name}_check_train_result_json"
+        elif check_option == "--check_eval_result_json":
+            option = f"{model_name}_check_eval_result_json"
+        elif check_option == "--check_dataset_result":
+            option = f"{model_name}_check_dataset_result"
+        logfile = cmd_list[-1]
+        return option, logfile
+    elif "--pipeline" in cmd:
+        cmd_list = cmd.split(" ")
+        pipeline_name = cmd_list[4]
+        logfile = cmd_list[-1]
+        return pipeline_name, logfile
+    elif "main.py" in cmd:
+        cmd_list = cmd.split(" ")
+        model_name = cmd_list[5].split("/")[-1].split(".yaml")[0]
+        option = cmd_list[7].split("=")[-1]
+        if option == "train":
+            logfile = cmd_list[-1].split("=")[-1]
+            logfile += "train.log"
+        else:
+            logfile = None
+        option = f"{model_name}_{option}"
+        return option, logfile
+    else:
+        return None, None
+
+
+def save_result_json(args):
+    "save_result_json"
+    with open(args.successed_cmd, "r") as f:
+        successed_cmd_list = f.readlines()
+    with open(args.failed_cmd, "r") as f:
+        failed_cmd_list = f.readlines()
+    result = {"successed": [], "failed": []}
+    successed_num = len(successed_cmd_list) - 1
+    failed_num = len(failed_cmd_list) - 1
+    result["successed_num"] = successed_num
+    result["failed_num"] = failed_num
+    for i, cmd in enumerate(successed_cmd_list[1:]):
+        check_option, logfile = get_option(cmd.strip())
+        if check_option:
+            result["successed"].append(check_option)
+    for i, cmd in enumerate(failed_cmd_list[1:]):
+        check_option, logfile = get_option(cmd.strip())
+        if check_option:
+            try:
+                with open(logfile, "r") as f:
+                    log_info = f.readlines()
+            except:
+                log_info = "未成功提取log，请在全局log中自行查找"
+            result["failed"].append({check_option: log_info})
+    with open("ci/results.json", "w") as f:
+        json.dump(result, f, ensure_ascii=False)
+    # print(args.failed_cmd)
+
+
+def get_logger(level=logging.INFO):
+    """
+    获取带有颜色的logger
+    """
+    # 创建logger对象
+    logger = logging.getLogger()
+    logger.setLevel(level)
+    # 创建控制台日志处理器
+    console_handler = logging.StreamHandler()
+    console_handler.setLevel(level)
+    # 定义颜色输出格式
+    color_formatter = colorlog.ColoredFormatter(
+        "%(log_color)s%(message)s",
+        log_colors={
+            "DEBUG": "cyan",
+            "INFO": "green",
+            "WARNING": "yellow",
+            "ERROR": "red",
+            "CRITICAL": "red,bg_white",
+        },
+    )
+    # 将颜色输出格式添加到控制台日志处理器
+    console_handler.setFormatter(color_formatter)
+    # 移除默认的handler
+    for handler in logger.handlers:
+        logger.removeHandler(handler)
+    # 将控制台日志处理器添加到logger对象
+    logger.addHandler(console_handler)
+    return logger
+
+
+def format_commit(commit):
+    """
+    格式化commit信息
+    """
+    commit = "-".join(commit[i : i + 2] for i in range(0, len(commit), 2))
+    return commit
+
+
+def check_environment():
+    """检查环境是否满足要求"""
+    table = PrettyTable(["Environment", "Value", "Description"])
+    device_type = os.environ.get("DEVICE_TYPE", None)
+    device_ids = os.environ.get("DEVICE_ID", None)
+    msg = "=" * 20 + "以下为当前环境变量配置信息" + "=" * 20
+    logger.info(msg)
+    if not device_type and not device_ids:
+        logger.warning("未设置设备类型和编号，使用配置文件中的默认值")
+
+    table.add_row(["Device", os.environ.get("DEVICE_TYPE", "GPU"), "算力卡类型，例如GPU、NPU、XPU等，默认为GPU"])
+    table.add_row(["Device ID", os.environ.get("DEVICE_ID", "0,1,2,3"), "使用的设备id列表，多个用逗号分隔"])
+    table.add_row(["MEM_SIZE", os.environ.get("MEM_SIZE", "32"), "显存大小，单位GB"])
+    table.add_row(["TEST_RANGE", os.environ.get("TEST_RANGE", ""), "测试范围，默认为空，设置示例：export TEST_RANGE='inference'"])
+    table.add_row(["MD_NUM", os.environ.get("MD_NUM", ""), "PR中MD文件改动数量，用于判断是否需要进行文档超链接检测，默认为空，设置示例：export MD_NUM=10"])
+    table.add_row(
+        ["WITHOUT_MD_NUM", os.environ.get("WITHOUT_MD_NUM", ""), "PR中除去MD文件改动数量，默认为空，设置示例：export WITHOUT_MD_NUM=10"]
+    )
+    logger.info(table)
+    msg = "=" * 20 + "以下为Paddle相关版本信息" + "=" * 20
+    logger.info(msg)
+    logger.info("注：为了能够显示commit信息，在每个数字中增加了一个“-”连字符，实际使用请删除连字符")
+    table = PrettyTable(["Repository", "Branch", "Commit"])
+    try:
+        import paddle
+
+        commit = paddle.__git_commit__
+        table.add_row(["PaddlePaddle", paddle.__version__, format_commit(commit)])
+    except ImportError:
+        logger.error("Paddle is not installed,please install it first.")
+        exit(1)
+    try:
+        branch = os.popen("git rev-parse --abbrev-ref HEAD").read().strip()
+        commit = os.popen("git rev-parse HEAD").read().strip()
+        table.add_row(["PaddleX", branch, format_commit(commit)])
+    except ImportError:
+        logger.error("PaddleX is not installed,please install it first.")
+        exit(1)
+    repos = os.listdir("paddlex/repo_manager/repos")
+    for repo in repos:
+        if repo == ".gitkeep":
+            continue
+        try:
+            branch = os.popen(f"cd paddlex/repo_manager/repos/{repo} && git rev-parse --abbrev-ref HEAD").read().strip()
+            commit = os.popen(f"cd paddlex/repo_manager/repos/{repo} &&git rev-parse HEAD").read().strip()
+            table.add_row([repo, branch, format_commit(commit)])
+        except:
+            pass
+    _logger = get_logger()
+    _logger.info(table)
+    msg = "=" * 20 + "环境检测完成" + "=" * 20
+    logger.info(msg)
+
+
 if __name__ == "__main__":
     check_items, args = parse_args()
+    logger = get_logger()
     if args.check:
         checker = PostTrainingChecker(args)
         checker.run_checks(args)
@@ -516,3 +696,7 @@ if __name__ == "__main__":
         download_dataset(args)
     elif args.check_url:
         check_documentation_url(args)
+    elif args.save_result:
+        save_result_json(args)
+    elif args.check_env:
+        check_environment()
