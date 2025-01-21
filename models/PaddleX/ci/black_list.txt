@@ -1,9 +1,60 @@
 ################################### All ##################################
 ################################## Train #################################
+Train:PP-OCRv3_mobile_rec
+Train:en_PP-OCRv3_mobile_rec
+Train:korean_PP-OCRv3_mobile_rec
+Train:japan_PP-OCRv3_mobile_rec
+Train:chinese_cht_PP-OCRv3_mobile_rec
+Train:te_PP-OCRv3_mobile_rec
+Train:ka_PP-OCRv3_mobile_rec
+Train:ta_PP-OCRv3_mobile_rec
+Train:latin_PP-OCRv3_mobile_rec
+Train:arabic_PP-OCRv3_mobile_rec
+Train:cyrillic_PP-OCRv3_mobile_rec
+Train:devanagari_PP-OCRv3_mobile_rec
+Train:UniMERNet
+Train:PP-FormulaNet-S
+Train:PP-FormulaNet-L
+Train:SLANeXt_wired
 ################################ Evaluate ################################
+Evaluate:PP-OCRv3_mobile_rec
+Evaluate:en_PP-OCRv3_mobile_rec
+Evaluate:korean_PP-OCRv3_mobile_rec
+Evaluate:japan_PP-OCRv3_mobile_rec
+Evaluate:chinese_cht_PP-OCRv3_mobile_rec
+Evaluate:te_PP-OCRv3_mobile_rec
+Evaluate:ka_PP-OCRv3_mobile_rec
+Evaluate:ta_PP-OCRv3_mobile_rec
+Evaluate:latin_PP-OCRv3_mobile_rec
+Evaluate:arabic_PP-OCRv3_mobile_rec
+Evaluate:cyrillic_PP-OCRv3_mobile_rec
+Evaluate:devanagari_PP-OCRv3_mobile_rec
+Evaluate:UniMERNet
+Evaluate:PP-FormulaNet-S
+Evaluate:PP-FormulaNet-L
+Evaluate:SLANeXt_wired
 ################################# Predict ################################
+Predict:PP-OCRv3_mobile_rec
+Predict:en_PP-OCRv3_mobile_rec
+Predict:korean_PP-OCRv3_mobile_rec
+Predict:japan_PP-OCRv3_mobile_rec
+Predict:chinese_cht_PP-OCRv3_mobile_rec
+Predict:te_PP-OCRv3_mobile_rec
+Predict:ka_PP-OCRv3_mobile_rec
+Predict:ta_PP-OCRv3_mobile_rec
+Predict:latin_PP-OCRv3_mobile_rec
+Predict:arabic_PP-OCRv3_mobile_rec
+Predict:cyrillic_PP-OCRv3_mobile_rec
+Predict:devanagari_PP-OCRv3_mobile_rec
+Predict:UniMERNet
+Predict:PP-FormulaNet-S
+Predict:PP-FormulaNet-L
 Predict:TimesNet_ad
+Predict:SLANeXt_wired
 ################################## Export ################################
+Export:UniMERNet
+Export:PP-FormulaNet-S
+Export:PP-FormulaNet-L
 ################################# Pipeline ###############################
 Pipeline:PP-ChatOCRv3-doc
 Pipeline:PP-ShiTuV2
