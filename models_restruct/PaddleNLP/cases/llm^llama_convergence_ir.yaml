@@ -3,11 +3,11 @@ case:
     train:
       -
         name: prepare_datasets_seqlen128
-        path: llm/llama
+        path: llm/
         cmd: mkdir data && cd data && wget https://bj.bcebos.com/paddlenlp/models/transformers/llama/data/llama_openwebtext_100k_ids.npy && wget https://bj.bcebos.com/paddlenlp/models/transformers/llama/data/llama_openwebtext_100k_idx.npz
       -
         name: baseline
-        path: llm/llama
+        path: llm/
         cmd:  python run_pretrain.py
         params:
           - --model_type "llama"
@@ -44,7 +44,7 @@ case:
           - --use_fused_rms_norm False
       -
         name: ir
-        path: llm/llama
+        path: llm/
         cmd: python run_pretrain.py
         params:
           - --model_type "llama"
