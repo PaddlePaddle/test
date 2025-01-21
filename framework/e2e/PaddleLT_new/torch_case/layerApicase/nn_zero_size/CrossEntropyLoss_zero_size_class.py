@@ -37,8 +37,8 @@ def create_numpy_inputs():
     """
     numpy array
     """
-    inputs = ((
-        -1 + 2 * np.random.random([1, 0])).astype('float32'),
+    inputs = (
+        (-1 + 2 * np.random.random([1, 0])).astype('float32'),
         np.array([[0.]]).astype('float32'),
     )
     return inputs

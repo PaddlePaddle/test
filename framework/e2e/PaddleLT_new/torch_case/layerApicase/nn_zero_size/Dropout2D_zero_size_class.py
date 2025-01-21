@@ -26,7 +26,7 @@ def create_tensor_inputs():
     """
     PyTorch tensor
     """
-    inputs = (torch.tensor((-1 + 2 * np.random.random([3, 0, 1, 1])).astype(np.float32), dtype=torch.float32, requires_grad=True), )
+    inputs = (torch.tensor((-1 + 2 * np.random.random([12, 0, 10, 10])).astype(np.float32), dtype=torch.float32, requires_grad=True), )
     return inputs
 
 
@@ -34,5 +34,5 @@ def create_numpy_inputs():
     """
     numpy array
     """
-    inputs = ((-1 + 2 * np.random.random([3, 0, 1, 1])).astype('float32'),)
+    inputs = ((-1 + 2 * np.random.random([12, 0, 10, 10])).astype('float32'),)
     return inputs

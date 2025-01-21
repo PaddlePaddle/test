@@ -16,7 +16,7 @@ class LayerCase(paddle.nn.Layer):
             stride=1,
             padding=0,
             output_padding=0,
-            groups=1,
+            # groups=1,
             dilation=1,
         )
 
