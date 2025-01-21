@@ -136,6 +136,7 @@ def create_tensor_inputs():
 
 
 def create_numpy_inputs():
+    np.random.seed(0)
     inputs = (
         np.random.random(size=[1, 4725]).astype('bool'),
         np.random.random(size=[1, 4725, 4]).astype('float32'),
