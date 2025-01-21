@@ -3,7 +3,7 @@ case:
     train:
       -
         name: multi
-        path: examples/text_summarization/bart
+        path: legacy/examples/text_summarization/bart
         cmd: python -m paddle.distributed.launch run_summarization.py
         params:
           - --dataset_name=cnn_dailymail
@@ -20,7 +20,7 @@ case:
     predict:
       -
         name: faster
-        path: examples/text_summarization/bart
+        path: legacy/examples/text_summarization/bart
         cmd: python generate.py
         params:
           - --dataset_name=cnn_dailymail

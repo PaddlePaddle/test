@@ -3,11 +3,11 @@ case:
     train:
       -
         name: prepare
-        path: examples/few_shot/RGL
+        path: legacy/examples/few_shot/RGL
         cmd: wget https://paddlenlp.bj.bcebos.com/datasets/k-shot-glue/rgl-k-shot.zip && unzip rgl-k-shot.zip
       -
         name: single
-        path: examples/few_shot/RGL
+        path: legacy/examples/few_shot/RGL
         cmd: python rgl.py
         params:
           - --dataset SST-2
@@ -31,11 +31,11 @@ case:
     train:
       -
         name: prepare
-        path: examples/few_shot/RGL
+        path: legacy/examples/few_shot/RGL
         cmd: wget https://paddlenlp.bj.bcebos.com/datasets/k-shot-glue/rgl-k-shot.zip && unzip rgl-k-shot.zip
       -
         name: train
-        path: examples/few_shot/RGL
+        path: legacy/examples/few_shot/RGL
         cmd: python rgl.py
         params:
           - --dataset SST-2
@@ -59,11 +59,11 @@ case:
     train:
       -
         name: prepare
-        path: examples/few_shot/RGL
+        path: legacy/examples/few_shot/RGL
         cmd: wget https://paddlenlp.bj.bcebos.com/datasets/k-shot-glue/rgl-k-shot.zip && unzip rgl-k-shot.zip
       -
         name: train
-        path: examples/few_shot/RGL
+        path: legacy/examples/few_shot/RGL
         cmd: python rgl.py
         params:
           - --dataset SST-2
@@ -88,11 +88,11 @@ case:
     train:
       -
         name: prepare
-        path: examples/few_shot/RGL
+        path: legacy/examples/few_shot/RGL
         cmd: wget https://paddlenlp.bj.bcebos.com/datasets/k-shot-glue/rgl-k-shot.zip && unzip rgl-k-shot.zip
       -
         name: single
-        path: examples/few_shot/RGL
+        path: legacy/examples/few_shot/RGL
         cmd: python rgl.py
         params:
           - --dataset SST-2

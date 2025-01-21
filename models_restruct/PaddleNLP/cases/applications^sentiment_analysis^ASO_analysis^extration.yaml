@@ -3,7 +3,7 @@ case:
     train:
       -
         name: single
-        path: applications/sentiment_analysis/ASO_analysis/extraction
+        path: legacy/applications/sentiment_analysis/ASO_analysis/extraction
         cmd: python train.py
         params:
           - --train_path "../data/ext_data/train.txt"
@@ -24,7 +24,7 @@ case:
     eval:
       -
         name: eval
-        path: applications/sentiment_analysis/ASO_analysis/extraction
+        path: legacy/applications/sentiment_analysis/ASO_analysis/extraction
         cmd: bash run_evaluate.sh
     infer: skipped
     export: skipped

@@ -3,7 +3,7 @@ case:
     train:
       -
         name: demo
-        path: examples/text_generation/ctrl
+        path: legacy/examples/text_generation/ctrl
         cmd: python demo.py
     eval: skipped
     infer: skipped

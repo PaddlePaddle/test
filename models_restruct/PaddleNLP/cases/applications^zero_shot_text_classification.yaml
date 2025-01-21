@@ -3,11 +3,11 @@ case:
     train:
       -
         name: prepare
-        path: applications/zero_shot_text_classification
+        path: legacy/applications/zero_shot_text_classification
         cmd: wget https://bj.bcebos.com/paddlenlp/datasets/utc-medical.tar.gz  && tar -xvf utc-medical.tar.gz && mv utc-medical data
       -
         name: label_studio
-        path: applications/zero_shot_text_classification
+        path: legacy/applications/zero_shot_text_classification
         cmd: python label_studio.py
         params:
           - --label_studio_file ./data/label_studio.json
@@ -16,7 +16,7 @@ case:
           - --options ./data/label.txt
       -
         name: fintune
-        path: applications/zero_shot_text_classification
+        path: legacy/applications/zero_shot_text_classification
         cmd: python -u -m paddle.distributed.launch --gpus "0,1" run_train.py
         params:
           - --device gpu
@@ -50,7 +50,7 @@ case:
     eval:
       -
         name: evaluate
-        path: applications/zero_shot_text_classification
+        path: legacy/applications/zero_shot_text_classification
         cmd: python run_eval.py
         params:
           - --model_path ./checkpoint/model_best
@@ -71,11 +71,11 @@ case:
     train:
       -
         name: prepare
-        path: applications/zero_shot_text_classification
+        path: legacy/applications/zero_shot_text_classification
         cmd: wget https://bj.bcebos.com/paddlenlp/datasets/utc-medical.tar.gz  && tar -xvf utc-medical.tar.gz && ren utc-medical data
       -
         name: label_studio
-        path: applications/zero_shot_text_classification
+        path: legacy/applications/zero_shot_text_classification
         cmd: python label_studio.py
         params:
           - --label_studio_file ./data/label_studio.json
@@ -84,7 +84,7 @@ case:
           - --options ./data/label.txt
       -
         name: fintune
-        path: applications/zero_shot_text_classification
+        path: legacy/applications/zero_shot_text_classification
         cmd: python -u -m paddle.distributed.launch run_train.py
         params:
           - --device gpu
@@ -118,7 +118,7 @@ case:
     eval:
       -
         name: evaluate
-        path: applications/zero_shot_text_classification
+        path: legacy/applications/zero_shot_text_classification
         cmd: python run_eval.py
         params:
           - --model_path ./checkpoint/model_best

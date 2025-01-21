@@ -3,15 +3,15 @@ case:
     train:
       -
         name: clone_kytea
-        path: examples/language_model/xlm
+        path: legacy/examples/language_model/xlm
         cmd: git clone https://github.com/neubig/kytea.git
       -
         name: build_kytea
-        path: examples/language_model/xlm/kytea
+        path: legacy/examples/language_model/xlm/kytea
         cmd: autoreconf -i && ./configure --prefix=$HOME/local && make && make install
       -
         name: train_xnli
-        path: examples/language_model/xlm
+        path: legacy/examples/language_model/xlm
         cmd: python xnli_train.py
         params:
           - --batch_size 8
@@ -23,7 +23,7 @@ case:
     eval:
       -
         name: eval_xnli
-        path: examples/language_model/xlm
+        path: legacy/examples/language_model/xlm
         cmd: python xnli_eval.py
         params:
           - --batch_size 8

@@ -15,7 +15,7 @@ case:
           - --max_steps 2
           - --logging_steps 1
           - --save_steps 2
-          - --output_dir ../../../model_zoo/tinybert/SST-2/
+          - --output_dir ../../../legacy/model_zoo/tinybert/SST-2/
           - --device gpu
         result:
           loss:
@@ -24,7 +24,7 @@ case:
             evaluation: "="
       -
         name: intermediate_distill
-        path: model_zoo/tinybert/
+        path: legacy/model_zoo/tinybert/
         cmd:  python task_distill.py
         params:
           - --model_type tinybert
@@ -50,7 +50,7 @@ case:
           evaluation: "="
       -
         name: distill_ped
-        path: model_zoo/tinybert/
+        path: legacy/model_zoo/tinybert/
         cmd:  python task_distill.py
         params:
           - --model_type tinybert

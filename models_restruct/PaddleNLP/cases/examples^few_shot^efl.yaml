@@ -4,7 +4,7 @@ case:
     train:
       -
         name: multi
-        path: examples/few_shot/efl
+        path: legacy/examples/few_shot/efl
         cmd: python -m paddle.distributed.launch run_train.py
     eval: skipped
     infer: skipped
@@ -16,7 +16,7 @@ case:
       train:
         -
           name: single
-          path: examples/few_shot/efl
+          path: legacy/examples/few_shot/efl
           cmd: python -m paddle.distributed.launch run_train.py
       eval: skipped
       infer: skipped
@@ -27,7 +27,7 @@ case:
       train:
         -
           name: train
-          path: examples/few_shot/efl
+          path: legacy/examples/few_shot/efl
           cmd: python run_train.py
           params:
             - --max_steps 2
@@ -43,7 +43,7 @@ case:
     train:
       -
         name: train
-        path: examples/few_shot/efl
+        path: legacy/examples/few_shot/efl
         cmd: python run_train.py
         params:
           - --max_steps 2

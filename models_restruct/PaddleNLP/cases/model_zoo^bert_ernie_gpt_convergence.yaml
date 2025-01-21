@@ -3,11 +3,11 @@ case:
     train:
       -
         name: bert_prepare
-        path: model_zoo/bert/data
+        path: legacy/model_zoo/bert/data
         cmd: wget -q https://bj.bcebos.com/paddlenlp/datasets/benchmark_wikicorpus_en_seqlen128.tar && tar -xf benchmark_wikicorpus_en_seqlen128.tar
       -
         name: bert_pretrain
-        path: model_zoo/bert
+        path: legacy/model_zoo/bert
         cmd: python run_pretrain.py
         params:
           - --max_predictions_per_seq 20
@@ -52,11 +52,11 @@ case:
           - --num_workers=0
       -
         name: gpt_prepare
-        path: model_zoo/gpt
+        path: legacy/model_zoo/gpt
         cmd: mkdir data && cd data && wget https://paddlenlp.bj.bcebos.com/models/transformers/gpt/data/gpt_en_dataset_300m_idx.npz && wget https://paddlenlp.bj.bcebos.com/models/transformers/gpt/data/gpt_en_dataset_300m_ids.npy
       -
         name: gpt_pretrain
-        path: model_zoo/gpt
+        path: legacy/model_zoo/gpt
         cmd: python run_pretrain.py
         params:
           - --model_type gpt

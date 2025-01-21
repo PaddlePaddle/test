@@ -3,7 +3,7 @@ case:
     train:
       -
         name: static
-        path: model_zoo/ernie-1.0/
+        path: legacy/model_zoo/ernie-1.0/
         cmd: python -u  -m paddle.distributed.launch --log_dir "./log"  run_pretrain_static.py
         params:
           - --model_type "ernie"

@@ -3,11 +3,11 @@ case:
     train:
       -
         name: prepare
-        path: examples/lexical_analysis/
+        path: legacy/examples/lexical_analysis/
         cmd: python download.py --data_dir ./
       -
         name: train
-        path: examples/lexical_analysis/
+        path: legacy/examples/lexical_analysis/
         cmd: python -m paddle.distributed.launch train.py
         params:
           - --data_dir ./lexical_analysis_dataset_tiny
@@ -20,7 +20,7 @@ case:
     eval:
       -
         name: eval
-        path: examples/lexical_analysis/
+        path: legacy/examples/lexical_analysis/
         cmd: python predict.py
         params:
           - --data_dir ./lexical_analysis_dataset_tiny
@@ -31,7 +31,7 @@ case:
     export:
       -
         name: export
-        path: examples/lexical_analysis/
+        path: legacy/examples/lexical_analysis/
         cmd: python export_model.py
         params:
           - --data_dir=./lexical_analysis_dataset_tiny
@@ -40,7 +40,7 @@ case:
     predict:
       -
         name: predict
-        path: examples/lexical_analysis/
+        path: legacy/examples/lexical_analysis/
         cmd: python deploy/predict.py
         params:
           - --model_file=infer_model/static_graph_params.pdmodel
@@ -51,11 +51,11 @@ case:
     train:
       -
         name: prepare
-        path: examples/lexical_analysis/
+        path: legacy/examples/lexical_analysis/
         cmd: python download.py --data_dir ./
       -
         name: train
-        path: examples/lexical_analysis/
+        path: legacy/examples/lexical_analysis/
         cmd: python -m paddle.distributed.launch train.py
         params:
           - --data_dir ./lexical_analysis_dataset_tiny
@@ -68,7 +68,7 @@ case:
     eval:
       -
         name: eval
-        path: examples/lexical_analysis/
+        path: legacy/examples/lexical_analysis/
         cmd: python predict.py
         params:
           - --data_dir ./lexical_analysis_dataset_tiny
@@ -79,7 +79,7 @@ case:
     export:
       -
         name: export
-        path: examples/lexical_analysis/
+        path: legacy/examples/lexical_analysis/
         cmd: python export_model.py
         params:
           - --data_dir=./lexical_analysis_dataset_tiny
@@ -88,7 +88,7 @@ case:
     predict:
       -
         name: predict
-        path: examples/lexical_analysis/
+        path: legacy/examples/lexical_analysis/
         cmd: python deploy/predict.py
         params:
           - --model_file=infer_model/static_graph_params.pdmodel
@@ -99,11 +99,11 @@ case:
     train:
       -
         name: prepare
-        path: examples/lexical_analysis/
+        path: legacy/examples/lexical_analysis/
         cmd: python download.py --data_dir ./
       -
         name: train
-        path: examples/lexical_analysis/
+        path: legacy/examples/lexical_analysis/
         params:
         cmd: python -m paddle.distributed.launch train.py
           - --data_dir ./lexical_analysis_dataset_tiny
@@ -116,7 +116,7 @@ case:
     eval:
       -
         name: eval
-        path: examples/lexical_analysis/
+        path: legacy/examples/lexical_analysis/
         cmd: python predict.py
         params:
           - --data_dir ./lexical_analysis_dataset_tiny
@@ -127,7 +127,7 @@ case:
     export:
       -
         name: export
-        path: examples/lexical_analysis/
+        path: legacy/examples/lexical_analysis/
         cmd: python export_model.py
           - --data_dir=./lexical_analysis_dataset_tiny
           - --params_path=./save_dir/model_15.pdparams
@@ -135,7 +135,7 @@ case:
     predict:
       -
         name: predict
-        path: examples/lexical_analysis/
+        path: legacy/examples/lexical_analysis/
         cmd: python deploy/predict.py
         params:
           - --model_file=infer_model/static_graph_params.pdmodel
@@ -146,11 +146,11 @@ case:
     train:
       -
         name: prepare
-        path: examples/lexical_analysis/
+        path: legacy/examples/lexical_analysis/
         cmd: python download.py --data_dir ./
       -
         name: train
-        path: examples/lexical_analysis/
+        path: legacy/examples/lexical_analysis/
         cmd: python -m paddle.distributed.launch train.py
         params:
           - --data_dir ./lexical_analysis_dataset_tiny
@@ -163,7 +163,7 @@ case:
     eval:
       -
         name: eval
-        path: examples/lexical_analysis/
+        path: legacy/examples/lexical_analysis/
         cmd: python predict.py
         params:
           - --data_dir ./lexical_analysis_dataset_tiny
@@ -174,7 +174,7 @@ case:
     export:
       -
         name: export
-        path: examples/lexical_analysis/
+        path: legacy/examples/lexical_analysis/
         cmd: python export_model.py
         params:
           - --data_dir=./lexical_analysis_dataset_tiny
@@ -183,7 +183,7 @@ case:
     predict:
       -
         name: predict
-        path: examples/lexical_analysis/
+        path: legacy/examples/lexical_analysis/
         cmd: python deploy/predict.py
         params:
           - --model_file=infer_model/static_graph_params.pdmodel

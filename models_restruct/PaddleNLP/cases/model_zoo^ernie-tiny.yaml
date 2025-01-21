@@ -3,11 +3,11 @@ case:
     train:
       -
         name: prepare
-        path: model_zoo/ernie-tiny/data
+        path: legacy/model_zoo/ernie-tiny/data
         cmd: wget https://paddle-qa.bj.bcebos.com/paddlenlp/ernie-tiny.tar.gz && tar -xzvf ernie-tiny.tar.gz && cp -r ernie-tiny/* ./
       -
         name: fintune
-        path: model_zoo/ernie-tiny/
+        path: legacy/model_zoo/ernie-tiny/
         cmd: python run_train.py
         params:
           - --device gpu
@@ -39,7 +39,7 @@ case:
             evaluation: "="
       -
         name: compress
-        path: model_zoo/ernie-tiny/
+        path: legacy/model_zoo/ernie-tiny/
         cmd: python run_train.py
         params:
           - --do_compress
@@ -75,7 +75,7 @@ case:
     eval:
       -
         name: eval
-        path: model_zoo/ernie-tiny/
+        path: legacy/model_zoo/ernie-tiny/
         cmd: python run_eval.py
         params:
           - --device gpu

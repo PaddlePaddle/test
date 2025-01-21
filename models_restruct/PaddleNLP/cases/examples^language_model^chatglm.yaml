@@ -3,11 +3,11 @@ case:
     train:
       -
         name: prepare
-        path: examples/language_model/chatglm
-        cmd: wget https://paddlenlp.bj.bcebos.com/datasets/examples/AdvertiseGen.tar.gz && tar -xzvf AdvertiseGen.tar.gz
+        path: legacy/examples/language_model/chatglm
+        cmd: wget https://paddlenlp.bj.bcebos.com/datasets/legacy/examples/AdvertiseGen.tar.gz && tar -xzvf AdvertiseGen.tar.gz
       -
         name: multi
-        path: examples/language_model/chatglm
+        path: legacy/examples/language_model/chatglm
         cmd: python -m paddle.distributed.launch --gpus finetune_generation.py
         params:
           - --model_name_or_path THUDM/chatglm-6b
@@ -36,7 +36,7 @@ case:
     eval:
       -
         name: eval
-        path: examples/language_model/chatglm
+        path: legacy/examples/language_model/chatglm
         cmd: python predict_generation.py
         params:
           - --model_name_or_path  ./checkpoints/chatglm-6b
@@ -44,7 +44,7 @@ case:
     export:
       -
         name: export
-        path: examples/language_model/chatglm
+        path: legacy/examples/language_model/chatglm
         cmd: export_generation_model.py
         params:
           - --model_name_or_path ./checkpoints/chatglm-6b

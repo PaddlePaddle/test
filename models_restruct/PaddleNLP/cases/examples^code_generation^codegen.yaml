@@ -3,11 +3,11 @@ case:
     train:
       -
         name: prepare
-        path: examples/code_generation/codegen
+        path: legacy/examples/code_generation/codegen
         cmd: wget https://paddle-qa.bj.bcebos.com/paddlenlp/codegen.tar.gz && tar -xzvf codegen.tar.gz
       -
         name: multi
-        path: examples/code_generation/codegen
+        path: legacy/examples/code_generation/codegen
         cmd:   python -m paddle.distributed.launch run_clm.py
         params:
           - --model_name_or_path Salesforce/codegen-350M-mono
@@ -29,11 +29,11 @@ case:
     train:
       -
         name: prepare
-        path: examples/code_generation/codegen
+        path: legacy/examples/code_generation/codegen
         cmd: wget https://paddle-qa.bj.bcebos.com/paddlenlp/codegen.tar.gz && tar -xzvf codegen.tar.gz
       -
         name: single
-        path: examples/code_generation/codegen
+        path: legacy/examples/code_generation/codegen
         cmd: python -m paddle.distributed.launch run_clm.py
         params:
           - --model_name_or_path Salesforce/codegen-350M-mono

@@ -3,15 +3,15 @@ case:
     train:
       -
         name: prepare_data
-        path: examples/sentiment_analysis/textcnn
+        path: legacy/examples/sentiment_analysis/textcnn
         cmd: wget https://bj.bcebos.com/paddlenlp/datasets/RobotChat.tar.gz && tar xvf RobotChat.tar.gz
       -
         name: prepare_models
-        path: examples/sentiment_analysis/textcnn
+        path: legacy/examples/sentiment_analysis/textcnn
         cmd: wget https://bj.bcebos.com/paddlenlp/robot_chat_word_dict.txt && wget https://bj.bcebos.com/paddlenlp/models/textcnn.pdparams
       -
         name: pretrain
-        path: examples/sentiment_analysis/textcnn
+        path: legacy/examples/sentiment_analysis/textcnn
         cmd: python -m paddle.distributed.launch train.py
         params:
           - --vocab_path=./robot_chat_word_dict.txt
@@ -27,7 +27,7 @@ case:
     export:
       -
         name: export
-        path: examples/sentiment_analysis/textcnn
+        path: legacy/examples/sentiment_analysis/textcnn
         cmd:  python export_model.py
         params:
           - --vocab_path=./robot_chat_word_dict.txt
@@ -36,7 +36,7 @@ case:
     predict:
       -
         name: predict
-        path: examples/sentiment_analysis/textcnn
+        path: legacy/examples/sentiment_analysis/textcnn
         cmd:  python predict.py
         params:
           - --vocab_path=./robot_chat_word_dict.txt

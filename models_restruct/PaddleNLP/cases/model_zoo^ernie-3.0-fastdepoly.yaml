@@ -3,21 +3,21 @@ case:
     train:
       -
         name: FD-GPU
-        path: model_zoo/ernie-3.0/deploy/python/
+        path: legacy/model_zoo/ernie-3.0/deploy/python/
         cmd: python seq_cls_infer.py
         params:
           - --model_dir ../../best_models/afqmc/export
           - --device gpu --backend paddle
       -
         name: FD-CPU
-        path: model_zoo/ernie-3.0/deploy/python/
+        path: legacy/model_zoo/ernie-3.0/deploy/python/
         cmd: python seq_cls_infer.py
         params:
           - --model_dir ../../best_models/afqmc/export
           - --device cpu --backend paddle
       -
         name: Qunt-GPU
-        path: model_zoo/ernie-3.0/deploy/python/
+        path: legacy/model_zoo/ernie-3.0/deploy/python/
         cmd: python seq_cls_infer.py
         params:
           - --model_dir ../../best_models/afqmc/width_mult_0.75/mse16_1/
@@ -26,7 +26,7 @@ case:
           - --model_prefix int8
       -
         name: Qunt-CPU
-        path: model_zoo/ernie-3.0/deploy/python/
+        path: legacy/model_zoo/ernie-3.0/deploy/python/
         cmd: python seq_cls_infer.py
         params:
           - --model_dir ../../best_models/afqmc/width_mult_0.75/mse16_1/

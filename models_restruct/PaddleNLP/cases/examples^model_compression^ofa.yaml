@@ -3,7 +3,7 @@ case:
     train:
       -
         name: run_glue
-        path: examples/benchmark/glue/
+        path: legacy/examples/benchmark/glue/
         cmd: python -u ./run_glue.py
         params:
           - --model_type bert
@@ -20,7 +20,7 @@ case:
           - --device gpu
       -
         name: run_glue_ofa
-        path: examples/model_compression/ofa/
+        path: legacy/examples/model_compression/ofa/
         cmd: python -m paddle.distributed.launch run_glue_ofa.py
         params:
           - --model_type bert
@@ -46,7 +46,7 @@ case:
     train:
       -
         name: run_glue
-        path: examples/benchmark/glue/
+        path: legacy/examples/benchmark/glue/
         cmd: python -u ./run_glue.py
         params:
           - --model_type bert
@@ -63,7 +63,7 @@ case:
           - --device gpu
       -
         name: run_glue_ofa
-        path: examples/model_compression/ofa/
+        path: legacy/examples/model_compression/ofa/
         cmd: python -m paddle.distributed.launch run_glue_ofa.py
         params:
           - --model_type bert

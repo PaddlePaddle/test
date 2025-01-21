@@ -3,7 +3,7 @@ case:
     train:
       -
         name: demo
-        path: examples/text_generation/reformer
+        path: legacy/examples/text_generation/reformer
         cmd: python demo.py
     eval: skipped
     infer: skipped
@@ -14,7 +14,7 @@ case:
     train:
       -
         name: demo
-        path: examples/text_generation/reformer
+        path: legacy/examples/text_generation/reformer
         cmd: python demo.py
     eval: skipped
     infer: skipped

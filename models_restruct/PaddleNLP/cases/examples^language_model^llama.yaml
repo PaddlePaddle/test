@@ -3,7 +3,7 @@ case:
     train:
       -
         name: multi
-        path: examples/language_model/llama
+        path: legacy/examples/language_model/llama
         cmd: python -u  -m paddle.distributed.fleet.launch finetune_generation.py
         params:
           - --model_name_or_path facebook/tiny-random-llama
@@ -31,7 +31,7 @@ case:
     eval:
       -
         name: eval
-        path: examples/language_model/llama
+        path: legacy/examples/language_model/llama
         cmd: python predict_generation.py
         params:
           -  --model_name_or_path ./checkpoints/
@@ -39,7 +39,7 @@ case:
     export:
       -
         name: export
-        path: examples/language_model/llama
+        path: legacy/examples/language_model/llama
         cmd: export_generation_model.py
         params:
           - --model_path checkpoints/
@@ -47,7 +47,7 @@ case:
     predict:
     -
         name: export
-        path: examples/language_model/llama
+        path: legacy/examples/language_model/llama
         cmd: python infer_generation.py
         params:
           - --model_dir inference

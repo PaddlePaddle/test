@@ -3,11 +3,11 @@ case:
     train:
       -
         name: prepare
-        path: model_zoo/ernie-gen
+        path: legacy/model_zoo/ernie-gen
         cmd: wget --no-check-certificate https://bj.bcebos.com/paddlenlp/datasets/poetry.tar.gz && tar xvf poetry.tar.gz
       -
         name: pretrain
-        path: model_zoo/ernie-gen
+        path: legacy/model_zoo/ernie-gen
         cmd: python -m paddle.distributed.launch train.py
         params:
           - --model_name_or_path ernie-1.0
@@ -29,7 +29,7 @@ case:
     eval:
       -
         name: evaluate
-        path: model_zoo/ernie-gen
+        path: legacy/model_zoo/ernie-gen
         cmd:  python -u ./eval.py
         params:
           - --model_name_or_path ernie-1.0
@@ -41,7 +41,7 @@ case:
     infer:
       -
         name: evaluate
-        path: model_zoo/ernie-gen
+        path: legacy/model_zoo/ernie-gen
         cmd: python -u ./predict.py
         params:
           - --model_name_or_path ernie-1.0
@@ -57,11 +57,11 @@ case:
     train:
       -
         name: prepare
-        path: model_zoo/ernie-gen
+        path: legacy/model_zoo/ernie-gen
         cmd: wget --no-check-certificate https://bj.bcebos.com/paddlenlp/datasets/poetry.tar.gz && tar xvf poetry.tar.gz
       -
         name: pretrain
-        path: model_zoo/ernie-gen
+        path: legacy/model_zoo/ernie-gen
         cmd: python -m paddle.distributed.launch train.py
         params:
           - --model_name_or_path ernie-1.0
@@ -83,7 +83,7 @@ case:
     eval:
       -
         name: evaluate
-        path: model_zoo/ernie-gen
+        path: legacy/model_zoo/ernie-gen
         cmd:  python -u ./eval.py
         params:
           - --model_name_or_path ernie-1.0
@@ -95,7 +95,7 @@ case:
     infer:
       -
         name: evaluate
-        path: model_zoo/ernie-gen
+        path: legacy/model_zoo/ernie-gen
         cmd: python -u ./predict.py
         params:
           - --model_name_or_path ernie-1.0

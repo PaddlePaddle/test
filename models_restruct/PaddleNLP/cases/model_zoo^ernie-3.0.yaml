@@ -3,7 +3,7 @@ case:
     train:
       -
         name: seq_cls
-        path: model_zoo/ernie-3.0/
+        path: legacy/model_zoo/ernie-3.0/
         cmd: python run_seq_cls.py
         params:
           - --model_name_or_path ernie-3.0-medium-zh
@@ -18,7 +18,7 @@ case:
           - --save_step 2
       -
         name: token_cls
-        path: model_zoo/ernie-3.0/
+        path: legacy/model_zoo/ernie-3.0/
         cmd: python run_token_cls.py
         params:
           - --model_name_or_path ernie-3.0-medium-zh
@@ -33,7 +33,7 @@ case:
           - --save_step 2
       -
         name: qa
-        path: model_zoo/ernie-3.0/
+        path: legacy/model_zoo/ernie-3.0/
         cmd: python run_qa.py
         params:
           - --model_name_or_path ernie-3.0-medium-zh
@@ -48,7 +48,7 @@ case:
           - --save_step 2
       -
         name: compress_seq_cls
-        path: model_zoo/ernie-3.0/
+        path: legacy/model_zoo/ernie-3.0/
         cmd: python compress_seq_cls.py
         params:
           - --model_name_or_path best_models/afqmc/
@@ -57,7 +57,7 @@ case:
           - --config configs/default.yml
       -
         name: compress_token_cls
-        path: model_zoo/ernie-3.0/
+        path: legacy/model_zoo/ernie-3.0/
         cmd: python compress_token_cls.py
         params:
           - --model_name_or_path best_models/msra_ner/
@@ -66,7 +66,7 @@ case:
           - --config configs/default.yml
       -
         name: compress_qa
-        path: model_zoo/ernie-3.0/
+        path: legacy/model_zoo/ernie-3.0/
         cmd: python compress_qa.py
         params:
           - --model_name_or_path best_models/cmrc2018/
@@ -76,7 +76,7 @@ case:
     eval:
       -
         name: seq_cls
-        path: model_zoo/ernie-3.0/
+        path: legacy/model_zoo/ernie-3.0/
         cmd: python run_seq_cls.py
         params:
           - --model_name_or_path best_models/afqmc/
@@ -91,7 +91,7 @@ case:
             evaluation: "="
       -
         name: token_cls
-        path: model_zoo/ernie-3.0/
+        path: legacy/model_zoo/ernie-3.0/
         cmd: python run_token_cls.py
         params:
           - --model_name_or_path best_models/msra_ner/
@@ -106,7 +106,7 @@ case:
             evaluation: "="
       -
         name: qa
-        path: model_zoo/ernie-3.0/
+        path: legacy/model_zoo/ernie-3.0/
         cmd: python run_qa.py
         params:
           - --model_name_or_path best_models/cmrc2018/
@@ -126,7 +126,7 @@ case:
     train:
       -
         name: seq_cls
-        path: model_zoo/ernie-3.0/
+        path: legacy/model_zoo/ernie-3.0/
         cmd: python run_seq_cls.py
         params:
           - --model_name_or_path ernie-3.0-medium-zh
@@ -145,7 +145,7 @@ case:
             evaluation: "="
       -
         name: token_cls
-        path: model_zoo/ernie-3.0/
+        path: legacy/model_zoo/ernie-3.0/
         cmd: python run_token_cls.py
         params:
           - --model_name_or_path ernie-3.0-medium-zh
@@ -165,7 +165,7 @@ case:
             evaluation: "="
       -
         name: qa
-        path: model_zoo/ernie-3.0/
+        path: legacy/model_zoo/ernie-3.0/
         cmd: python run_qa.py
         params:
           - --model_name_or_path best_models/cmrc2018/
@@ -182,7 +182,7 @@ case:
             evaluation: "="
       -
         name: compress_seq_cls
-        path: model_zoo/ernie-3.0/
+        path: legacy/model_zoo/ernie-3.0/
         cmd: python compress_seq_cls.py
         params:
           - --model_name_or_path best_models/afqmc/
@@ -196,7 +196,7 @@ case:
             evaluation: "="
       -
         name: compress_token_cls
-        path: model_zoo/ernie-3.0/
+        path: legacy/model_zoo/ernie-3.0/
         cmd: python compress_token_cls.py
         params:
           - --model_name_or_path best_models/msra_ner/
@@ -210,7 +210,7 @@ case:
             evaluation: "="
       -
         name: compress_qa
-        path: model_zoo/ernie-3.0/
+        path: legacy/model_zoo/ernie-3.0/
         cmd: python compress_qa.py
         params:
           - --model_name_or_path best_models/cmrc2018/
@@ -225,7 +225,7 @@ case:
     eval:
       -
         name: seq_cls
-        path: model_zoo/ernie-3.0/
+        path: legacy/model_zoo/ernie-3.0/
         cmd: python run_seq_cls.py
         params:
           - --model_name_or_path best_models/afqmc/
@@ -240,7 +240,7 @@ case:
             evaluation: "="
       -
         name: token_cls
-        path: model_zoo/ernie-3.0/
+        path: legacy/model_zoo/ernie-3.0/
         cmd: python run_token_cls.py
         params:
           - --model_name_or_path best_models/msra_ner/
@@ -255,7 +255,7 @@ case:
             evaluation: "="
       -
         name: qa
-        path: model_zoo/ernie-3.0/
+        path: legacy/model_zoo/ernie-3.0/
         cmd: python run_qa.py
         params:
           - --model_name_or_path best_models/cmrc2018/

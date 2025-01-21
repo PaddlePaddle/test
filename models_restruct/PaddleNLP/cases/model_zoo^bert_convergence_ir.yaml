@@ -3,11 +3,11 @@ case:
     train:
       -
         name: prepare_datasets_seqlen128
-        path: model_zoo/bert/
+        path: legacy/model_zoo/bert/
         cmd: wget https://paddle-qa.bj.bcebos.com/paddlenlp/hdf5_lower_case_1_seq_len_128_max_pred_20_masked_lm_prob_0.15_random_seed_12345_dupe_factor_5.tar.gz && tar -xzvf hdf5_lower_case_1_seq_len_128_max_pred_20_masked_lm_prob_0.15_random_seed_12345_dupe_factor_5.tar.gz
       -
         name: baseline
-        path: model_zoo/bert
+        path: legacy/model_zoo/bert
         cmd: python run_pretrain.py
         params:
           - --max_predictions_per_seq 20
@@ -31,7 +31,7 @@ case:
           - --cinn True
       -
         name: ir
-        path: model_zoo/bert
+        path: legacy/model_zoo/bert
         cmd: python run_pretrain.py
         params:
           - --max_predictions_per_seq 20

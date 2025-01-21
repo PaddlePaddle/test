@@ -3,11 +3,11 @@ case:
     train:
       -
         name: prepare
-        path: examples/text_matching/simnet
+        path: legacy/examples/text_matching/simnet
         cmd: wget https://bj.bcebos.com/paddlenlp/data/simnet_vocab.txt
       -
         name: train
-        path: examples/text_matching/simnet
+        path: legacy/examples/text_matching/simnet
         cmd: python -m paddle.distributed.launch train.py
         params:
           - --vocab_path="./simnet_vocab.txt"
@@ -20,7 +20,7 @@ case:
     eval:
       -
         name: train
-        path: examples/text_matching/simnet
+        path: legacy/examples/text_matching/simnet
         cmd: python predict.py
         params:
           - --vocab_path="./simnet_vocab.txt"
@@ -35,11 +35,11 @@ case:
     train:
       -
         name: prepare
-        path: examples/text_matching/simnet
+        path: legacy/examples/text_matching/simnet
         cmd: wget https://bj.bcebos.com/paddlenlp/data/simnet_vocab.txt
       -
         name: train
-        path: examples/text_matching/simnet
+        path: legacy/examples/text_matching/simnet
         cmd: python -m paddle.distributed.launch train.py
         params:
           - --vocab_path="./simnet_vocab.txt"
@@ -52,7 +52,7 @@ case:
     eval:
       -
         name: train
-        path: examples/text_matching/simnet
+        path: legacy/examples/text_matching/simnet
         cmd: python predict.py
         params:
           - --vocab_path="./simnet_vocab.txt"

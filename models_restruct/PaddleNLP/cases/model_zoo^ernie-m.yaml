@@ -3,7 +3,7 @@ case:
     train:
       -
         name: run_classifier_clt
-        path: model_zoo/ernie-m/
+        path: legacy/model_zoo/ernie-m/
         cmd: python -m paddle.distributed.launch --log_dir output_clt run_classifier.py
         params:
           - --do_train
@@ -29,7 +29,7 @@ case:
             evaluation: "="
       -
         name: run_classifier_tta
-        path: model_zoo/ernie-m/
+        path: legacy/model_zoo/ernie-m/
         cmd: python -m paddle.distributed.launch --log_dir output_tta run_classifier.py
         params:
           - --do_train

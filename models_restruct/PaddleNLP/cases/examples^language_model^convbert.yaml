@@ -3,7 +3,7 @@ case:
     train:
       -
         name: single
-        path: examples/language_model/convbert
+        path: legacy/examples/language_model/convbert
         cmd: python -u run_glue.py
         params:
           - --model_type convbert
@@ -27,7 +27,7 @@ case:
     train:
       -
         name: single
-        path: examples/language_model/convbert
+        path: legacy/examples/language_model/convbert
         cmd: python -u run_glue.py
         params:
           - --model_type convbert

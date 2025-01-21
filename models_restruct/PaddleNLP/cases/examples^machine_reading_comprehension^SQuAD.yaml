@@ -3,7 +3,7 @@ case:
     train:
       -
         name: pretrain
-        path: examples/machine_reading_comprehension/SQuAD/
+        path: legacy/examples/machine_reading_comprehension/SQuAD/
         cmd: python -m paddle.distributed.launch run_squad.py
         params:
           - --model_type bert
@@ -26,7 +26,7 @@ case:
     export:
       -
         name: export
-        path: examples/machine_reading_comprehension/SQuAD/
+        path: legacy/examples/machine_reading_comprehension/SQuAD/
         cmd:  python -u ./export_model.py
         params:
           - --model_type bert
@@ -35,7 +35,7 @@ case:
     predict:
       -
         name: export
-        path: examples/machine_reading_comprehension/SQuAD/
+        path: legacy/examples/machine_reading_comprehension/SQuAD/
         cmd:  python -u deploy/python/predict.py
         params:
           - --model_type bert

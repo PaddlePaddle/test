@@ -3,7 +3,7 @@ case:
     train:
       -
         name: multi
-        path: examples/question_generation/t5
+        path: legacy/examples/question_generation/t5
         cmd: python -m paddle.distributed.launch train.py
         params:
           - --model_name_or_path=t5-base
@@ -17,7 +17,7 @@ case:
     eval:
       -
         name: eval
-        path: examples/question_generation/t5
+        path: legacy/examples/question_generation/t5
         cmd:  python predict.py
         params:
           - --model_name_or_path=./checkpoints/model_2
@@ -39,7 +39,7 @@ case:
     train:
       -
         name: single
-        path: examples/question_generation/t5
+        path: legacy/examples/question_generation/t5
         cmd: python -m paddle.distributed.launch train.py
         params:
           - --model_name_or_path=t5-base
@@ -53,7 +53,7 @@ case:
     eval:
       -
         name: eval
-        path: examples/question_generation/t5
+        path: legacy/examples/question_generation/t5
         cmd:  python predict.py
         params:
           - --model_name_or_path=./checkpoints/model_2

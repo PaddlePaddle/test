@@ -3,11 +3,11 @@ case:
     train:
       -
         name: prepare
-        path: model_zoo/uie
+        path: legacy/model_zoo/uie
         cmd: mkdir data && cd data && wget https://bj.bcebos.com/paddlenlp/datasets/uie/doccano_ext.json
       -
         name: doccano
-        path: model_zoo/uie
+        path: legacy/model_zoo/uie
         cmd: python doccano.py
         params:
             - --doccano_file ./data/doccano_ext.json
@@ -17,7 +17,7 @@ case:
             - --schema_lang ch
       -
         name: multi
-        path: model_zoo/uie
+        path: legacy/model_zoo/uie
         cmd: python -u -m paddle.distributed.launch  finetune.py
         params:
           - --device gpu
@@ -53,7 +53,7 @@ case:
     eval:
       -
         name: eval
-        path: model_zoo/uie
+        path: legacy/model_zoo/uie
         cmd:  python evaluate.py
         params:
           - --model_path ./checkpoint/model_best
@@ -68,11 +68,11 @@ case:
     train:
       -
         name: prepare
-        path: model_zoo/uie
+        path: legacy/model_zoo/uie
         cmd: mkdir data && cd data && wget https://bj.bcebos.com/paddlenlp/datasets/uie/doccano_ext.json
       -
         name: doccano
-        path: model_zoo/uie
+        path: legacy/model_zoo/uie
         cmd: python doccano.py
         params:
             - --doccano_file ./data/doccano_ext.json
@@ -82,7 +82,7 @@ case:
             - --schema_lang ch
       -
         name: finetune
-        path: model_zoo/uie
+        path: legacy/model_zoo/uie
         cmd: python -u -m paddle.distributed.launch  finetune.py
         params:
           - --device gpu
@@ -118,7 +118,7 @@ case:
     eval:
       -
         name: eval
-        path: model_zoo/uie
+        path: legacy/model_zoo/uie
         cmd:  python evaluate.py
         params:
           - --model_path ./checkpoint/model_best

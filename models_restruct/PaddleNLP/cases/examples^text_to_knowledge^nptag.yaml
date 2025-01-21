@@ -3,11 +3,11 @@ case:
     train:
       -
         name: prepare
-        path: examples/text_to_knowledge/nptag/
+        path: legacy/examples/text_to_knowledge/nptag/
         cmd: wget -q https://paddlenlp.bj.bcebos.com/paddlenlp/datasets/nptag_dataset.tar.gz && tar -zxvf nptag_dataset.tar.gz
       -
         name: pretrain
-        path: examples/text_to_knowledge/nptag/
+        path: legacy/examples/text_to_knowledge/nptag/
         cmd: python -m paddle.distributed.launch  train.py
         params:
           - --batch_size 64
@@ -20,7 +20,7 @@ case:
     eval:
       -
         name: eval
-        path: examples/text_to_knowledge/nptag/
+        path: legacy/examples/text_to_knowledge/nptag/
         cmd: python -m paddle.distributed.launch  predict.py
         params:
           - --device=gpu
@@ -29,7 +29,7 @@ case:
     export:
       -
         name: export
-        path: examples/text_to_knowledge/nptag/
+        path: legacy/examples/text_to_knowledge/nptag/
         cmd: python export_model.py
         params:
           - --params_path=./output/model_100/model_state.pdparams
@@ -37,7 +37,7 @@ case:
     predict:
       -
         name: predict
-        path: examples/text_to_knowledge/nptag/
+        path: legacy/examples/text_to_knowledge/nptag/
         cmd: python deploy/python/predict.py
         params:
           - --model_dir=./export
