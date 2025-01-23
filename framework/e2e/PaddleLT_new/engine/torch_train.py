@@ -128,7 +128,6 @@ class TorchLayerTrain(object):
             opt = optimizer.get_opt(net=net)
 
         for epoch in range(self.step):
-            print("data is: ", data)
             logit = net(*data)
             # 构建loss用于训练
             dy_loss = loss.get_loss(logit)
