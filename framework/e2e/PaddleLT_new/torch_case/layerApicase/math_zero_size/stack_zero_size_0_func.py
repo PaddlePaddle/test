@@ -5,19 +5,19 @@ import torch.nn as nn
 
 class LayerCase(nn.Module):
     """
-    case名称: addmm_zero_size_func
+    case名称: stack_zero_size_func
     """
 
     def __init__(self):
         super(LayerCase, self).__init__()
 
-    def forward(self, data, x, y ):
+    def forward(self, x, y ):
         """
         forward
         """
         torch.manual_seed(33)
         np.random.seed(33)
-        out = torch.addmm(data, x, y, alpha=5.0, beta=0.5 )
+        out = torch.stack([x, y], dim=0)
         return out
 
 
@@ -28,7 +28,6 @@ def create_tensor_inputs():
     inputs = (
         torch.tensor((-1 + 2 * np.random.random([100, 0, 10])).astype(np.float32), dtype=torch.float32, requires_grad=True), 
         torch.tensor((-1 + 2 * np.random.random([100, 0, 10])).astype(np.float32), dtype=torch.float32, requires_grad=True),
-        torch.tensor((-1 + 2 * np.random.random([100, 0, 10])).astype(np.float32), dtype=torch.float32, requires_grad=True),
     )
     return inputs
 
@@ -38,7 +37,6 @@ def create_numpy_inputs():
     numpy array
     """
     inputs = (
-        (-1 + 2 * np.random.random([100, 0, 10])).astype('float32'),
         (-1 + 2 * np.random.random([100, 0, 10])).astype('float32'),
         (-1 + 2 * np.random.random([100, 0, 10])).astype('float32'),
     )
