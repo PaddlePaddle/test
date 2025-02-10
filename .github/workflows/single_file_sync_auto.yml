@@ -1,0 +1,36 @@
+name: tools file sync to bos
+run-name: Tools file synchronization
+on:
+  push:
+    paths:
+      - 'tools/bos_upload.py'
+      - 'tools/linux_env_info.sh'
+  workflow_dispatch:  
+
+jobs:
+  upload_bos:
+    if: ${{ !github.event.repository.fork }}
+    environment: CodeSync
+    runs-on: ubuntu-latest
+    steps:
+      - name: PaddleTest Checkout
+        uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            tools
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - name: Upload Code
+        env:
+          AK: ${{ secrets.BOS_AK }}
+          SK: ${{ secrets.BOS_SK }}
+        run: |
+          tree -L 3
+          echo "Repository: ${{ github.repository }}"
+          echo "Branch: ${{ github.ref }}"
+          python -m pip install bce-python-sdk==0.8.74
+          branch=$(echo '${{ github.ref }}' | sed 's#refs/heads/##')
+          python tools/bos_upload.py tools/bos_upload.py paddle-qa/CodeSync/${branch}/${{ github.repository }}
+          python tools/bos_upload.py tools/linux_env_info.sh paddle-qa/CodeSync/${branch}/${{ github.repository }}
+
