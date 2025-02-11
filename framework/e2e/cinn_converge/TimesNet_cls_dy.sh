@@ -1,0 +1,1 @@
+python main.py -c paddlex/configs/modules/ts_classification/TimesNet_cls.yaml -o Global.mode=train -o Global.dataset_dir=../UWaveGestureLibrary -o Train.learning_rate=0.0005 -o Train.epochs_iters=30 -o Global.output='./output/ts_classification/TimesNet_cls_dy'

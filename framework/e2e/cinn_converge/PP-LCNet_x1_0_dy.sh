@@ -1,0 +1,1 @@
+python main.py -c paddlex/configs/modules/image_classification/PP-LCNet_x1_0.yaml -o Global.mode=train -o Train.num_classes=1000 -o Train.epochs_iters=360 -o Train.batch_size=256 -o Train.learning_rate=0.8 -o Train.pretrain_weight_path=None -o Global.device=gpu:0,1,2,3,4,5,6,7 -o Global.dataset_dir=../ILSVRC2012/ -o Global.output='./output/image_classification/PP-LCNet_x1_0_dy'

@@ -1,0 +1,1 @@
+python main.py -c paddlex/configs/modules/text_recognition/ch_RepSVTR_rec.yaml -o Global.mode=train -o Train.batch_size=192 -o Evaluate.batch_size=128 -o Train.epochs_iters=50    -o Global.device=gpu:0,1,2,3 -o Global.dataset_dir=../ocr_rec_dataset_examples -o Global.output='./output/text_recognition/ch_RepSVTR_rec_dy'

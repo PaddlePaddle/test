@@ -1,0 +1,1 @@
+python main.py -c paddlex/configs/modules/text_recognition/PP-OCRv3_mobile_rec.yaml -o Global.mode=train -o Train.batch_size=128 -o Evaluate.batch_size=128 -o Train.epochs_iters=50    -o Global.device=gpu:0,1,2,3 -o Global.dataset_dir=../ocr_rec_dataset_examples -o Global.output='./output/text_recognition/PP-OCRv3_mobile_rec_CINN' -o Train.dy2st=True
