@@ -1,0 +1,1 @@
+python main.py -c paddlex/configs/modules/face_feature/MobileFaceNet.yaml -o Global.mode=train -o Global.dataset_dir=../MS1M_v3  -o Train.epochs_iters=25 -o Train.batch_size=128 -o Train.learning_rate=4e-3 -o Global.device=gpu:0,1,2,3,4,5,6,7 -o Global.output='./output/face_detection/MobileFaceNet_CINN' -o Train.dy2st=True

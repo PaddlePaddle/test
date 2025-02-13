@@ -1,0 +1,1 @@
+python main.py -c paddlex/configs/modules/object_detection/YOLOv3-DarkNet53.yaml -o Global.mode=train -o Global.dataset_dir=../coco -o Train.num_classes=80 -o Train.epochs_iters=270 -o Train.batch_size=8 -o Train.learning_rate=0.001 -o Global.device=gpu:0,1,2,3,4,5,6,7 -o Global.output='./output/object_detection/YOLOv3-DarkNet53_dy'

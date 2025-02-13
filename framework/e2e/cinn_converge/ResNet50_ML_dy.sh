@@ -1,0 +1,1 @@
+python main.py -c paddlex/configs/modules/image_multilabel_classification/ResNet50_ML.yaml -o Global.mode=train -o Train.num_classes=80 -o epochs_iters=40 -o Train.batch_size=32 -o Train.learning_rate=0.00005 -o Global.device=gpu:0,1,2,3,4,5,6,7 -o Global.dataset_dir=../coco_ml -o Global.output='./output/image_multilabel_classification/ResNet50_ML_dy'

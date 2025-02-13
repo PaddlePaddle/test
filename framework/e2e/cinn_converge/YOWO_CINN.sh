@@ -1,0 +1,1 @@
+python main.py -c paddlex/configs/modules/video_detection/YOWO.yaml -o Global.mode=train -o Global.dataset_dir=../yowo_dataset/ -o Global.output='./output/video_detection/YOWO_CINN' -o Train.dy2st=True

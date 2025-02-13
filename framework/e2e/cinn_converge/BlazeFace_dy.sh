@@ -1,0 +1,1 @@
+python main.py -c paddlex/configs/modules/face_detection/BlazeFace.yaml -o Global.mode=train -o Global.dataset_dir=../widerface_train -o Train.epochs_iters=1000 -o Train.batch_size=16 -o Train.learning_rate=0.001 -o Global.output='./output/face_detection/BlazeFace_dy'
