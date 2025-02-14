@@ -3,11 +3,11 @@ case:
     train:
       -
         name: prepare
-        path: applications/question_answering/unsupervised_qa
-        cmd: mkdir data &&  cd data && wget https://paddlenlp.bj.bcebos.com/applications/unsupervised_qa/source_file.txt  && wget https://paddlenlp.bj.bcebos.com/applications/unsupervised_qa/train.json && wget https://paddlenlp.bj.bcebos.com/applications/unsupervised_qa/dev.json
+        path: legacy/applications/question_answering/unsupervised_qa
+        cmd: mkdir data &&  cd data && wget https://paddlenlp.bj.bcebos.com/legacy/applications/unsupervised_qa/source_file.txt  && wget https://paddlenlp.bj.bcebos.com/legacy/applications/unsupervised_qa/train.json && wget https://paddlenlp.bj.bcebos.com/legacy/applications/unsupervised_qa/dev.json
       -
         name: run_qa_pairs_generation
-        path: applications/question_answering/unsupervised_qa
+        path: legacy/applications/question_answering/unsupervised_qa
         cmd: python -u run_qa_pairs_generation.py
         params:
           - --source_file_path data/source_file.txt
@@ -29,7 +29,7 @@ case:
           - --do_debug
       -
         name: run_data_preprocess_train
-        path: applications/question_answering/unsupervised_qa
+        path: legacy/applications/question_answering/unsupervised_qa
         cmd: python -u run_data_preprocess.py
         params:
           - --source_file_path data/train.json
@@ -37,7 +37,7 @@ case:
           - --do_answer_prompt
       -
         name: run_data_preprocess_dev
-        path: applications/question_answering/unsupervised_qa
+        path: legacy/applications/question_answering/unsupervised_qa
         cmd: python -u run_data_preprocess.py
         params:
           - --source_file_path data/dev.json
@@ -45,7 +45,7 @@ case:
           - --do_answer_prompt
       -
         name: answer_extraction_and_roundtrip_filtration_finetune
-        path: applications/question_answering/unsupervised_qa
+        path: legacy/applications/question_answering/unsupervised_qa
         cmd: python -u -m paddle.distributed.launch --log_dir log/answer_extraction finetune/answer_extraction_and_roundtrip_filtration/finetune.py
         params:
           - --train_path data/finetune/answer_extraction/train.json
@@ -62,7 +62,7 @@ case:
           - --device gpu
       -
         name: question_generation_finetune
-        path: applications/question_answering/unsupervised_qa
+        path: legacy/applications/question_answering/unsupervised_qa
         cmd: python -u -m paddle.distributed.launch  --log_dir log/question_generation finetune/question_generation/train.py
         params:
           - --train_file=data/finetune/question_generation/train.json
@@ -89,7 +89,7 @@ case:
           - --device=gpu
       -
         name: filtration_finetune
-        path: applications/question_answering/unsupervised_qa
+        path: legacy/applications/question_answering/unsupervised_qa
         cmd: python -u -m paddle.distributed.launch --log_dir log/filtration finetune/answer_extraction_and_roundtrip_filtration/finetune.py
         params:
           - --train_path=data/finetune/filtration/train.json
@@ -107,7 +107,7 @@ case:
     eval:
       -
         name: answer_extraction
-        path: applications/question_answering/unsupervised_qa
+        path: legacy/applications/question_answering/unsupervised_qa
         cmd: python finetune/answer_extraction_and_roundtrip_filtration/evaluate.py
         params:
           - --model_path=log/answer_extraction/checkpoints/model_best
@@ -117,7 +117,7 @@ case:
           - --limit=0.01
       -
         name: filtration
-        path: applications/question_answering/unsupervised_qa
+        path: legacy/applications/question_answering/unsupervised_qa
         cmd: python finetune/answer_extraction_and_roundtrip_filtration/evaluate.py
         params:
           - --model_path=log/filtration/checkpoints/model_best
@@ -133,11 +133,11 @@ case:
     train:
       -
         name: prepare
-        path: applications/question_answering/unsupervised_qa
-        cmd: mkdir data &&  cd data && wget https://paddlenlp.bj.bcebos.com/applications/unsupervised_qa/source_file.txt  && wget https://paddlenlp.bj.bcebos.com/applications/unsupervised_qa/train.json && wget https://paddlenlp.bj.bcebos.com/applications/unsupervised_qa/dev.json
+        path: legacy/applications/question_answering/unsupervised_qa
+        cmd: mkdir data &&  cd data && wget https://paddlenlp.bj.bcebos.com/legacy/applications/unsupervised_qa/source_file.txt  && wget https://paddlenlp.bj.bcebos.com/legacy/applications/unsupervised_qa/train.json && wget https://paddlenlp.bj.bcebos.com/legacy/applications/unsupervised_qa/dev.json
       -
         name: run_qa_pairs_generation
-        path: applications/question_answering/unsupervised_qa
+        path: legacy/applications/question_answering/unsupervised_qa
         cmd: python -u run_qa_pairs_generation.py
         params:
           - --source_file_path data/source_file.txt
@@ -159,7 +159,7 @@ case:
           - --do_debug
       -
         name: run_data_preprocess_train
-        path: applications/question_answering/unsupervised_qa
+        path: legacy/applications/question_answering/unsupervised_qa
         cmd: python -u run_data_preprocess.py
         params:
           - --source_file_path data/train.json
@@ -167,7 +167,7 @@ case:
           - --do_answer_prompt
       -
         name: run_data_preprocess_dev
-        path: applications/question_answering/unsupervised_qa
+        path: legacy/applications/question_answering/unsupervised_qa
         cmd: python -u run_data_preprocess.py
         params:
           - --source_file_path data/dev.json
@@ -175,7 +175,7 @@ case:
           - --do_answer_prompt
       -
         name: answer_extraction_and_roundtrip_filtration_finetune
-        path: applications/question_answering/unsupervised_qa
+        path: legacy/applications/question_answering/unsupervised_qa
         cmd: python -u -m paddle.distributed.launch --log_dir log/answer_extraction finetune/answer_extraction_and_roundtrip_filtration/finetune.py
         params:
           - --train_path data/finetune/answer_extraction/train.json
@@ -192,7 +192,7 @@ case:
           - --device gpu
       -
         name: question_generation_finetune
-        path: applications/question_answering/unsupervised_qa
+        path: legacy/applications/question_answering/unsupervised_qa
         cmd: python -u -m paddle.distributed.launch  --log_dir log/question_generation finetune/question_generation/train.py
         params:
           - --train_file=data/finetune/question_generation/train.json
@@ -219,7 +219,7 @@ case:
           - --device=gpu
       -
         name: filtration_finetune
-        path: applications/question_answering/unsupervised_qa
+        path: legacy/applications/question_answering/unsupervised_qa
         cmd: python -u -m paddle.distributed.launch --log_dir log/filtration finetune/answer_extraction_and_roundtrip_filtration/finetune.py
         params:
           - --train_path=data/finetune/filtration/train.json
@@ -237,7 +237,7 @@ case:
     eval:
       -
         name: answer_extraction_evaluate
-        path: applications/question_answering/unsupervised_qa
+        path: legacy/applications/question_answering/unsupervised_qa
         cmd: python finetune/answer_extraction_and_roundtrip_filtration/evaluate.py
         params:
           - --model_path=log/answer_extraction/checkpoints/model_best
@@ -247,7 +247,7 @@ case:
           - --limit=0.01
       -
         name: evaluate_filtration
-        path: applications/question_answering/unsupervised_qa
+        path: legacy/applications/question_answering/unsupervised_qa
         cmd: python finetune/answer_extraction_and_roundtrip_filtration/evaluate.py
         params:
           - --model_path=log/filtration/checkpoints/model_best

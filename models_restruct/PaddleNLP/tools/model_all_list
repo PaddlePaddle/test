@@ -1,8 +1,5 @@
 applications^information_extraction^text.yaml
 applications^question_answering^unsupervised_qa.yaml
-applications^sentiment_analysis^ASO_analysis.yaml
-applications^sentiment_analysis^ASO_analysis^extration.yaml
-applications^sentiment_analysis^ASO_analysis^pp_minilm.yaml
 applications^text_summarize^pagesus.yaml
 applications^zero_shot_text_classification.yaml
 examples^few_shot^efl.yaml

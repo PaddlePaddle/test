@@ -3,7 +3,7 @@ case:
     train:
       -
         name: prepare
-        path: model_zoo/electra
+        path: legacy/legacy/model_zoo/electra
         cmd: wget -q https://paddle-qa.bj.bcebos.com/paddlenlp/BookCorpus.tar.gz && tar -xzvf BookCorpus.tar.gz
         result:
           exit_code:
@@ -12,7 +12,7 @@ case:
             evaluation: "="
       -
         name: pretrain
-        path: model_zoo/electra
+        path: legacy/legacy/model_zoo/electra
         cmd: python -u ./run_pretrain.py
         params:
           - --model_type electra
@@ -37,13 +37,13 @@ case:
             evaluation: "="
       -
         name: get_fintune_model
-        path: model_zoo/electra
+        path: legacy/legacy/model_zoo/electra
         cmd: python -u ./get_ft_model.py
         params:
           - --model_dir ./pretrain_model/model_1.pdparams/
       -
         name: fintune_pretarined
-        path: model_zoo/electra
+        path: legacy/legacy/model_zoo/electra
         cmd: python -u ./run_glue.py
         params:
           - --model_type electra
@@ -60,7 +60,7 @@ case:
           - --device gpu
       -
         name: fintune_local
-        path: model_zoo/electra
+        path: legacy/legacy/model_zoo/electra
         cmd: python -u ./run_glue.py
         params:
           - --model_type electra
@@ -81,7 +81,7 @@ case:
     export:
       -
         name: export
-        path: model_zoo/electra
+        path: legacy/legacy/model_zoo/electra
         cmd: python -u ./export_model.py
         params:
           - --input_model_dir ./SST-2/sst-2_ft_model_1.pdparams/
@@ -90,7 +90,7 @@ case:
     predict:
       -
         name: predict
-        path: model_zoo/electra/deploy/python
+        path: legacy/legacy/model_zoo/electra/deploy/python
         cmd: python -u ./predict.py
         params:
           - --model_file ../../electra-deploy.pdmodel
@@ -104,7 +104,7 @@ case:
     train:
       -
         name: prepare
-        path: model_zoo/electra
+        path: legacy/legacy/model_zoo/electra
         cmd: wget -q https://paddle-qa.bj.bcebos.com/paddlenlp/BookCorpus.tar.gz && tar -xzvf BookCorpus.tar.gz
         result:
           exit_code:
@@ -113,7 +113,7 @@ case:
             evaluation: "="
       -
         name: pretrain
-        path: model_zoo/electra
+        path: legacy/legacy/model_zoo/electra
         cmd: python -u ./run_pretrain.py
         params:
           - --model_type electra
@@ -138,13 +138,13 @@ case:
             evaluation: "="
       -
         name: get_fintune_model
-        path: model_zoo/electra
+        path: legacy/legacy/model_zoo/electra
         cmd: python -u ./get_ft_model.py
         params:
           - --model_dir ./pretrain_model/model_1.pdparams/
       -
         name: fintune_pretarined
-        path: model_zoo/electra
+        path: legacy/legacy/model_zoo/electra
         cmd: python -u ./run_glue.py
         params:
           - --model_type electra
@@ -161,7 +161,7 @@ case:
           - --device gpu
       -
         name: fintune_local
-        path: model_zoo/electra
+        path: legacy/legacy/model_zoo/electra
         cmd: python -u ./run_glue.py
         params:
           - --model_type electra
@@ -182,7 +182,7 @@ case:
     export:
       -
         name: export
-        path: model_zoo/electra
+        path: legacy/legacy/model_zoo/electra
         cmd: python -u ./export_model.py
         params:
           - --input_model_dir ./SST-2/sst-2_ft_model_1.pdparams/
@@ -191,7 +191,7 @@ case:
     predict:
       -
         name: predict
-        path: model_zoo/electra/deploy/python
+        path: legacy/legacy/model_zoo/electra/deploy/python
         cmd: python -u ./predict.py
         params:
           - --model_file ../../electra-deploy.pdmodel

@@ -3,7 +3,7 @@ case:
     train:
       -
         name: LSTMEncoder_MLP_BiAffine
-        path: examples/dependency_parsing/ddparser
+        path: legacy/examples/dependency_parsing/ddparser
         cmd: python -m paddle.distributed.launch train.py
         params:
           - --device=gpu
@@ -16,7 +16,7 @@ case:
           - --lstm_lr=0.002
       -
         name: LSTMByWPEncoder_MLP_BiAffine
-        path: examples/dependency_parsing/ddparser
+        path: legacy/examples/dependency_parsing/ddparser
         cmd: python -m paddle.distributed.launch train.py
         params:
           - --device=gpu
@@ -27,7 +27,7 @@ case:
           - --lstm_lr=0.002
       -
         name: LSTMEncoder_MLP_BiAffine
-        path: examples/dependency_parsing/ddparser
+        path: legacy/examples/dependency_parsing/ddparser
         cmd: python -m paddle.distributed.launch train.py
         params:
           -  --device=gpu
@@ -39,7 +39,7 @@ case:
     eval:
       -
         name: LSTMEncoder_MLP_BiAffine
-        path: examples/dependency_parsing/ddparser
+        path: legacy/examples/dependency_parsing/ddparser
         cmd: python -m paddle.distributed.launch predict.py
         params:
           - --device=gpu
@@ -50,7 +50,7 @@ case:
           - --infer_output_file=infer_output.conll
       -
         name: LSTMByWPEncoder_MLP_BiAffine
-        path: examples/dependency_parsing/ddparser
+        path: legacy/examples/dependency_parsing/ddparser
         cmd: python -m paddle.distributed.launch predict.py
         params:
           - --device=gpu
@@ -61,7 +61,7 @@ case:
           - --infer_output_file=infer_output.conll
       -
         name: LSTMEncoder_MLP_BiAffine
-        path: examples/dependency_parsing/ddparser
+        path: legacy/examples/dependency_parsing/ddparser
         cmd: python -m paddle.distributed.launch predict.py
         params:
           - --device=gpu
@@ -73,14 +73,14 @@ case:
     export:
       -
         name: LSTMByWPEncoder_MLPF_BiAffine
-        path: examples/dependency_parsing/ddparser
+        path: legacy/examples/dependency_parsing/ddparser
         cmd: python export_model.py --encoding_model=lstm-pe
         params:
           - --params_path=./ByWPEncoder/best.pdparams
           - --output_path=./ByWPEncoder/output
       -
         name: LSTMEncoder_MLP_BiAffine
-        path: examples/dependency_parsing/ddparser
+        path: legacy/examples/dependency_parsing/ddparser
         cmd: python export_model.py --encoding_model=ernie-gram-zh
         params:
           - --params_path=./ErnieEncoderbest.pdparams
@@ -88,14 +88,14 @@ case:
     predict:
       -
         name: LSTMByWPEncoder_MLP_BiAffine
-        path: examples/dependency_parsing/ddparser
+        path: legacy/examples/dependency_parsing/ddparser
         cmd: python deploy/python/predict.py
         params:
           - --model_dir=./ByWPEncoder/output
           - --task_name=nlpcc13_evsam05_hit
       -
         name: LSTMEncoder_MLP_BiAffine
-        path: examples/dependency_parsing/ddparser
+        path: legacy/examples/dependency_parsing/ddparser
         cmd: python deploy/python/predict.py
         params:
           - --model_dir=./ErnieEncoder/output
@@ -105,7 +105,7 @@ case:
     train:
       -
         name: LSTMEncoder_MLP_BiAffine
-        path: examples/dependency_parsing/ddparser
+        path: legacy/examples/dependency_parsing/ddparser
         cmd: python -m paddle.distributed.launch train.py
         params:
           - --device=gpu
@@ -118,7 +118,7 @@ case:
           - --lstm_lr=0.002
       -
         name: LSTMByWPEncoder_MLP_BiAffine
-        path: examples/dependency_parsing/ddparser
+        path: legacy/examples/dependency_parsing/ddparser
         cmd: python -m paddle.distributed.launch train.py
         params:
           - --device=gpu
@@ -129,7 +129,7 @@ case:
           - --lstm_lr=0.002
       -
         name: LSTMEncoder_MLP_BiAffine
-        path: examples/dependency_parsing/ddparser
+        path: legacy/examples/dependency_parsing/ddparser
         cmd: python -m paddle.distributed.launch train.py
         params:
           -  --device=gpu
@@ -141,7 +141,7 @@ case:
     eval:
       -
         name: LSTMEncoder_MLP_BiAffine
-        path: examples/dependency_parsing/ddparser
+        path: legacy/examples/dependency_parsing/ddparser
         cmd: python -m paddle.distributed.launch predict.py
         params:
           - --device=gpu
@@ -152,7 +152,7 @@ case:
           - --infer_output_file=infer_output.conll
       -
         name: LSTMByWPEncoder_MLP_BiAffine
-        path: examples/dependency_parsing/ddparser
+        path: legacy/examples/dependency_parsing/ddparser
         cmd: python -m paddle.distributed.launch predict.py
         params:
           - --device=gpu
@@ -163,7 +163,7 @@ case:
           - --infer_output_file=infer_output.conll
       -
         name: LSTMEncoder_MLP_BiAffine
-        path: examples/dependency_parsing/ddparser
+        path: legacy/examples/dependency_parsing/ddparser
         cmd: python -m paddle.distributed.launch predict.py
         params:
           - --device=gpu
@@ -175,14 +175,14 @@ case:
     export:
       -
         name: LSTMByWPEncoder_MLP_BiAffine
-        path: examples/dependency_parsing/ddparser
+        path: legacy/examples/dependency_parsing/ddparser
         cmd: python export_model.py --encoding_model=lstm-pe
         params:
           - --params_path=./ByWPEncoder/best.pdparams
           - --output_path=./ByWPEncoder/output
       -
         name: LSTMEncoder_MLP_BiAffine
-        path: examples/dependency_parsing/ddparser
+        path: legacy/examples/dependency_parsing/ddparser
         cmd: python export_model.py --encoding_model=ernie-gram-zh
         params:
           - --params_path=./ErnieEncoderbest.pdparams
@@ -190,14 +190,14 @@ case:
     predict:
       -
         name: LSTMByWPEncoder_MLP_BiAffine
-        path: examples/dependency_parsing/ddparser
+        path: legacy/examples/dependency_parsing/ddparser
         cmd: python deploy/python/predict.py
         params:
           - --model_dir=./ByWPEncoder/output
           - --task_name=nlpcc13_evsam05_hit
       -
         name: LSTMEncoder_MLP_BiAffine
-        path: examples/dependency_parsing/ddparser
+        path: legacy/examples/dependency_parsing/ddparser
         cmd: python deploy/python/predict.py
         params:
           - --model_dir=./ErnieEncoder/output

@@ -3,11 +3,11 @@ case:
     train:
       -
         name: prepare
-        path: model_zoo/ernie-tiny/data
+        path: legacy/model_zoo/ernie-tiny/data
         cmd: wget https://paddle-qa.bj.bcebos.com/paddlenlp/ernie-tiny.tar.gz && tar -xzvf ernie-tiny.tar.gz && cp -r ernie-tiny/* ./
       -
         name: fintune
-        path: model_zoo/ernie-tiny/
+        path: legacy/model_zoo/ernie-tiny/
         cmd: python run_train.py
         params:
           - --device gpu
@@ -39,7 +39,7 @@ case:
             evaluation: "="
       -
         name: compress
-        path: model_zoo/ernie-tiny/
+        path: legacy/model_zoo/ernie-tiny/
         cmd: python run_train.py
         params:
           - --do_compress
@@ -75,7 +75,7 @@ case:
     eval:
       -
         name: eval
-        path: model_zoo/ernie-tiny/
+        path: legacy/model_zoo/ernie-tiny/
         cmd: python run_eval.py
         params:
           - --device gpu
@@ -98,51 +98,51 @@ case:
     predict:
       -
         name: deploy_python_prepare
-        path: model_zoo/ernie-tiny/output/BS64_LR5e-5_EPOCHS30/
+        path: legacy/model_zoo/ernie-tiny/output/BS64_LR5e-5_EPOCHS30/
         cmd: cp -r width_mult_0.75/* ./
       -
         name: deploy_python_install_fastdeploy
-        path: model_zoo/ernie-tiny/output/BS64_LR5e-5_EPOCHS30/
+        path: legacy/model_zoo/ernie-tiny/output/BS64_LR5e-5_EPOCHS30/
         cmd: python -m pip install fastdeploy-gpu-python -f https://www.paddlepaddle.org.cn/whl/fastdeploy.html
       -
         name: fastdeploy_python_gpu
-        path: model_zoo/ernie-tiny/deploy/python
+        path: legacy/model_zoo/ernie-tiny/deploy/python
         cmd: python infer_demo.py --device gpu --backend paddle --model_dir ../../output/BS64_LR5e-5_EPOCHS30 --slot_label_path ../../data/slot_label.txt --intent_label_path ../../data/intent_label.txt
       -
         name: fastdeploy_python_cpu
-        path: model_zoo/ernie-tiny/deploy/python
+        path: legacy/model_zoo/ernie-tiny/deploy/python
         cmd: python infer_demo.py --device cpu --backend paddle --model_dir ../../output/BS64_LR5e-5_EPOCHS30 --slot_label_path ../../data/slot_label.txt --intent_label_path ../../data/intent_label.txt
       -
         name: deploy_python_compress_gpu
-        path: model_zoo/ernie-tiny/deploy/python
+        path: legacy/model_zoo/ernie-tiny/deploy/python
         cmd: python infer_demo.py --device gpu --backend paddle_tensorrt --model_prefix int8 --model_dir ../../output/BS64_LR5e-5_EPOCHS30/ --slot_label_path ../../data/slot_label.txt --intent_label_path ../../data/intent_label.txt
       -
         name: deploy_python_compress_cpu
-        path: model_zoo/ernie-tiny/deploy/python
+        path: legacy/model_zoo/ernie-tiny/deploy/python
         cmd: python infer_demo.py --device cpu --backend paddle_tensorrt --model_prefix int8 --model_dir ../../output/BS64_LR5e-5_EPOCHS30/ --slot_label_path ../../data/slot_label.txt --intent_label_path ../../data/intent_label.txt
       -
         name: deploy_cpp_prepare
-        path: model_zoo/ernie-tiny/deploy/cpp
+        path: legacy/model_zoo/ernie-tiny/deploy/cpp
         cmd: wget -q https://bj.bcebos.com/fastdeploy/release/cpp/fastdeploy-linux-x64-gpu-1.0.2.tgz && tar -xzvf fastdeploy-linux-x64-gpu-1.0.2.tgz && mkdir build
       -
         name: deploy_cpp_build
-        path: model_zoo/ernie-tiny/deploy/cpp/build
+        path: legacy/model_zoo/ernie-tiny/deploy/cpp/build
         cmd: cmake .. -DFASTDEPLOY_INSTALL_DIR=./fastdeploy-linux-x64-gpu-1.0.2 && make -j
       -
         name: deploy_cpp_gpu
-        path: model_zoo/ernie-tiny/deploy/cpp/build
+        path: legacy/model_zoo/ernie-tiny/deploy/cpp/build
         cmd: ./infer_demo --device gpu --backend paddle --model_dir ../../../output/BS64_LR5e-5_EPOCHS30 --slot_label_path ../../../data/slot_label.txt --intent_label_path ../../../data/intent_label.txt
       -
         name: deploy_cpp_cpu
-        path: model_zoo/ernie-tiny/deploy/cpp/build
+        path: legacy/model_zoo/ernie-tiny/deploy/cpp/build
         cmd: ./infer_demo --device cpu --backend paddle --model_dir ../../../output/BS64_LR5e-5_EPOCHS30 --slot_label_path ../../../data/slot_label.txt --intent_label_path ../../../data/intent_label.txt
       -
         name: deploy_cpp_compress_gpu
-        path: model_zoo/ernie-tiny/deploy/cpp/build
+        path: legacy/model_zoo/ernie-tiny/deploy/cpp/build
         cmd: ./infer_demo --device gpu --backend paddle_tensorrt --model_prefix int8 --model_dir ../../../output/BS64_LR5e-5_EPOCHS30 --slot_label_path ../../../data/slot_label.txt --intent_label_path ../../../data/intent_label.txt
       -
         name: deploy_cpp_compress_cpu
-        path: model_zoo/ernie-tiny/deploy/cpp/build
+        path: legacy/model_zoo/ernie-tiny/deploy/cpp/build
         cmd: ./infer_demo --device cpu --backend paddle_tensorrt --model_prefix int8 --model_dir ../../../output/BS64_LR5e-5_EPOCHS30 --slot_label_path ../../../data/slot_label.txt --intent_label_path ../../../data/intent_label.txt
 
   windows:

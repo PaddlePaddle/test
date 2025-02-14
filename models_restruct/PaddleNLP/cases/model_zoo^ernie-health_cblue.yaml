@@ -3,7 +3,7 @@ case:
     train:
       -
         name: classification
-        path: model_zoo/ernie-health/cblue
+        path: legacy/model_zoo/ernie-health/cblue
         cmd: python -m paddle.distributed.launch train_classification.py
         params:
           - --dataset CHIP-CDN-2C
@@ -22,7 +22,7 @@ case:
             evaluation: "="
       -
         name: ner
-        path: model_zoo/ernie-health/cblue
+        path: legacy/model_zoo/ernie-health/cblue
         cmd: python -m paddle.distributed.launch train_ner.py
         params:
           - --batch_size 32
@@ -40,7 +40,7 @@ case:
             evaluation: "="
       -
         name: spo
-        path: model_zoo/ernie-health/cblue
+        path: legacy/model_zoo/ernie-health/cblue
         cmd: python -m paddle.distributed.launch train_spo.py
         params:
           - --batch_size 12
@@ -61,7 +61,7 @@ case:
     export:
       -
         name: classification
-        path: model_zoo/ernie-health/cblue
+        path: legacy/model_zoo/ernie-health/cblue
         cmd: python export_model.py
         params:
           - --train_dataset CHIP-CDN-2C
@@ -74,7 +74,7 @@ case:
             evaluation: "="
       -
         name: ner
-        path: model_zoo/ernie-health/cblue
+        path: legacy/model_zoo/ernie-health/cblue
         cmd: python export_model.py
         params:
           - --train_dataset CMeIE
@@ -87,7 +87,7 @@ case:
             evaluation: "="
       -
         name: spo
-        path: model_zoo/ernie-health/cblue
+        path: legacy/model_zoo/ernie-health/cblue
         cmd: python export_model.py
         params:
           - --train_dataset CMeEE

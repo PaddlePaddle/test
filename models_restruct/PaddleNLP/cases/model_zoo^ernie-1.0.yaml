@@ -3,11 +3,11 @@ case:
     train:
       -
         name: prepare
-        path: model_zoo/ernie-1.0/
+        path: legacy/model_zoo/ernie-1.0/
         cmd: mkdir data && cd data && wget -q https://paddlenlp.bj.bcebos.com/models/transformers/data_tools/wudao_200g_sample_ernie-1.0-base-zh_ids.npy && wget -q https://paddlenlp.bj.bcebos.com/models/transformers/data_tools/wudao_200g_sample_ernie-1.0-base-zh_idx.npz
       -
         name: pretrain
-        path: model_zoo/ernie-1.0/
+        path: legacy/model_zoo/ernie-1.0/
         cmd: python -m paddle.distributed.launch --log_dir ./log run_pretrain.py
         params:
           - --model_type "ernie"

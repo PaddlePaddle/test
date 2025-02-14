@@ -3,11 +3,11 @@ case:
     train:
       -
         name: prepare
-        path: model_zoo/ernie-vil2.0
+        path: legacy/model_zoo/ernie-vil2.0
         cmd: wget https://paddlenlp.bj.bcebos.com/tests/Flickr30k-CN-small.zip && unzip Flickr30k-CN-small.zip
       -
         name: multi
-        path: model_zoo/ernie-vil2.0
+        path: legacy/model_zoo/ernie-vil2.0
         cmd:  python -u -m paddle.distributed.launch --log_dir train_log run_finetune.py
         params:
           - --output_dir output_pd
@@ -32,7 +32,7 @@ case:
     eval:
       -
         name: eval
-        path: model_zoo/ernie-vil2.0
+        path: legacy/model_zoo/ernie-vil2.0
         cmd: python -u extract_features.py
         params:
           - --extract-image-feats
@@ -46,7 +46,7 @@ case:
     infer:
       -
         name: infer_make_topk
-        path: model_zoo/ernie-vil2.0
+        path: legacy/model_zoo/ernie-vil2.0
         cmd: python -u extract_features.py
         params:
           - --image-feats="Flickr30k-CN/valid_imgs.img_feat.jsonl"
@@ -56,14 +56,14 @@ case:
           - --output="$Flickr30k-CN/valid_predictions.jsonl"
       -
         name: infer_transform_ir_annotation_to_tr
-        path: model_zoo/ernie-vil2.0
+        path: legacy/model_zoo/ernie-vil2.0
         cmd: python utils/transform_ir_annotation_to_tr.py
         params:
           - --input Flickr30k-CN/valid_texts.jsonl
     export:
       -
         name: export
-        path: model_zoo/ernie-vil2.0
+        path: legacy/model_zoo/ernie-vil2.0
         cmd: export_model.py
         params:
           - --model_path=output_pd/checkpoint-2/

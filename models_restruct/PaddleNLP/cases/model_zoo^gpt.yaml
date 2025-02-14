@@ -3,15 +3,15 @@ case:
     train:
       -
         name: data_tools
-        path: model_zoo/ernie-1.0/data_tools
+        path: legacy/model_zoo/ernie-1.0/data_tools
         cmd: sed -i "s/python3/python/g" Makefile && sed -i "s/python-config/python3.7m-config/g" Makefile
       -
         name: prepare_data
-        path: model_zoo/gpt
+        path: legacy/model_zoo/gpt
         cmd: mkdir pre_data && cd pre_data && wget -q https://bj.bcebos.com/paddlenlp/models/transformers/gpt/data/gpt_en_dataset_300m_ids.npy && wget -q https://bj.bcebos.com/paddlenlp/models/transformers/gpt/data/gpt_en_dataset_300m_idx.npz
       -
         name: pretrain
-        path: model_zoo/gpt
+        path: legacy/model_zoo/gpt
         cmd: python -m paddle.distributed.launch run_pretrain.py
         params:
           - --model_name_or_path "__internal_testing__/gpt"
@@ -33,7 +33,7 @@ case:
             evaluation: "="
       -
         name: single_dy2st
-        path: model_zoo/gpt
+        path: legacy/model_zoo/gpt
         cmd: mkdir data && cd data && wget https://paddlenlp.bj.bcebos.com/models/transformers/gpt/data/gpt_en_dataset_300m_idx.npz && wget https://paddlenlp.bj.bcebos.com/models/transformers/gpt/data/gpt_en_dataset_300m_ids.npy && cd ..; python run_pretrain.py
         params:
           - --model_type gpt
@@ -52,7 +52,7 @@ case:
           - --seed 100
       -
         name: multi_dy2st
-        path: model_zoo/gpt
+        path: legacy/model_zoo/gpt
         cmd: mkdir data && cd data && wget https://paddlenlp.bj.bcebos.com/models/transformers/gpt/data/gpt_en_dataset_300m_idx.npz && wget https://paddlenlp.bj.bcebos.com/models/transformers/gpt/data/gpt_en_dataset_300m_ids.npy && cd ..; python -m paddle.distributed.launch run_pretrain.py
         params:
           - --model_type gpt
@@ -75,7 +75,7 @@ case:
     export:
       -
         name: export
-        path: model_zoo/gpt
+        path: legacy/model_zoo/gpt
         cmd:  python export_model.py
         params:
           - --model_type=gpt
@@ -84,7 +84,7 @@ case:
     predict:
       -
         name: predict
-        path: model_zoo/gpt/deploy/python/
+        path: legacy/model_zoo/gpt/deploy/python/
         cmd: python inference.py
         params:
           - --model_type gpt

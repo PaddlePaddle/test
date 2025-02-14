@@ -3,20 +3,20 @@ case:
     train:
       -
         name: prepare
-        path: examples/text_graph/erniesage
+        path: legacy/examples/text_graph/erniesage
         cmd: python ./preprocessing/dump_graph.py
         params:
           - --conf ./config/erniesage_link_prediction.yaml
       -
         name: train
-        path: examples/text_graph/erniesage
+        path: legacy/examples/text_graph/erniesage
         cmd: python -m paddle.distributed.launch link_prediction.py
         params:
           - --conf ./config/erniesage_link_prediction.yaml
     eval:
       -
         name: train
-        path: examples/text_graph/erniesage
+        path: legacy/examples/text_graph/erniesage
         cmd: python -m paddle.distributed.launch link_prediction.py
         params:
           - --conf ./config/erniesage_link_prediction.yaml
@@ -29,20 +29,20 @@ case:
     train:
       -
         name: prepare
-        path: examples/text_graph/erniesage
+        path: legacy/examples/text_graph/erniesage
         cmd: python ./preprocessing/dump_graph.py
         params:
           - --conf ./config/erniesage_link_prediction.yaml
       -
         name: train
-        path: examples/text_graph/erniesage
+        path: legacy/examples/text_graph/erniesage
         cmd: python -m paddle.distributed.launch link_prediction.py
         params:
           - --conf ./config/erniesage_link_prediction.yaml
     eval:
       -
         name: train
-        path: examples/text_graph/erniesage
+        path: legacy/examples/text_graph/erniesage
         cmd: python -m paddle.distributed.launch link_prediction.py
         params:
           - --conf ./config/erniesage_link_prediction.yaml

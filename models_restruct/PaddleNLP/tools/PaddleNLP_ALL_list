@@ -1,5 +1,3 @@
-applications^sentiment_analysis^ASO_analysis^pp_minilm.yaml
-applications^text_summarize^pagesus.yaml
 examples^dependency_parsing^ddparsing.yaml
 examples^language_model^bloom.yaml
 examples^language_model^chatglm.yaml

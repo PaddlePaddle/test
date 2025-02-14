@@ -25,7 +25,7 @@ case:
           - --learning_rate 0.00001
           - --min_learning_rate 0.000005
           - --lr_scheduler_type "cosine"
-          - --max_steps 3000
+          - --max_steps 3001
           - --save_steps 3000
           - --weight_decay 0.01
           - --warmup_ratio 0.01

@@ -3,11 +3,11 @@ case:
     train:
       -
         name: prepare
-        path: model_zoo/ernie-health
+        path: legacy/model_zoo/ernie-health
         cmd: python preprocess.py --input_path ./raw_data/ --output_file ./data/samples --tokenize_tool lac --num_worker 8
       -
         name: pretrain
-        path: model_zoo/ernie-health
+        path: legacy/model_zoo/ernie-health
         cmd: python -m paddle.distributed.launch  run_pretrain.py
         params:
           - --input_dir ./data
@@ -29,7 +29,7 @@ case:
             evaluation: "="
       -
         name: trainer
-        path: model_zoo/ernie-health
+        path: legacy/model_zoo/ernie-health
         cmd: python -u -m paddle.distributed.launch  run_pretrain_trainer.py
         params:
           - --input_dir "./data"

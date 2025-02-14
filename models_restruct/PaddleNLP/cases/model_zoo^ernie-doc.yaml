@@ -3,7 +3,7 @@ case:
     train:
       -
         name: classifier
-        path: model_zoo/ernie-doc
+        path: legacy/model_zoo/ernie-doc
         cmd: python -m paddle.distributed.launch --log_dir hyp run_classifier.py
         params:
           - --epochs 15
@@ -16,7 +16,7 @@ case:
           - --output_dir hyp
       -
         name: mrc
-        path: model_zoo/ernie-doc
+        path: legacy/model_zoo/ernie-doc
         cmd: python -m paddle.distributed.launch  --log_dir cmrc2018 run_mrc.py
         params:
           - --batch_size 2
@@ -29,7 +29,7 @@ case:
           - --output_dir cmrc2018
       -
         name: mcq
-        path: model_zoo/ernie-doc/
+        path: legacy/model_zoo/ernie-doc/
         cmd: python -m paddle.distributed.launch --log_dir c3 run_mcq.py
         params:
           - --learning_rate 6.5e-5
@@ -39,7 +39,7 @@ case:
           - --output_dir c3
       -
         name: semantic_matching
-        path: model_zoo/ernie-doc/
+        path: legacy/model_zoo/ernie-doc/
         cmd: python -m paddle.distributed.launch --log_dir cail run_semantic_matching.py
         params:
           - --epochs 1
@@ -51,7 +51,7 @@ case:
           - --output_dir cail
       -
         name: sequence_labeling
-        path: model_zoo/ernie-doc/
+        path: legacy/model_zoo/ernie-doc/
         cmd: python -m paddle.distributed.launch  --log_dir msra run_sequence_labeling.py
         params:
           - --learning_rate 3e-5
@@ -66,7 +66,7 @@ case:
             evaluation: "="
       -
         name: dureader_robust
-        path: model_zoo/ernie-doc/
+        path: legacy/model_zoo/ernie-doc/
         cmd: python -m paddle.distributed.launch  --log_dir dureader_robust run_mrc.py
         params:
           - --model_name_or_path ernie-doc-base-zh
@@ -89,7 +89,7 @@ case:
     train:
       -
         name: classifier
-        path: model_zoo/ernie-doc
+        path: legacy/model_zoo/ernie-doc
         cmd: python -m paddle.distributed.launch --log_dir hyp run_classifier.py
         params:
           - --epochs 15
@@ -107,7 +107,7 @@ case:
             evaluation: "="
       -
         name: mrc
-        path: model_zoo/ernie-doc
+        path: legacy/model_zoo/ernie-doc
         cmd: python -m paddle.distributed.launch  --log_dir cmrc2018 run_mrc.py
         params:
           - --batch_size 2
@@ -125,7 +125,7 @@ case:
             evaluation: "="
       -
         name: mcq
-        path: model_zoo/ernie-doc/
+        path: legacy/model_zoo/ernie-doc/
         cmd: python -m paddle.distributed.launch --log_dir c3 run_mcq.py
         params:
           - --learning_rate 6.5e-5
@@ -140,7 +140,7 @@ case:
             evaluation: "="
       -
         name: semantic_matching
-        path: model_zoo/ernie-doc/
+        path: legacy/model_zoo/ernie-doc/
         cmd: python -m paddle.distributed.launch --log_dir cail run_semantic_matching.py
         params:
           - --epochs 1
@@ -157,7 +157,7 @@ case:
             evaluation: "="
       -
         name: sequence_labeling
-        path: model_zoo/ernie-doc/
+        path: legacy/model_zoo/ernie-doc/
         cmd: python -m paddle.distributed.launch  --log_dir msra run_sequence_labeling.py
         params:
           - --learning_rate 3e-5
@@ -173,7 +173,7 @@ case:
             evaluation: "="
       -
         name: dureader_robust
-        path: model_zoo/ernie-doc/
+        path: legacy/model_zoo/ernie-doc/
         cmd: python -m paddle.distributed.launch  --log_dir dureader_robust run_mrc.py
         params:
           - --model_name_or_path ernie-doc-base-zh

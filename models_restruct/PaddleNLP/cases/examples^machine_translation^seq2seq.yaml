@@ -3,7 +3,7 @@ case:
     train:
       -
         name: pretrain
-        path: examples/machine_translation/seq2seq/
+        path: legacy/examples/machine_translation/seq2seq/
         cmd: python train.py
         params:
           - --num_layers 2
@@ -19,7 +19,7 @@ case:
     eval:
       -
         name: eval
-        path: examples/machine_translation/seq2seq/
+        path: legacy/examples/machine_translation/seq2seq/
         cmd: python predict.py
         params:
           - --num_layers 2
@@ -36,7 +36,7 @@ case:
     export:
       -
         name: export
-        path: examples/machine_translation/seq2seq/
+        path: legacy/examples/machine_translation/seq2seq/
         cmd:  python export_model.py
         params:
           - --num_layers 2
@@ -51,7 +51,7 @@ case:
     predict:
       -
         name: predict
-        path: examples/machine_translation/seq2seq/deploy/python
+        path: legacy/examples/machine_translation/seq2seq/deploy/python
         cmd:  python infer.py
         params:
           - --export_path ../../infer_model/model

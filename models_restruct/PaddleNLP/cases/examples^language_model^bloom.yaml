@@ -3,7 +3,7 @@ case:
     train:
       -
         name: multi
-        path: examples/language_model/bloom
+        path: legacy/examples/language_model/bloom
         cmd: python -m paddle.distributed.launch --log_dir our_log finetune_generation.py
         params:
           - --model_name_or_path bigscience/bloom-560m
@@ -35,7 +35,7 @@ case:
     eval:
       -
         name: eval
-        path: examples/language_model/bloom
+        path: legacy/examples/language_model/bloom
         cmd: python -m paddle.distributed.launch predict_generation.py
         params:
           - --model_name_or_path checkpoints/bloom-560m/checkpoint-20
@@ -44,7 +44,7 @@ case:
     export:
       -
         name: export
-        path: examples/language_model/bloom
+        path: legacy/examples/language_model/bloom
         cmd: export_generation_model.py
         params:
         - --model_name_or_path ./save
@@ -52,7 +52,7 @@ case:
     predict:
       -
         name: predict
-        path: examples/language_model/bloom
+        path: legacy/examples/language_model/bloom
         cmd: infer_generation.py
         params:
         - --model_dir inference/ --model_prefix bloom

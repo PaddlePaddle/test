@@ -3,7 +3,7 @@ case:
     train:
       -
         name: single
-        path: applications/sentiment_analysis/ASO_analysis/pp_minilm
+        path: legacy/applications/sentiment_analysis/ASO_analysis/pp_minilm
         cmd: python train.py
         params:
           - --base_model_name "ppminilm-6l-768h"
@@ -25,19 +25,19 @@ case:
     eval:
       -
         name: eval
-        path: applications/sentiment_analysis/ASO_analysis/pp_minilm
+        path: legacy/applications/sentiment_analysis/ASO_analysis/pp_minilm
         cmd: bash run_evaluate.sh
     infer: skipped
     export:
       -
         name: eval
-        path: applications/sentiment_analysis/ASO_analysis/
+        path: legacy/applications/sentiment_analysis/ASO_analysis/
         cmd: sh run_export_model.sh pp_minilm
 
     predict:
       -
         name: predict
-        path: applications/sentiment_analysis/ASO_analysis/pp_minilm
+        path: legacy/applications/sentiment_analysis/ASO_analysis/pp_minilm
         cmd: bash run_quant.sh
 
   windows:

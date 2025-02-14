@@ -4,11 +4,11 @@ case:
     train:
       -
         name: prepare
-        path: applications/text_summarization/finetune
+        path: legacy/applications/text_summarization/finetune
         cmd: python run_prepare.py
       -
         name: train
-        path: applications/text_summarization/finetune
+        path: legacy/applications/text_summarization/finetune
         cmd: python -m paddle.distributed.launch train.py
         params:
           - --do_train
@@ -16,7 +16,7 @@ case:
     infer:
       -
         name: trained
-        path: applications/text_summarization/finetune
+        path: legacy/applications/text_summarization/finetune
         cmd: python predict.py
         params:
           - --device gpu
@@ -24,14 +24,14 @@ case:
     export:
       -
         name: trained
-        path: applications/text_summarization/finetune
+        path: legacy/applications/text_summarization/finetune
         cmd: python export_model.py
         params:
           - --export_output_dir ./inference_model/
     predict:
       -
         name: trained
-        path: applications/text_summarization/finetune/deploy/paddle_inference/
+        path: legacy/applications/text_summarization/finetune/deploy/paddle_inference/
         cmd: python inference_pegasus.py
         params:
           - --inference_model_dir ../../inference_model/
@@ -41,17 +41,17 @@ case:
     train:
       -
         name: prepare
-        path: applications/text_summarization/finetune
+        path: legacy/applications/text_summarization/finetune
         cmd: python run_prepare.py
       -
         name: train
-        path: applications/text_summarization/finetune
+        path: legacy/applications/text_summarization/finetune
         cmd: python -m paddle.distributed.launch train.py
     eval: skipped
     infer:
       -
         name: trained
-        path: applications/text_summarization/finetune
+        path: legacy/applications/text_summarization/finetune
         cmd: python predict.py
         params:
           - --device gpu

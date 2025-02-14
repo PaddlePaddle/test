@@ -3,11 +3,11 @@ case:
     train:
       -
         name: download
-        path: examples/machine_translation/transformer
+        path: legacy/examples/machine_translation/transformer
         cmd: wget -q https://paddle-qa.bj.bcebos.com/paddlenlp/WMT14.en-de.partial.tar.gz && tar -xzvf WMT14.en-de.partial.tar.gz
       -
         name: pretrain
-        path: examples/machine_translation/transformer
+        path: legacy/examples/machine_translation/transformer
         cmd: python train.py
         params:
           - --config ./configs/transformer.base.yaml
@@ -20,7 +20,7 @@ case:
     export:
       -
         name: export
-        path: examples/machine_translation/transformer
+        path: legacy/examples/machine_translation/transformer
         cmd:  python export_model.py
         params:
           - --config ./configs/transformer.base.yaml
@@ -29,7 +29,7 @@ case:
     predict:
       -
         name: predict
-        path: examples/machine_translation/transformer
+        path: legacy/examples/machine_translation/transformer
         cmd:  python ./deploy/python/inference.py
         params:
           - --config ./configs/transformer.base.yaml

@@ -3,11 +3,11 @@ case:
     train:
       -
         name: prepare_datasets_seqlen128
-        path: model_zoo/bert/data
+        path: legacy/model_zoo/bert/data
         cmd: wget -q https://bj.bcebos.com/paddlenlp/datasets/benchmark_wikicorpus_en_seqlen128.tar && tar -xf benchmark_wikicorpus_en_seqlen128.tar
       -
         name: dy2st_prim_cinn
-        path: model_zoo/bert
+        path: legacy/model_zoo/bert
         cmd: python run_pretrain.py
         params:
           - --max_predictions_per_seq 20

@@ -3,7 +3,7 @@ case:
     train:
       -
         name: run_squad
-        path: examples/language_model/luke
+        path: legacy/examples/language_model/luke
         cmd: python -m paddle.distributed.launch run_squad.py
         params:
           - --model_type luke
@@ -19,7 +19,7 @@ case:
           - --save_step 2
       -
         name: run_open_entity
-        path: examples/language_model/luke
+        path: legacy/examples/language_model/luke
         cmd: python -m paddle.distributed.launch run_open_entity.py
         params:
           - --model_type luke-large

@@ -3,11 +3,11 @@ case:
     train:
       -
         name: prepare
-        path: examples/multimodal/layoutlm
+        path: legacy/examples/multimodal/layoutlm
         cmd: wget https://bj.bcebos.com/v1/paddlenlp/datasets/FUNSD.zip && unzip FUNSD.zip
       -
         name: single
-        path: examples/multimodal/layoutlm
+        path: legacy/examples/multimodal/layoutlm
         cmd:   python train_funsd.py
         params:
           - --data_dir "./data/"

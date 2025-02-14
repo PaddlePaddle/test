@@ -3,7 +3,7 @@ case:
     train:
       -
         name: multi
-        path: examples/question_generation/unimo-text
+        path: legacy/examples/question_generation/unimo-text
         cmd: python -m paddle.distributed.launch --log_dir ./unimo/finetune/log train.py
         params:
           - --dataset_name=dureader_qg
@@ -29,7 +29,7 @@ case:
     eval:
       -
         name: eval
-        path: examples/question_generation/unimo-text
+        path: legacy/examples/question_generation/unimo-text
         cmd:  python predict.py
         params:
           - --model_name_or_path=./unimo/finetune/checkpoints/model_best
@@ -47,7 +47,7 @@ case:
     export:
       -
         name: eval
-        path: examples/question_generation/unimo-text
+        path: legacy/examples/question_generation/unimo-text
         cmd: python export_model.py
         params:
           - --model_name_or_path ./unimo/finetune/checkpoints/model_best
@@ -59,7 +59,7 @@ case:
     train:
       -
         name: single
-        path: examples/question_generation/unimo-text
+        path: legacy/examples/question_generation/unimo-text
         cmd: python -m paddle.distributed.launch --log_dir ./unimo/finetune/log train.py
         params:
           - --dataset_name=dureader_qg
@@ -85,7 +85,7 @@ case:
     eval:
       -
         name: eval
-        path: examples/question_generation/unimo-text
+        path: legacy/examples/question_generation/unimo-text
         cmd:  python predict.py
         params:
           - --model_name_or_path=./unimo/finetune/checkpoints/model_best
@@ -103,7 +103,7 @@ case:
     export:
       -
         name: eval
-        path: examples/question_generation/unimo-text
+        path: legacy/examples/question_generation/unimo-text
         cmd: python export_model.py
         params:
           - --model_name_or_path ./unimo/finetune/checkpoints/model_best

@@ -3,11 +3,11 @@ case:
     train:
       -
         name: prepare
-        path: model_zoo/bert
+        path: legacy/model_zoo/bert
         cmd: wget -q https://paddle-qa.bj.bcebos.com/paddlenlp/bert.tar.gz && tar -xzvf bert.tar.gz
       -
         name: pretrain
-        path: model_zoo/bert
+        path: legacy/model_zoo/bert
         cmd: python -m paddle.distributed.launch  run_pretrain.py
         params:
           - --model_type bert
@@ -28,7 +28,7 @@ case:
             evaluation: "="
       -
         name: fintune_glue
-        path: model_zoo/bert
+        path: legacy/model_zoo/bert
         cmd: python -m paddle.distributed.launch run_glue_trainer.py
         params:
           - --model_name_or_path bert-base-uncased
@@ -53,7 +53,7 @@ case:
             evaluation: "="
       -
         name: single_dy2st
-        path: model_zoo/bert
+        path: legacy/model_zoo/bert
         cmd: cd data && wget -q https://bj.bcebos.com/paddlenlp/datasets/benchmark_wikicorpus_en_seqlen128.tar && tar -xf benchmark_wikicorpus_en_seqlen128.tar && cd ..; python run_pretrain.py
         params:
           - --max_predictions_per_seq 20
@@ -76,7 +76,7 @@ case:
           - --amp_level O2
       -
         name: multi_dy2st
-        path: model_zoo/bert
+        path: legacy/model_zoo/bert
         cmd: cd data && wget -q https://bj.bcebos.com/paddlenlp/datasets/benchmark_wikicorpus_en_seqlen128.tar && tar -xf benchmark_wikicorpus_en_seqlen128.tar && cd ..; python -m paddle.distributed.launch run_pretrain.py
         params:
           - --max_predictions_per_seq 20
@@ -102,7 +102,7 @@ case:
     export:
       -
         name: export
-        path: model_zoo/bert
+        path: legacy/model_zoo/bert
         cmd:  python -u ./export_model.py
         params:
           - --model_type bert
@@ -114,11 +114,11 @@ case:
     train:
       -
         name: prepare
-        path: model_zoo/bert
+        path: legacy/model_zoo/bert
         cmd: wget -q https://paddle-qa.bj.bcebos.com/paddlenlp/bert.tar.gz && tar -xzvf bert.tar.gz
       -
         name: pretrain
-        path: model_zoo/bert
+        path: legacy/model_zoo/bert
         cmd: python -m paddle.distributed.launch  run_pretrain.py
         params:
           - --model_type bert
@@ -138,7 +138,7 @@ case:
             evaluation: "="
       -
         name: fintune_glue
-        path: model_zoo/bert
+        path: legacy/model_zoo/bert
         cmd: python -m paddle.distributed.launch run_glue.py
         params:
           - --model_type bert
@@ -160,7 +160,7 @@ case:
     export:
       -
         name: export
-        path: model_zoo/bert
+        path: legacy/model_zoo/bert
         cmd:  python -u ./export_model.py
         params:
           - --model_type bert
@@ -169,7 +169,7 @@ case:
     predict:
       -
         name: predict
-        path: model_zoo/bert
+        path: legacy/model_zoo/bert
         cmd: python -u ./predict_glue.py
         params:
           - --task_name SST2
@@ -179,7 +179,7 @@ case:
           - --max_seq_length 128
       -
         name: predict_sample_data_SST2
-        path: model_zoo/bert
+        path: legacy/model_zoo/bert
         cmd: python -u ./predict_glue.py
         params:
           - --task_name SST2

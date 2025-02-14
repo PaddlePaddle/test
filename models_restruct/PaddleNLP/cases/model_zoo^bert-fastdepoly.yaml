@@ -7,14 +7,14 @@ case:
     predict:
       -
         name: fastdepoly-cpu
-        path: model_zoo/bert/deploy/python
+        path: legacy/model_zoo/bert/deploy/python
         cmd: python seq_cls_infer.py
         params:
           - --model_dir ../../infer_model/
           - --device cpu --backend paddle
       -
         name: fastdepoly-gpu
-        path: model_zoo/bert/deploy/python
+        path: legacy/model_zoo/bert/deploy/python
         cmd: python seq_cls_infer.py
         params:
           - --model_dir ../../infer_model/

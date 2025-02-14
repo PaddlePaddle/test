@@ -3,7 +3,7 @@ case:
     train:
       -
         name: train_rte
-        path: examples/language_model/t5
+        path: legacy/examples/language_model/t5
         cmd: python run_glue.py
         params:
           - --model_name_or_path t5-base
@@ -22,7 +22,7 @@ case:
           - --output_dir outputs/rte/
       -
         name: trainer_finetune_rte
-        path: examples/language_model/t5
+        path: legacy/examples/language_model/t5
         cmd: python -m paddle.distributed.launch run_glue_trainer.py
         params:
           - --model_name_or_path t5-base
@@ -43,7 +43,7 @@ case:
           - --max_steps 2
       -
         name: trainer_finetune_cluewsc2020
-        path: examples/language_model/t5
+        path: legacy/examples/language_model/t5
         cmd: python -m paddle.distributed.launch run_glue_trainer.py
         params:
           - --model_name_or_path Langboat/mengzi-t5-base-mt
@@ -68,7 +68,7 @@ case:
     train:
       -
         name: train_rte
-        path: examples/language_model/t5
+        path: legacy/examples/language_model/t5
         cmd: python run_glue.py
         params:
           - --model_name_or_path t5-base
@@ -87,7 +87,7 @@ case:
           - --output_dir outputs/rte/
       -
         name: trainer_finetune_rte
-        path: examples/language_model/t5
+        path: legacy/examples/language_model/t5
         cmd: python -m paddle.distributed.launch run_glue_trainer.py
         params:
           - --model_name_or_path t5-base
@@ -108,7 +108,7 @@ case:
           - --max_steps 2
       -
         name: trainer_finetune_cluewsc2020
-        path: examples/language_model/t5
+        path: legacy/examples/language_model/t5
         cmd: python -m paddle.distributed.launch run_glue_trainer.py
         params:
           - --model_name_or_path Langboat/mengzi-t5-base-mt

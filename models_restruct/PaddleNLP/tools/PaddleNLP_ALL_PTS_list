@@ -1,8 +1,6 @@
 applications^information_extraction^document.yaml
 applications^information_extraction^text.yaml
 applications^question_answering^unsupervised_qa.yaml
-applications^sentiment_analysis^ASO_analysis.yaml
-applications^sentiment_analysis^ASO_analysis^extration.yaml
 examples^code_generation^codegen.yaml
 examples^few_shot^RGL.yaml
 examples^lexical_analysis.yaml

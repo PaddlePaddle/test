@@ -3,12 +3,12 @@ case:
     train:
       -
         name: datasets
-        path: model_zoo/gpt-3/tasks/gpt
+        path: legacy/model_zoo/gpt-3/tasks/gpt
         cmd: mkdir data && cd data && wget https://bj.bcebos.com/paddlenlp/models/transformers/llama/data/llama_openwebtext_100k_ids.npy && wget https://bj.bcebos.com/paddlenlp/models/transformers/llama/data/llama_openwebtext_100k_idx.npz
 
       -
         name: baseline
-        path: model_zoo/gpt-3/tasks/gpt
+        path: legacy/model_zoo/gpt-3/tasks/gpt
         cmd: python train_pir.py
         params:
           - -c ../../ppfleetx/configs/nlp/gpt/pretrain_gpt_345M_single_card.yaml
@@ -19,7 +19,7 @@ case:
 
       -
         name: ir
-        path: model_zoo/gpt-3/tasks/gpt
+        path: legacy/model_zoo/gpt-3/tasks/gpt
         cmd: python train_pir.py
         params:
           - -c ../../ppfleetx/configs/nlp/gpt/pretrain_gpt_345M_single_card.yaml

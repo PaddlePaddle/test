@@ -3,7 +3,7 @@ case:
     train:
       -
         name: multi
-        path: examples/language_model/glm
+        path: legacy/examples/language_model/glm
         cmd: python finetune_generation.py
         params:
           - --model_name_or_path THUDM/glm-large-chinese
@@ -36,7 +36,7 @@ case:
     eval:
       -
         name: eval
-        path: examples/language_model/glm
+        path: legacy/examples/language_model/glm
         cmd: python predict_generation.py
         params:
           -  --model_name_or_path  ./checkpoints/glm-large-chinesee
@@ -44,7 +44,7 @@ case:
     export:
       -
         name: export
-        path: examples/language_model/glm
+        path: legacy/examples/language_model/glm
         cmd: export_generation_model.py
         params:
           - --model_name_or_path ./checkpoints/glm-large-chinese

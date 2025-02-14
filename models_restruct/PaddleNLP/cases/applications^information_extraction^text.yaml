@@ -3,11 +3,11 @@ case:
     train:
       -
         name: prepare
-        path: applications/information_extraction/text
+        path: legacy/applications/information_extraction/text
         cmd: wget https://bj.bcebos.com/paddlenlp/datasets/military.tar.gz && tar -xvf military.tar.gz && mv military data
       -
         name: label_studio
-        path: applications/information_extraction/text
+        path: legacy/applications/information_extraction/text
         cmd: python ../label_studio.py
         params:
           - --label_studio_file ./data/label_studio.json
@@ -17,7 +17,7 @@ case:
           - --task_type ext
       -
         name: fintune
-        path: applications/information_extraction/text
+        path: legacy/applications/information_extraction/text
         cmd: python -u -m paddle.distributed.launch finetune.py
         params:
           - --device gpu
@@ -51,7 +51,7 @@ case:
             evaluation: "="
       -
         name: data_distill
-        path: applications/information_extraction/text/data_distill
+        path: legacy/applications/information_extraction/text/data_distill
         cmd: python data_distill.py
         params:
           - --data_path ../data
@@ -66,7 +66,7 @@ case:
             evaluation: "="
       -
         name: distill_train_student
-        path: applications/information_extraction/text/data_distill
+        path: legacy/applications/information_extraction/text/data_distill
         cmd: python train.py
         params:
           - --task_type relation_extraction
@@ -80,7 +80,7 @@ case:
     eval:
       -
         name: evaluate
-        path: applications/information_extraction/text
+        path: legacy/applications/information_extraction/text
         cmd: python evaluate.py
         params:
           - --model_path ./checkpoint/model_best
@@ -94,7 +94,7 @@ case:
             evaluation: "="
       -
         name: distill_evaluate_teacher
-        path: applications/information_extraction/text/data_distill
+        path: legacy/applications/information_extraction/text/data_distill
         cmd: python evaluate_teacher.py
         params:
           - --task_type relation_extraction
@@ -103,7 +103,7 @@ case:
           - --model_path ../checkpoint/model_best
       -
         name: distill_evaluate_student
-        path: applications/information_extraction/text/data_distill
+        path: legacy/applications/information_extraction/text/data_distill
         cmd: python evaluate.py
         params:
           - --model_path ./checkpoint/model_39
@@ -119,11 +119,11 @@ case:
     train:
       -
         name: prepare
-        path: applications/information_extraction/text
+        path: legacy/applications/information_extraction/text
         cmd: wget https://bj.bcebos.com/paddlenlp/datasets/military.tar.gz && tar -xvf military.tar.gz && ren military data
       -
         name: label_studio
-        path: applications/information_extraction/text
+        path: legacy/applications/information_extraction/text
         cmd: python ../label_studio.py
         params:
           - --label_studio_file ./data/label_studio.json
@@ -133,7 +133,7 @@ case:
           - --task_type ext
       -
         name: fintune
-        path: applications/information_extraction/text
+        path: legacy/applications/information_extraction/text
         cmd: python -u -m paddle.distributed.launch finetune.py
         params:
           - --device gpu
@@ -167,7 +167,7 @@ case:
             evaluation: "="
       -
         name: data_distill
-        path: applications/information_extraction/text/data_distill
+        path: legacy/applications/information_extraction/text/data_distill
         cmd: python data_distill.py
         params:
           - --data_path ../data
@@ -182,7 +182,7 @@ case:
             evaluation: "="
       -
         name: distill_train_student
-        path: applications/information_extraction/text/data_distill
+        path: legacy/applications/information_extraction/text/data_distill
         cmd: python train.py
         params:
           - --task_type relation_extraction
@@ -196,7 +196,7 @@ case:
     eval:
       -
         name: evaluate
-        path: applications/information_extraction/text
+        path: legacy/applications/information_extraction/text
         cmd: python evaluate.py
         params:
           - --model_path ./checkpoint/model_best
@@ -210,7 +210,7 @@ case:
             evaluation: "="
       -
         name: distill_evaluate_teacher
-        path: applications/information_extraction/text/data_distill
+        path: legacy/applications/information_extraction/text/data_distill
         cmd: python evaluate_teacher.py
         params:
           - --task_type relation_extraction
@@ -219,7 +219,7 @@ case:
           - --model_path ../checkpoint/model_best
       -
         name: distill_evaluate_student
-        path: applications/information_extraction/text/data_distill
+        path: legacy/applications/information_extraction/text/data_distill
         cmd: python evaluate.py
         params:
           - --model_path ./checkpoint/model_39

@@ -3,7 +3,7 @@ case:
     train:
       -
         name: FD-GPU
-        path: model_zoo/ernie-m/deploy/python
+        path: legacy/model_zoo/ernie-m/deploy/python
         cmd: python seq_cls_infer.py
         params:
           - --model_dir ../../finetuned_models/export/model
@@ -11,7 +11,7 @@ case:
           - --backend paddle
       -
         name: FD-CPU
-        path: model_zoo/ernie-m/deploy/python
+        path: legacy/model_zoo/ernie-m/deploy/python
         cmd: python seq_cls_infer.py
         params:
           - --model_dir ../../finetuned_models/export/

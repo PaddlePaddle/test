@@ -3,11 +3,11 @@ case:
     train:
       -
         name: prepare
-        path: model_zoo/bert/static
+        path: legacy/model_zoo/bert/static
         cmd: wget -q https://paddle-qa.bj.bcebos.com/paddlenlp/bert_static.tar.gz && tar -xzvf bert_static.tar.gz
       -
         name: pretrain
-        path: model_zoo/bert/static
+        path: legacy/model_zoo/bert/static
         cmd: python -m paddle.distributed.launch  run_pretrain.py
         params:
           - --model_type bert
@@ -26,7 +26,7 @@ case:
             evaluation: "="
       -
         name: fintune
-        path: model_zoo/bert/static
+        path: legacy/model_zoo/bert/static
         cmd: python -m paddle.distributed.launch  run_glue.py
         params:
           - --model_type bert
@@ -48,7 +48,7 @@ case:
     predict:
       -
         name: predict
-        path: model_zoo/bert/static
+        path: legacy/model_zoo/bert/static
         cmd: python -u ./predict_glue.py
         params:
           - --task_name SST-2

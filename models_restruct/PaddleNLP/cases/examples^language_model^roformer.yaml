@@ -3,7 +3,7 @@ case:
     train:
       -
         name: run_thucnews
-        path: examples/language_model/roformer
+        path: legacy/examples/language_model/roformer
         cmd: python -m paddle.distributed.launch run_thucnews.py
         params:
           - --model_type roformer
@@ -20,7 +20,7 @@ case:
           - --max_steps 2
       -
         name: run_cail2019_scm
-        path: examples/language_model/roformer
+        path: legacy/examples/language_model/roformer
         cmd: python -m paddle.distributed.launch run_cail2019_scm.py
         params:
           - --model_type roformer_mean_pooling
@@ -44,7 +44,7 @@ case:
     train:
       -
         name: run_thucnews
-        path: examples/language_model/roformer
+        path: legacy/examples/language_model/roformer
         cmd: python -m paddle.distributed.launch run_thucnews.py
         params:
           - --model_type roformer
@@ -61,7 +61,7 @@ case:
           - --max_steps 2
       -
         name: run_cail2019_scm
-        path: examples/language_model/roformer
+        path: legacy/examples/language_model/roformer
         cmd: python -m paddle.distributed.launch run_cail2019_scm.py
         params:
           - --model_type roformer_mean_pooling
