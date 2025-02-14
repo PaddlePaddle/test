@@ -101,23 +101,23 @@ class PaddleNLP_Build(Model_Build):
 
             os.system(
                 'sed -i "s/save_step: 10000/save_step: 1/g" \
-                    examples/machine_translation/transformer/configs/transformer.base.yaml'
+                    slm/examples/machine_reading_comprehension/transformer/configs/transformer.base.yaml'
             )
             os.system(
                 'sed -i "s/print_step: 100/print_step: 1/g" \
-                    examples/machine_translation/transformer/configs/transformer.base.yaml'
+                    slm/examples/machine_reading_comprehension/transformer/configs/transformer.base.yaml'
             )
             os.system(
                 'sed -i "s/epoch: 30/epoch: 1/g" \
-                    examples/machine_translation/transformer/configs/transformer.base.yaml'
+                    slm/examples/machine_reading_comprehension/transformer/configs/transformer.base.yaml'
             )
             os.system(
                 'sed -i "s/max_iter: None/max_iter: 2/g" \
-                    examples/machine_translation/transformer/configs/transformer.base.yaml'
+                    slm/examples/machine_reading_comprehension/transformer/configs/transformer.base.yaml'
             )
             os.system(
                 'sed -i "s/batch_size: 4096/batch_size: 1000/g" \
-                    examples/machine_translation/transformer/configs/transformer.base.yaml'
+                    slm/examples/machine_reading_comprehension/transformer/configs/transformer.base.yaml'
             )
 
             # if platform == "linux_convergence":
